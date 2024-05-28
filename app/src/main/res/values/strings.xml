@@ -4,4 +4,8 @@
     <string name="favorite">Favorite</string>
     <string name="setting">Setting</string>
     <string name="local">Local</string>
+    <string name="songs">Songs</string>
+    <string name="playlists">Playlists</string>
+    <string name="artists">Artists</string>
+    <string name="all_songs">All songs</string>
 </resources>
