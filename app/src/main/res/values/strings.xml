@@ -9,4 +9,8 @@
     <string name="artists">Artists</string>
     <string name="all_songs">All songs</string>
     <string name="can_t_fetch_songs_from_internet">Can\'t fetch songs from internet.</string>
+    <string name="search">Search</string>
+    <string name="hide">Hide</string>
+    <string name="add_to">Add to</string>
+    <string name="play_next">Play Next</string>
 </resources>

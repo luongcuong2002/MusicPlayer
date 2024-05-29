@@ -28,7 +28,7 @@ class SongFragment : BaseFragment<FragmentSongBinding>() {
     private fun setupListeners() {
         dataBinding.ivCheckbox.setOnClickListener {
             showActivity(SongSelectorActivity::class.java, Bundle().apply {
-                putSerializable(Constant.BUNDLE_SONG, songViewModel.songs as Serializable)
+                putSerializable(Constant.BUNDLE_SONGS, songViewModel.songs as Serializable)
             })
         }
     }
