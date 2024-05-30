@@ -1,5 +1,7 @@
 package com.kma.musicplayer.ui.screen.home.song
 
+import android.app.Activity
+import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import androidx.lifecycle.ViewModelProvider
@@ -9,6 +11,9 @@ import com.kma.musicplayer.network.common.ApiCallState
 import com.kma.musicplayer.ui.screen.core.BaseFragment
 import com.kma.musicplayer.ui.screen.songselector.SongSelectorActivity
 import com.kma.musicplayer.utils.Constant
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import java.io.Serializable
 
 class SongFragment : BaseFragment<FragmentSongBinding>() {
@@ -27,9 +32,12 @@ class SongFragment : BaseFragment<FragmentSongBinding>() {
 
     private fun setupListeners() {
         dataBinding.ivCheckbox.setOnClickListener {
-            showActivity(SongSelectorActivity::class.java, Bundle().apply {
-                putSerializable(Constant.BUNDLE_SONGS, songViewModel.songs as Serializable)
-            })
+            showActivityForResult(
+                SongSelectorActivity::class.java, Constant.REQUEST_CODE_DATA_CHANGED,
+                Bundle().apply {
+                    putSerializable(Constant.BUNDLE_SONGS, songViewModel.songs as Serializable)
+                },
+            )
         }
     }
 
@@ -63,5 +71,15 @@ class SongFragment : BaseFragment<FragmentSongBinding>() {
             // handle song click
         }
         dataBinding.rvSongs.adapter = songAdapter
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (requestCode == Constant.REQUEST_CODE_DATA_CHANGED && resultCode == Activity.RESULT_OK) {
+            CoroutineScope(Dispatchers.Main).launch {
+                songViewModel.filterHiddenSongs()
+                songAdapter.notifyDataSetChanged()
+            }
+        }
     }
 }

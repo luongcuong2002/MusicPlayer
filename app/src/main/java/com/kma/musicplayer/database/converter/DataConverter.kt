@@ -1,4 +1,4 @@
-package com.kma.musicplayer.database
+package com.kma.musicplayer.database.converter
 
 import androidx.room.TypeConverter
 import com.google.gson.Gson

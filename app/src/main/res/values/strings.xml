@@ -11,6 +11,7 @@
     <string name="can_t_fetch_songs_from_internet">Can\'t fetch songs from internet.</string>
     <string name="search">Search</string>
     <string name="hide">Hide</string>
+    <string name="hide_songs_confirm">Are you sure you want to hide the songs?</string>
     <string name="add_to">Add to</string>
     <string name="play_next">Play Next</string>
     <string name="playlist_name_already_exists">Playlist name already exists</string>

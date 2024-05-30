@@ -47,4 +47,12 @@ abstract class BaseFragment<DB : ViewDataBinding> : Fragment() {
         }
         startActivity(intent)
     }
+
+    fun showActivityForResult(clazz: Class<*>, requestCode: Int, bundle: Bundle? = null) {
+        val intent = Intent(requireContext(), clazz)
+        if (bundle != null) {
+            intent.putExtras(bundle)
+        }
+        startActivityForResult(intent, requestCode)
+    }
 }

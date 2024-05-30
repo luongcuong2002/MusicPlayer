@@ -8,7 +8,6 @@ import android.widget.Toast
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.kma.musicplayer.R
 import com.kma.musicplayer.database.AppDatabase
-import com.kma.musicplayer.database.PlaylistDao
 import com.kma.musicplayer.databinding.BottomSheetCreateNewPlaylistBinding
 import com.kma.musicplayer.model.PlaylistModel
 import kotlinx.coroutines.CoroutineScope
@@ -22,7 +21,7 @@ class CreateNewPlaylistBottomSheet(
 
     private lateinit var binding: BottomSheetCreateNewPlaylistBinding
 
-    private var playlistDao: PlaylistDao? = null
+    private var playlistDao = AppDatabase.INSTANCE.playlistDao()
 
     @SuppressLint("RestrictedApi")
     override fun setupDialog(dialog: Dialog, style: Int) {
@@ -31,12 +30,7 @@ class CreateNewPlaylistBottomSheet(
         binding = BottomSheetCreateNewPlaylistBinding.inflate(layoutInflater)
         dialog.setContentView(binding.root)
 
-        connectToDatabase()
         setupListeners()
-    }
-
-    private fun connectToDatabase() {
-        playlistDao = AppDatabase.getInstance(requireActivity())?.playlistDao()
     }
 
     private fun setupListeners() {

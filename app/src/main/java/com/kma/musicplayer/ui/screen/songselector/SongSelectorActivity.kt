@@ -3,14 +3,18 @@ package com.kma.musicplayer.ui.screen.songselector
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
-import android.view.View
 import androidx.lifecycle.ViewModelProvider
 import com.kma.musicplayer.R
+import com.kma.musicplayer.database.AppDatabase
 import com.kma.musicplayer.databinding.ActivitySongSelectorBinding
+import com.kma.musicplayer.extension.showDialog
 import com.kma.musicplayer.model.OnlineSong
 import com.kma.musicplayer.ui.bottomsheet.add_to_playlist.AddToPlaylistBottomSheet
 import com.kma.musicplayer.ui.screen.core.BaseActivity
 import com.kma.musicplayer.utils.Constant
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
 class SongSelectorActivity : BaseActivity<ActivitySongSelectorBinding>() {
 
@@ -68,6 +72,28 @@ class SongSelectorActivity : BaseActivity<ActivitySongSelectorBinding>() {
             val selectedSongIds = songSelectorViewModel.getSelectedSongIds()
             val addToPlaylistBottomSheet = AddToPlaylistBottomSheet(selectedSongIds)
             addToPlaylistBottomSheet.show(supportFragmentManager, "AddToPlaylistBottomSheet")
+        }
+        mDataBinding.llHide.setOnClickListener {
+            showDialog(
+                title = getString(R.string.hide),
+                message = getString(R.string.hide_songs_confirm),
+                textOfPositiveButton = getString(R.string.hide),
+                textOfNegativeButton = getString(R.string.cancel),
+                positiveButtonFunction = {
+                    CoroutineScope(Dispatchers.Main).launch {
+                        val selectedSongIds = songSelectorViewModel.getSelectedSongIds()
+                        AppDatabase.INSTANCE.hiddenSongDao().insertAll(selectedSongIds)
+                        setResult(RESULT_OK)
+                        songSelectorViewModel.hideSelectedSongs()
+
+                        if (songSelectorViewModel.songs.isEmpty()) {
+                            finish()
+                        }
+
+                        setupRecyclerView()
+                    }
+                }
+            )
         }
     }
 

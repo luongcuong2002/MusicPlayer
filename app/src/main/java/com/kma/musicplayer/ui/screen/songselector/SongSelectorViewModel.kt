@@ -48,4 +48,8 @@ class SongSelectorViewModel : ViewModel() {
     fun getSelectedSongIds(): List<String> {
         return songs.filter { it.isSelected }.map { it.song.id }
     }
+
+    fun hideSelectedSongs() {
+        songs.removeAll { it.isSelected }
+    }
 }

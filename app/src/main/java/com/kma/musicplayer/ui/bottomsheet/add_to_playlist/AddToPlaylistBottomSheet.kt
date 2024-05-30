@@ -6,7 +6,6 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
-import com.kma.musicplayer.database.PlaylistDao
 import com.kma.musicplayer.database.AppDatabase
 import com.kma.musicplayer.ui.bottomsheet.create_new_playlist.CreateNewPlaylistBottomSheet
 import com.kma.musicplayer.R
@@ -27,7 +26,7 @@ class AddToPlaylistBottomSheet(
     private var itemHeight: Int = 100
     private var spaceBetweenItems = 100
 
-    private var playlistDao: PlaylistDao? = null
+    private var playlistDao = AppDatabase.INSTANCE.playlistDao()
 
     private var playlists = mutableListOf<SelectablePlaylist>()
     private var playlistAdapter: PlaylistAdapter? = null
@@ -43,13 +42,8 @@ class AddToPlaylistBottomSheet(
         binding = BottomSheetAddToPlaylistBinding.inflate(layoutInflater)
         dialog.setContentView(binding.root)
 
-        connectToDatabase()
         setupRecycleView()
         setupListeners()
-    }
-
-    private fun connectToDatabase() {
-        playlistDao = AppDatabase.getInstance(requireActivity())?.playlistDao()
     }
 
     private fun setupRecycleView() {
@@ -68,10 +62,10 @@ class AddToPlaylistBottomSheet(
 
     private suspend fun fetchAllPlaylists(): MutableList<SelectablePlaylist> =
         withContext(Dispatchers.IO) {
-            return@withContext playlistDao?.getAllPlaylists()
-                ?.map {
+            return@withContext playlistDao.getAllPlaylists()
+                .map {
                     SelectablePlaylist(it)
-                }?.toMutableList() ?: mutableListOf()
+                }.toMutableList() ?: mutableListOf()
         }
 
     private fun setupListeners() {
@@ -139,7 +133,7 @@ class AddToPlaylistBottomSheet(
                     addAll(songIds)
                     addAll(songIdsToAdd)
                 }
-                playlistDao?.updateMediaPaths(id, newMediaPaths)
+                playlistDao.updateMediaPaths(id, newMediaPaths)
 
                 isAddedToAnyPlaylist = true
             }

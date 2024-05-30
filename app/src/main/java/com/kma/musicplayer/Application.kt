@@ -8,6 +8,6 @@ class Application : Application() {
         super.onCreate()
 
         // Initialize the database
-        AppDatabase.getInstance(this)
+        AppDatabase.createInstance(this)
     }
 }

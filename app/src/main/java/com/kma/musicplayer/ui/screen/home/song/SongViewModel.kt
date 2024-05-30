@@ -4,11 +4,16 @@ import android.os.Handler
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.kma.musicplayer.database.AppDatabase
 import com.kma.musicplayer.model.OnlineSong
 import com.kma.musicplayer.network.common.ApiCallState
 import com.kma.musicplayer.network.retrofit.model.SongDto
 import com.kma.musicplayer.network.retrofit.repository.SongRepository
 import com.kma.musicplayer.utils.Mapping
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -124,8 +129,17 @@ class SongViewModel : ViewModel() {
             )
         }
 
-        Handler().postDelayed({
-            _apiCallState.value = ApiCallState.SUCCESS
-        }, 1000)
+        CoroutineScope(Dispatchers.Main).launch {
+            filterHiddenSongs()
+            Handler().postDelayed({
+                _apiCallState.value = ApiCallState.SUCCESS
+            }, 1000)
+        }
+    }
+
+    suspend fun filterHiddenSongs() = withContext(Dispatchers.IO) {
+        songs.removeAll {
+            AppDatabase.INSTANCE.hiddenSongDao().isHidden(it.id)
+        }
     }
 }
