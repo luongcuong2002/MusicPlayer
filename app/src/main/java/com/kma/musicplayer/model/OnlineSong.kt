@@ -3,7 +3,7 @@ package com.kma.musicplayer.model
 import java.io.Serializable
 
 data class OnlineSong(
-    val id: Int,
+    val id: String,
     val title: String,
     val artist: String,
     val duration: Int,

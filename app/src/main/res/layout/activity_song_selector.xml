@@ -13,7 +13,7 @@
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="@dimen/_13sdp">
 
-            <com.kma.musicplayer.customview.BackButton
+            <com.kma.musicplayer.ui.customview.BackButton
                 android:layout_width="@dimen/_20sdp"
                 android:layout_height="@dimen/_20sdp" />
 

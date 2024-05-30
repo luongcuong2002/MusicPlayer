@@ -44,4 +44,8 @@ class SongSelectorViewModel : ViewModel() {
     fun checkAtLeastOneSelected() {
         _isAtLeastOneSelected.value = songs.any { it.isSelected }
     }
+
+    fun getSelectedSongIds(): List<String> {
+        return songs.filter { it.isSelected }.map { it.song.id }
+    }
 }

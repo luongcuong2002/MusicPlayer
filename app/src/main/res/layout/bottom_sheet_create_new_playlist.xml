@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/bg_bottom_sheet"
+        android:gravity="center_horizontal"
+        android:orientation="vertical"
+        android:padding="@dimen/_13sdp">
+
+        <ImageView
+            android:layout_width="@dimen/_34sdp"
+            android:layout_height="@dimen/_3sdp"
+            android:background="@drawable/bg_handler_bottomsheet" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginVertical="@dimen/_10sdp"
+            android:fontFamily="@font/nunito_bold"
+            android:text="@string/new_playlist"
+            android:textColor="@color/white"
+            android:textSize="@dimen/_13ssp" />
+
+        <EditText
+            android:id="@+id/edt_playlist_name"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_40sdp"
+            android:background="@drawable/bg_text_input"
+            android:fontFamily="@font/nunito_regular"
+            android:hint="@string/enter_playlist_name"
+            android:maxLines="1"
+            android:singleLine="true"
+            android:paddingHorizontal="@dimen/_14sdp"
+            android:textColor="@color/white"
+            android:textColorHint="@color/color_787B82"
+            android:textSize="@dimen/_13ssp" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_35sdp"
+            android:layout_marginTop="@dimen/_20sdp"
+            android:layout_marginBottom="@dimen/_7sdp"
+            android:orientation="horizontal">
+
+            <RelativeLayout
+                android:id="@+id/rl_cancel"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/_8sdp"
+                android:layout_weight="1"
+                android:background="@drawable/bg_bottom_sheet_cancel_button"
+                android:paddingVertical="@dimen/_8sdp">
+
+                <com.kma.musicplayer.ui.customview.MovableText
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:fontFamily="@font/nunito_semibold"
+                    android:lineHeight="@dimen/_20ssp"
+                    android:text="@string/cancel"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/_13ssp" />
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/rl_ok"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@drawable/bg_bottom_sheet_ok_button"
+                android:paddingVertical="@dimen/_8sdp">
+
+                <com.kma.musicplayer.ui.customview.MovableText
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:fontFamily="@font/nunito_semibold"
+                    android:lineHeight="@dimen/_20ssp"
+                    android:text="@string/ok"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/_13ssp" />
+
+            </RelativeLayout>
+
+        </LinearLayout>
+
+    </LinearLayout>
+</layout>

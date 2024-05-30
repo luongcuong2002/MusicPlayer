@@ -44,7 +44,7 @@ class SongViewModel : ViewModel() {
         songs.apply {
             add(
                 OnlineSong(
-                    1,
+                    "1",
                     "Baby",
                     "Justin Bieber",
                     3 * 60 + 10,
@@ -54,7 +54,7 @@ class SongViewModel : ViewModel() {
             )
             add(
                 OnlineSong(
-                    2,
+                    "2",
                     "See you again",
                     "Charlie Puth",
                     5 * 60 + 12,
@@ -64,7 +64,7 @@ class SongViewModel : ViewModel() {
             )
             add(
                 OnlineSong(
-                    3,
+                    "3",
                     "Baby",
                     "Justin Bieber",
                     7 * 60 + 21,
@@ -74,7 +74,7 @@ class SongViewModel : ViewModel() {
             )
             add(
                 OnlineSong(
-                    4,
+                    "4",
                     "See you again",
                     "Charlie Puth",
                     4 * 60 + 13,
@@ -84,7 +84,7 @@ class SongViewModel : ViewModel() {
             )
             add(
                 OnlineSong(
-                    5,
+                    "5",
                     "Baby",
                     "Justin Bieber",
                     3 * 60 + 10,
@@ -94,7 +94,7 @@ class SongViewModel : ViewModel() {
             )
             add(
                 OnlineSong(
-                    6,
+                    "6",
                     "See you again",
                     "Charlie Puth",
                     3 * 60 + 10,
@@ -104,7 +104,7 @@ class SongViewModel : ViewModel() {
             )
             add(
                 OnlineSong(
-                    7,
+                    "7",
                     "Baby",
                     "Justin Bieber",
                     2 * 60 + 46,
@@ -114,7 +114,7 @@ class SongViewModel : ViewModel() {
             )
             add(
                 OnlineSong(
-                    8,
+                    "8",
                     "See you again",
                     "Charlie Puth",
                     1 * 60 + 65,

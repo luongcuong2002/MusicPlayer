@@ -8,6 +8,7 @@ import androidx.lifecycle.ViewModelProvider
 import com.kma.musicplayer.R
 import com.kma.musicplayer.databinding.ActivitySongSelectorBinding
 import com.kma.musicplayer.model.OnlineSong
+import com.kma.musicplayer.ui.bottomsheet.add_to_playlist.AddToPlaylistBottomSheet
 import com.kma.musicplayer.ui.screen.core.BaseActivity
 import com.kma.musicplayer.utils.Constant
 
@@ -63,6 +64,11 @@ class SongSelectorActivity : BaseActivity<ActivitySongSelectorBinding>() {
 
             }
         })
+        mDataBinding.llAddTo.setOnClickListener {
+            val selectedSongIds = songSelectorViewModel.getSelectedSongIds()
+            val addToPlaylistBottomSheet = AddToPlaylistBottomSheet(selectedSongIds)
+            addToPlaylistBottomSheet.show(supportFragmentManager, "AddToPlaylistBottomSheet")
+        }
     }
 
     private fun setupObserver() {

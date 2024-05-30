@@ -13,4 +13,14 @@
     <string name="hide">Hide</string>
     <string name="add_to">Add to</string>
     <string name="play_next">Play Next</string>
+    <string name="playlist_name_already_exists">Playlist name already exists</string>
+    <string name="please_select_at_least_one_playlist">Please select at least one playlist</string>
+    <string name="songs_2">songs</string>
+    <string name="song">song</string>
+    <string name="add_to_playlist">Add to playlist</string>
+    <string name="new_playlist">New Playlist</string>
+    <string name="ok">OK</string>
+    <string name="cancel">Cancel</string>
+    <string name="enter_playlist_name">Enter playlist name</string>
+    <string name="song_already_exists_in_playlist">The song already exists in playlist</string>
 </resources>
