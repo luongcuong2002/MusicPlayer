@@ -7,25 +7,25 @@
 
     <fragment
         android:id="@+id/homeFragment"
-        android:name="com.kma.musicplayer.screen.home.HomeFragment"
+        android:name="com.kma.musicplayer.ui.screen.home.HomeFragment"
         android:label="SettingOtherFragment"
         tools:layout="@layout/fragment_home" />
 
     <fragment
         android:id="@+id/favouriteFragment"
-        android:name="com.kma.musicplayer.screen.favourite.FavouriteFragment"
+        android:name="com.kma.musicplayer.ui.screen.favourite.FavouriteFragment"
         android:label="SettingOtherFragment"
         tools:layout="@layout/fragment_favourite" />
 
     <fragment
         android:id="@+id/musicLocalFragment"
-        android:name="com.kma.musicplayer.screen.musiclocal.MusicLocalFragment"
+        android:name="com.kma.musicplayer.ui.screen.musiclocal.MusicLocalFragment"
         android:label="SettingGeneralFragment"
         tools:layout="@layout/fragment_music_local" />
 
     <fragment
         android:id="@+id/settingFragment"
-        android:name="com.kma.musicplayer.screen.setting.SettingFragment"
+        android:name="com.kma.musicplayer.ui.screen.setting.SettingFragment"
         android:label="SettingGeneralFragment"
         tools:layout="@layout/fragment_setting" />
 
