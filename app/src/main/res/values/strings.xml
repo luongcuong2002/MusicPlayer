@@ -30,4 +30,6 @@
     <string name="delete">Delete</string>
     <string name="delete_playlist">Delete Playlist</string>
     <string name="delete_playlist_message">Are you sure you want to delete the playlist?</string>
+    <string name="hide_the_song">Hide the song</string>
+    <string name="share">Share</string>
 </resources>

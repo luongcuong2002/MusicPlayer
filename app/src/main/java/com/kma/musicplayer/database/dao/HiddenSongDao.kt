@@ -9,9 +9,9 @@ interface HiddenSongDao {
     fun isHidden(songId: String): Boolean
 
     @Query("INSERT INTO HiddenSong (song_id) VALUES (:songId)")
-    suspend fun insertHiddenSong(songId: String)
+    suspend fun insert(songId: String)
 
     suspend fun insertAll(songIds: List<String>) {
-        songIds.forEach { insertHiddenSong(it) }
+        songIds.forEach { insert(it) }
     }
 }

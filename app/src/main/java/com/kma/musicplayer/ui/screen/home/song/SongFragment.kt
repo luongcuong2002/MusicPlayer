@@ -6,11 +6,15 @@ import android.os.Bundle
 import android.view.View
 import androidx.lifecycle.ViewModelProvider
 import com.kma.musicplayer.R
+import com.kma.musicplayer.database.AppDatabase
 import com.kma.musicplayer.databinding.FragmentSongBinding
 import com.kma.musicplayer.network.common.ApiCallState
+import com.kma.musicplayer.ui.bottomsheet.add_to_playlist.AddToPlaylistBottomSheet
+import com.kma.musicplayer.ui.bottomsheet.song_option.SongOptionBottomSheet
 import com.kma.musicplayer.ui.screen.core.BaseFragment
 import com.kma.musicplayer.ui.screen.songselector.SongSelectorActivity
 import com.kma.musicplayer.utils.Constant
+import com.kma.musicplayer.utils.ShareUtils
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -67,9 +71,41 @@ class SongFragment : BaseFragment<FragmentSongBinding>() {
     }
 
     private fun setupRecyclerView() {
-        songAdapter = SongAdapter(songViewModel.songs) {
-            // handle song click
-        }
+        songAdapter = SongAdapter(
+            songs = songViewModel.songs,
+            onMoreClick = { song ->
+                var bottomSheet: SongOptionBottomSheet? = null
+                bottomSheet = SongOptionBottomSheet(
+                    song = song,
+                    onClickPlayNext = {
+                        bottomSheet?.dismiss()
+                    },
+                    onClickAddToPlaylist = {
+                        val addToPlaylistBottomSheet = AddToPlaylistBottomSheet(listOf(song.id))
+                        addToPlaylistBottomSheet.show(
+                            requireActivity().supportFragmentManager,
+                            addToPlaylistBottomSheet.tag
+                        )
+                    },
+                    onClickHide = {
+                        CoroutineScope(Dispatchers.Main).launch {
+                            AppDatabase.INSTANCE.hiddenSongDao().insert(song.id)
+                            songViewModel.filterHiddenSongs()
+                            songAdapter.notifyDataSetChanged()
+                            bottomSheet?.dismiss()
+                        }
+                    },
+                    onClickShare = {
+                        ShareUtils.shareSong(requireActivity(), song)
+                        bottomSheet?.dismiss()
+                    },
+                )
+                bottomSheet.show(requireActivity().supportFragmentManager, bottomSheet.tag)
+            },
+            onSongClick = { song ->
+
+            },
+        )
         binding.rvSongs.adapter = songAdapter
     }
 

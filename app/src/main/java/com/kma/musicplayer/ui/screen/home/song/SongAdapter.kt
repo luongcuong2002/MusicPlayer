@@ -17,6 +17,7 @@ import com.kma.musicplayer.utils.Formatter
 
 class SongAdapter(
     private val songs: List<OnlineSong>,
+    private val onMoreClick: (OnlineSong) -> Unit,
     private val onSongClick: (OnlineSong) -> Unit
 ) : RecyclerView.Adapter<SongAdapter.SongViewHolder>() {
 
@@ -67,6 +68,10 @@ class SongAdapter(
                     }
                 })
                 .into(binding.ivThumbnail)
+
+            binding.ivMore.setOnClickListener {
+                onMoreClick(song)
+            }
 
             binding.root.setOnClickListener {
                 onSongClick(song)

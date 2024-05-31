@@ -1,12 +1,10 @@
 package com.kma.musicplayer.model
 
-import java.io.Serializable
-
-data class OnlineSong(
-    val id: String,
-    val title: String,
+class OnlineSong(
+    id: String,
+    title: String,
     val artist: String,
-    val duration: Int,
+    duration: Int,
     val thumbnail: String,
-    val path: String
-) : Serializable
+    path: String
+) : Song(id, title, duration, path)
