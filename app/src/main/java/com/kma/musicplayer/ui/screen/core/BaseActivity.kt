@@ -12,7 +12,7 @@ import com.kma.musicplayer.utils.SystemUtil
 
 abstract class BaseActivity<DB : ViewDataBinding> : AppCompatActivity() {
 
-    lateinit var mDataBinding: DB
+    lateinit var binding: DB
     private var currentApiVersion = 0
 
     abstract fun getContentView(): Int
@@ -37,7 +37,7 @@ abstract class BaseActivity<DB : ViewDataBinding> : AppCompatActivity() {
                     }
                 }
         }
-        mDataBinding = DataBindingUtil.setContentView(this, getContentView())
+        binding = DataBindingUtil.setContentView(this, getContentView())
 
         Log.d("CHECK_ACTIVITY", "onCreate: ${javaClass.simpleName}")
     }

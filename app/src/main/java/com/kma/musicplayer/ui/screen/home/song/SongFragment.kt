@@ -31,7 +31,7 @@ class SongFragment : BaseFragment<FragmentSongBinding>() {
     }
 
     private fun setupListeners() {
-        dataBinding.ivCheckbox.setOnClickListener {
+        binding.ivCheckbox.setOnClickListener {
             showActivityForResult(
                 SongSelectorActivity::class.java, Constant.REQUEST_CODE_DATA_CHANGED,
                 Bundle().apply {
@@ -45,22 +45,22 @@ class SongFragment : BaseFragment<FragmentSongBinding>() {
         songViewModel.apiCallState.observe(viewLifecycleOwner) {
             when (it) {
                 ApiCallState.LOADING -> {
-                    dataBinding.rvSongs.visibility = View.GONE
-                    dataBinding.pbLoading.visibility = View.VISIBLE
-                    dataBinding.tvError.visibility = View.GONE
+                    binding.rvSongs.visibility = View.GONE
+                    binding.pbLoading.visibility = View.VISIBLE
+                    binding.tvError.visibility = View.GONE
                 }
 
                 ApiCallState.SUCCESS -> {
-                    dataBinding.rvSongs.visibility = View.VISIBLE
-                    dataBinding.pbLoading.visibility = View.GONE
-                    dataBinding.tvError.visibility = View.GONE
+                    binding.rvSongs.visibility = View.VISIBLE
+                    binding.pbLoading.visibility = View.GONE
+                    binding.tvError.visibility = View.GONE
                     setupRecyclerView()
                 }
 
                 ApiCallState.ERROR -> {
-                    dataBinding.rvSongs.visibility = View.GONE
-                    dataBinding.pbLoading.visibility = View.GONE
-                    dataBinding.tvError.visibility = View.VISIBLE
+                    binding.rvSongs.visibility = View.GONE
+                    binding.pbLoading.visibility = View.GONE
+                    binding.tvError.visibility = View.VISIBLE
                 }
             }
         }
@@ -70,7 +70,7 @@ class SongFragment : BaseFragment<FragmentSongBinding>() {
         songAdapter = SongAdapter(songViewModel.songs) {
             // handle song click
         }
-        dataBinding.rvSongs.adapter = songAdapter
+        binding.rvSongs.adapter = songAdapter
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {

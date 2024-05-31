@@ -11,7 +11,7 @@ import androidx.fragment.app.Fragment
 import com.kma.musicplayer.utils.SystemUtil
 
 abstract class BaseFragment<DB : ViewDataBinding> : Fragment() {
-    lateinit var dataBinding: DB
+    lateinit var binding: DB
 
     abstract fun getContentView(): Int
 
@@ -29,13 +29,13 @@ abstract class BaseFragment<DB : ViewDataBinding> : Fragment() {
         var rootView: View? = null
         val resId = getContentView()
         if (resId > 0) {
-            dataBinding = DataBindingUtil.inflate(
+            binding = DataBindingUtil.inflate(
                 inflater,
                 getContentView(),
                 container,
                 false
             )
-            rootView = dataBinding.root
+            rootView = binding.root
         }
         return rootView
     }

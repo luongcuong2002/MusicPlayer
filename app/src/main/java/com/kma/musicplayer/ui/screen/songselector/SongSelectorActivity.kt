@@ -44,11 +44,11 @@ class SongSelectorActivity : BaseActivity<ActivitySongSelectorBinding>() {
             songSelectorViewModel.checkSelectAll()
             songSelectorViewModel.checkAtLeastOneSelected()
         }
-        mDataBinding.rvSongs.adapter = selectableSongAdapter
+        binding.rvSongs.adapter = selectableSongAdapter
     }
 
     private fun setupListeners() {
-        mDataBinding.ivSelectAll.setOnClickListener {
+        binding.ivSelectAll.setOnClickListener {
             if (songSelectorViewModel.isSelectAll.value == true) {
                 songSelectorViewModel.deselectAll()
             } else {
@@ -56,7 +56,7 @@ class SongSelectorActivity : BaseActivity<ActivitySongSelectorBinding>() {
             }
             selectableSongAdapter.notifyDataSetChanged()
         }
-        mDataBinding.etSearch.addTextChangedListener(object : TextWatcher {
+        binding.etSearch.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
             }
 
@@ -68,12 +68,12 @@ class SongSelectorActivity : BaseActivity<ActivitySongSelectorBinding>() {
 
             }
         })
-        mDataBinding.llAddTo.setOnClickListener {
+        binding.llAddTo.setOnClickListener {
             val selectedSongIds = songSelectorViewModel.getSelectedSongIds()
             val addToPlaylistBottomSheet = AddToPlaylistBottomSheet(selectedSongIds)
             addToPlaylistBottomSheet.show(supportFragmentManager, "AddToPlaylistBottomSheet")
         }
-        mDataBinding.llHide.setOnClickListener {
+        binding.llHide.setOnClickListener {
             showDialog(
                 title = getString(R.string.hide),
                 message = getString(R.string.hide_songs_confirm),
@@ -99,16 +99,16 @@ class SongSelectorActivity : BaseActivity<ActivitySongSelectorBinding>() {
 
     private fun setupObserver() {
         songSelectorViewModel.isSelectAll.observe(this) {
-            mDataBinding.ivSelectAll.setImageResource(if (it) R.drawable.ic_select_all_enable else R.drawable.ic_select_all_disable)
+            binding.ivSelectAll.setImageResource(if (it) R.drawable.ic_select_all_enable else R.drawable.ic_select_all_disable)
         }
         songSelectorViewModel.isAtLeastOneSelected.observe(this) {
             val opacity = if (it) 1.0f else 0.5f
-            mDataBinding.llHide.alpha = opacity
-            mDataBinding.llHide.isClickable = it
-            mDataBinding.llAddTo.alpha = opacity
-            mDataBinding.llAddTo.isClickable = it
-            mDataBinding.llPlayNext.alpha = opacity
-            mDataBinding.llPlayNext.isClickable = it
+            binding.llHide.alpha = opacity
+            binding.llHide.isClickable = it
+            binding.llAddTo.alpha = opacity
+            binding.llAddTo.isClickable = it
+            binding.llPlayNext.alpha = opacity
+            binding.llPlayNext.isClickable = it
         }
     }
 }

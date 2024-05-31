@@ -20,25 +20,25 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
     }
 
     private fun setupListeners() {
-        mDataBinding.llTabHome.setOnClickListener {
+        binding.llTabHome.setOnClickListener {
             if (navController.currentDestination?.id != R.id.homeFragment) {
                 selectTab(R.id.homeFragment)
                 navController.navigate(R.id.homeFragment)
             }
         }
-        mDataBinding.llTabFavourite.setOnClickListener {
+        binding.llTabFavourite.setOnClickListener {
             if (navController.currentDestination?.id != R.id.favouriteFragment) {
                 selectTab(R.id.favouriteFragment)
                 navController.navigate(R.id.favouriteFragment)
             }
         }
-        mDataBinding.llTabLocal.setOnClickListener {
+        binding.llTabLocal.setOnClickListener {
             if (navController.currentDestination?.id != R.id.musicLocalFragment) {
                 selectTab(R.id.musicLocalFragment)
                 navController.navigate(R.id.musicLocalFragment)
             }
         }
-        mDataBinding.llTabSetting.setOnClickListener {
+        binding.llTabSetting.setOnClickListener {
             if (navController.currentDestination?.id != R.id.settingFragment) {
                 selectTab(R.id.settingFragment)
                 navController.navigate(R.id.settingFragment)
@@ -50,32 +50,32 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
         unSelectAllTabs()
         when (tabId) {
             R.id.homeFragment -> {
-                mDataBinding.ivHome.setImageResource(R.drawable.ic_tab_home_active)
-                mDataBinding.tvHome.setTextColor(resources.getColor(R.color.color_7150D0))
+                binding.ivHome.setImageResource(R.drawable.ic_tab_home_active)
+                binding.tvHome.setTextColor(resources.getColor(R.color.color_7150D0))
             }
             R.id.favouriteFragment -> {
-                mDataBinding.ivFavourite.setImageResource(R.drawable.ic_tab_favourite_active)
-                mDataBinding.tvFavourite.setTextColor(resources.getColor(R.color.color_7150D0))
+                binding.ivFavourite.setImageResource(R.drawable.ic_tab_favourite_active)
+                binding.tvFavourite.setTextColor(resources.getColor(R.color.color_7150D0))
             }
             R.id.musicLocalFragment -> {
-                mDataBinding.ivLocal.setImageResource(R.drawable.ic_tab_local_active)
-                mDataBinding.tvLocal.setTextColor(resources.getColor(R.color.color_7150D0))
+                binding.ivLocal.setImageResource(R.drawable.ic_tab_local_active)
+                binding.tvLocal.setTextColor(resources.getColor(R.color.color_7150D0))
             }
             R.id.settingFragment -> {
-                mDataBinding.ivSetting.setImageResource(R.drawable.ic_tab_setting_active)
-                mDataBinding.tvSetting.setTextColor(resources.getColor(R.color.color_7150D0))
+                binding.ivSetting.setImageResource(R.drawable.ic_tab_setting_active)
+                binding.tvSetting.setTextColor(resources.getColor(R.color.color_7150D0))
             }
         }
     }
 
     private fun unSelectAllTabs() {
-        mDataBinding.ivHome.setImageResource(R.drawable.ic_tab_home_inactive)
-        mDataBinding.tvHome.setTextColor(resources.getColor(R.color.color_787B82))
-        mDataBinding.ivFavourite.setImageResource(R.drawable.ic_tab_favourite_inactive)
-        mDataBinding.tvFavourite.setTextColor(resources.getColor(R.color.color_787B82))
-        mDataBinding.ivLocal.setImageResource(R.drawable.ic_tab_local_inactive)
-        mDataBinding.tvLocal.setTextColor(resources.getColor(R.color.color_787B82))
-        mDataBinding.ivSetting.setImageResource(R.drawable.ic_tab_setting_inactive)
-        mDataBinding.tvSetting.setTextColor(resources.getColor(R.color.color_787B82))
+        binding.ivHome.setImageResource(R.drawable.ic_tab_home_inactive)
+        binding.tvHome.setTextColor(resources.getColor(R.color.color_787B82))
+        binding.ivFavourite.setImageResource(R.drawable.ic_tab_favourite_inactive)
+        binding.tvFavourite.setTextColor(resources.getColor(R.color.color_787B82))
+        binding.ivLocal.setImageResource(R.drawable.ic_tab_local_inactive)
+        binding.tvLocal.setTextColor(resources.getColor(R.color.color_787B82))
+        binding.ivSetting.setImageResource(R.drawable.ic_tab_setting_inactive)
+        binding.tvSetting.setTextColor(resources.getColor(R.color.color_787B82))
     }
 }

@@ -16,8 +16,8 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         adapter = ViewPagerAdapter(requireActivity())
-        dataBinding.viewPager.adapter = adapter
-        dataBinding.viewPager.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
+        binding.viewPager.adapter = adapter
+        binding.viewPager.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
             override fun onPageSelected(position: Int) {
                 super.onPageSelected(position)
                 updateNavigationBarUI(position)
@@ -27,42 +27,42 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
     }
 
     private fun setupListeners() {
-        dataBinding.tvSongs.setOnClickListener {
-            dataBinding.viewPager.currentItem = 0
+        binding.tvSongs.setOnClickListener {
+            binding.viewPager.currentItem = 0
         }
-        dataBinding.tvPlaylists.setOnClickListener {
-            dataBinding.viewPager.currentItem = 1
+        binding.tvPlaylists.setOnClickListener {
+            binding.viewPager.currentItem = 1
         }
-        dataBinding.tvArtists.setOnClickListener {
-            dataBinding.viewPager.currentItem = 2
+        binding.tvArtists.setOnClickListener {
+            binding.viewPager.currentItem = 2
         }
     }
 
     private fun updateNavigationBarUI(position: Int) {
         when (position) {
             0 -> {
-                dataBinding.tvSongs.setTextColor(resources.getColor(R.color.white))
-                dataBinding.songsBarHighlight.visibility = View.VISIBLE
-                dataBinding.tvPlaylists.setTextColor(resources.getColor(R.color.color_787B82))
-                dataBinding.playlistsBarHighlight.visibility = View.INVISIBLE
-                dataBinding.tvArtists.setTextColor(resources.getColor(R.color.color_787B82))
-                dataBinding.artistsBarHighlight.visibility = View.INVISIBLE
+                binding.tvSongs.setTextColor(resources.getColor(R.color.white))
+                binding.songsBarHighlight.visibility = View.VISIBLE
+                binding.tvPlaylists.setTextColor(resources.getColor(R.color.color_787B82))
+                binding.playlistsBarHighlight.visibility = View.INVISIBLE
+                binding.tvArtists.setTextColor(resources.getColor(R.color.color_787B82))
+                binding.artistsBarHighlight.visibility = View.INVISIBLE
             }
             1 -> {
-                dataBinding.tvSongs.setTextColor(resources.getColor(R.color.color_787B82))
-                dataBinding.songsBarHighlight.visibility = View.INVISIBLE
-                dataBinding.tvPlaylists.setTextColor(resources.getColor(R.color.white))
-                dataBinding.playlistsBarHighlight.visibility = View.VISIBLE
-                dataBinding.tvArtists.setTextColor(resources.getColor(R.color.color_787B82))
-                dataBinding.artistsBarHighlight.visibility = View.INVISIBLE
+                binding.tvSongs.setTextColor(resources.getColor(R.color.color_787B82))
+                binding.songsBarHighlight.visibility = View.INVISIBLE
+                binding.tvPlaylists.setTextColor(resources.getColor(R.color.white))
+                binding.playlistsBarHighlight.visibility = View.VISIBLE
+                binding.tvArtists.setTextColor(resources.getColor(R.color.color_787B82))
+                binding.artistsBarHighlight.visibility = View.INVISIBLE
             }
             else -> {
-                dataBinding.tvSongs.setTextColor(resources.getColor(R.color.color_787B82))
-                dataBinding.songsBarHighlight.visibility = View.INVISIBLE
-                dataBinding.tvPlaylists.setTextColor(resources.getColor(R.color.color_787B82))
-                dataBinding.playlistsBarHighlight.visibility = View.INVISIBLE
-                dataBinding.tvArtists.setTextColor(resources.getColor(R.color.white))
-                dataBinding.artistsBarHighlight.visibility = View.VISIBLE
+                binding.tvSongs.setTextColor(resources.getColor(R.color.color_787B82))
+                binding.songsBarHighlight.visibility = View.INVISIBLE
+                binding.tvPlaylists.setTextColor(resources.getColor(R.color.color_787B82))
+                binding.playlistsBarHighlight.visibility = View.INVISIBLE
+                binding.tvArtists.setTextColor(resources.getColor(R.color.white))
+                binding.artistsBarHighlight.visibility = View.VISIBLE
             }
         }
     }

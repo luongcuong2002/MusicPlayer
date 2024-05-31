@@ -85,14 +85,14 @@ class CreateNewPlaylistBottomSheet(
 
     private suspend fun checkPlaylistNameExisted(playlistName: String): Boolean =
         withContext(Dispatchers.IO) {
-            return@withContext playlistDao?.isPlaylistNameExisted(playlistName) ?: false
+            return@withContext playlistDao.isPlaylistNameExisted(playlistName)
         }
 
     private suspend fun insertPlaylist(playlistName: String) = withContext(Dispatchers.IO) {
         val playlist = PlaylistModel(
             playlistName = playlistName
         )
-        playlistDao?.insertPlaylist(playlist)
+        playlistDao.insertPlaylist(playlist)
     }
 
     override fun onResume() {
