@@ -32,4 +32,6 @@
     <string name="delete_playlist_message">Are you sure you want to delete the playlist?</string>
     <string name="hide_the_song">Hide the song</string>
     <string name="share">Share</string>
+    <string name="no_app_found_to_handle_the_share_action">No app found to handle the share action</string>
+    <string name="can_t_download_the_song_to_cache">Can\'t download the song to cache</string>
 </resources>

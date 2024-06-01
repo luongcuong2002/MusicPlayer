@@ -1,7 +1,11 @@
 package com.kma.musicplayer.ui.screen.home.playlist
 
+import android.content.Context
 import android.os.Bundle
+import android.util.Log
+import android.view.LayoutInflater
 import android.view.View
+import android.view.ViewGroup
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.kma.musicplayer.R
@@ -28,6 +32,14 @@ class PlaylistFragment : BaseFragment<FragmentPlaylistBinding>() {
         setupListeners()
         setupObserver()
         setupRecyclerView()
+    }
+
+    override fun onResume() {
+        super.onResume()
+        CoroutineScope(Dispatchers.Main).launch {
+            playlistViewModel.getAllPlaylists()
+            playlistAdapter.notifyDataSetChanged()
+        }
     }
 
     private fun setupListeners() {
