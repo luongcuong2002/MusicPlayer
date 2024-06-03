@@ -44,14 +44,37 @@
                 android:layout_height="wrap_content"
                 android:layout_centerInParent="true"
                 android:layout_marginHorizontal="@dimen/_36sdp"
+                android:animation="@anim/rotate"
                 app:rectAspectRatio="1">
 
-                <ImageView
-                    android:id="@+id/iv_thumbnail"
+                <com.google.android.material.card.MaterialCardView
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:adjustViewBounds="false"
-                    android:src="@drawable/default_song_thumbnail" />
+                    app:cardBackgroundColor="@color/transparent"
+                    app:cardCornerRadius="@dimen/_200sdp"
+                    app:cardElevation="0dp"
+                    app:strokeColor="#1A2335"
+                    app:strokeWidth="1dp">
+
+                    <ImageView
+                        android:id="@+id/iv_thumbnail"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:adjustViewBounds="false"
+                        android:src="@drawable/default_song_thumbnail" />
+
+                </com.google.android.material.card.MaterialCardView>
+
+                <com.google.android.material.card.MaterialCardView
+                    android:layout_width="@dimen/_40sdp"
+                    android:layout_height="@dimen/_40sdp"
+                    android:layout_centerInParent="true"
+                    app:cardBackgroundColor="@color/color_0F0817"
+                    app:cardCornerRadius="@dimen/_100sdp"
+                    app:cardElevation="0dp"
+                    app:strokeColor="#1A2335"
+                    app:strokeWidth="1dp" />
+
             </com.kma.musicplayer.ui.customview.RectangleRelativeLayout>
 
         </RelativeLayout>
@@ -70,6 +93,7 @@
                 android:orientation="vertical">
 
                 <com.kma.musicplayer.ui.customview.MovableText
+                    android:id="@+id/tv_song_name"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/nunito_semibold"
@@ -78,6 +102,7 @@
                     android:textSize="@dimen/_16ssp" />
 
                 <com.kma.musicplayer.ui.customview.MovableText
+                    android:id="@+id/tv_artist"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/_4sdp"
@@ -96,80 +121,20 @@
 
         </LinearLayout>
 
-        <com.google.android.exoplayer2.ui.DefaultTimeBar
-            android:id="@+id/exo_progress"
+        <com.google.android.exoplayer2.ui.PlayerView
+            android:id="@+id/player_view"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="@dimen/_115sdp"
             android:layout_marginTop="@dimen/_20sdp"
-            app:buffered_color="#33FFFFFF"
-            app:played_color="@color/white"
-            app:scrubber_drawable="@drawable/custom_seekbar_thumb"
-            app:unplayed_color="#33FFFFFF" />
-
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginHorizontal="@dimen/_7sdp">
-
-            <TextView
-                android:id="@+id/exo_position"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentStart="true"
-                android:fontFamily="@font/nunito_semibold"
-                android:text="00:12"
-                android:textColor="@color/color_7B57E4"
-                android:textSize="@dimen/_10ssp" />
-
-            <TextView
-                android:id="@+id/exo_duration"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentEnd="true"
-                android:fontFamily="@font/nunito_semibold"
-                android:text="00:12"
-                android:textColor="@color/white"
-                android:textSize="@dimen/_10ssp" />
-
-        </RelativeLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginVertical="@dimen/_28sdp"
-            android:gravity="center">
-
-            <ImageView
-                android:layout_width="@dimen/_20sdp"
-                android:layout_height="@dimen/_20sdp"
-                android:src="@drawable/ic_previous" />
-
-            <RelativeLayout
-                android:id="@+id/ic_play_pause"
-                android:layout_width="@dimen/_53sdp"
-                android:layout_height="@dimen/_53sdp"
-                android:layout_marginHorizontal="@dimen/_40sdp">
-
-                <ImageView
-                    android:id="@+id/exo_play"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:src="@drawable/ic_purple_play" />
-
-                <ImageView
-                    android:id="@+id/exo_pause"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:src="@drawable/ic_purple_pause" />
-
-            </RelativeLayout>
-
-            <ImageView
-                android:layout_width="@dimen/_20sdp"
-                android:layout_height="@dimen/_20sdp"
-                android:src="@drawable/ic_next" />
-
-        </LinearLayout>
+            android:layout_marginBottom="@dimen/_28sdp"
+            app:auto_show="true"
+            app:controller_layout_id="@layout/layout_audio_controller"
+            app:hide_on_touch="false"
+            app:player_layout_id="@layout/exo_player_view"
+            app:resize_mode="fill"
+            app:show_timeout="5000"
+            app:use_artwork="false"
+            app:use_controller="true" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -177,6 +142,7 @@
             android:orientation="horizontal">
 
             <LinearLayout
+                android:id="@+id/ll_timer"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -184,6 +150,7 @@
                 android:paddingBottom="@dimen/_10sdp">
 
                 <ImageView
+                    android:id="@+id/iv_timer"
                     android:layout_width="@dimen/_20sdp"
                     android:layout_height="@dimen/_20sdp"
                     android:src="@drawable/ic_time_off" />
@@ -191,6 +158,7 @@
             </LinearLayout>
 
             <LinearLayout
+                android:id="@+id/ll_repeat"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -198,6 +166,7 @@
                 android:paddingBottom="@dimen/_10sdp">
 
                 <ImageView
+                    android:id="@+id/iv_repeat"
                     android:layout_width="@dimen/_20sdp"
                     android:layout_height="@dimen/_20sdp"
                     android:src="@drawable/ic_no_repeat" />
@@ -205,6 +174,7 @@
             </LinearLayout>
 
             <LinearLayout
+                android:id="@+id/ll_random"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -212,6 +182,7 @@
                 android:paddingBottom="@dimen/_10sdp">
 
                 <ImageView
+                    android:id="@+id/iv_random"
                     android:layout_width="@dimen/_20sdp"
                     android:layout_height="@dimen/_20sdp"
                     android:src="@drawable/ic_random_off" />
@@ -219,6 +190,7 @@
             </LinearLayout>
 
             <LinearLayout
+                android:id="@+id/ll_queue"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -226,6 +198,7 @@
                 android:paddingBottom="@dimen/_10sdp">
 
                 <ImageView
+                    android:id="@+id/iv_queue"
                     android:layout_width="@dimen/_20sdp"
                     android:layout_height="@dimen/_20sdp"
                     android:src="@drawable/ic_song_queue" />

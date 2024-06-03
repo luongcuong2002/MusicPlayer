@@ -1,19 +1,42 @@
 package com.kma.musicplayer.ui.screen.core
 
+import android.content.ComponentName
 import android.content.Intent
+import android.content.ServiceConnection
 import android.os.Build
 import android.os.Bundle
+import android.os.IBinder
 import android.util.Log
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
+import com.kma.musicplayer.service.PlaySongService
 import com.kma.musicplayer.utils.SystemUtil
 
-abstract class BaseActivity<DB : ViewDataBinding> : AppCompatActivity() {
+abstract class BaseActivity<DB : ViewDataBinding> : AppCompatActivity(), ServiceConnection {
 
     lateinit var binding: DB
     private var currentApiVersion = 0
+
+    private var _songService: PlaySongService? = null
+    val songService: PlaySongService?
+        get() = _songService
+
+    private var mBound = false
+    override fun onServiceConnected(className: ComponentName, service: IBinder) {
+        val binder = service as PlaySongService.LocalBinder
+        _songService = binder.getService()
+        mBound = true
+    }
+
+    override fun onServiceDisconnected(className: ComponentName) {
+        mBound = false
+    }
+
+    fun isServiceBound(): Boolean {
+        return mBound
+    }
 
     abstract fun getContentView(): Int
 
@@ -40,6 +63,23 @@ abstract class BaseActivity<DB : ViewDataBinding> : AppCompatActivity() {
         binding = DataBindingUtil.setContentView(this, getContentView())
 
         Log.d("CHECK_ACTIVITY", "onCreate: ${javaClass.simpleName}")
+    }
+
+    override fun onStart() {
+        super.onStart()
+        bindService(
+            Intent(this, PlaySongService::class.java),
+            this,
+            BIND_AUTO_CREATE
+        )
+    }
+
+    override fun onStop() {
+        super.onStop()
+        if (mBound) {
+            unbindService(this)
+            mBound = false
+        }
     }
 
     override fun onWindowFocusChanged(hasFocus: Boolean) {

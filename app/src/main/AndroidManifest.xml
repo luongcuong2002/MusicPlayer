@@ -34,6 +34,14 @@
             android:name=".ui.screen.songselector.SongSelectorActivity"
             android:exported="false"
             android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.screen.playsong.PlaySongActivity"
+            android:exported="true"
+            android:screenOrientation="portrait" />
+
+        <service
+            android:name=".service.PlaySongService"
+            android:exported="false" />
 
         <provider
             android:name="androidx.core.content.FileProvider"

@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/card_view"
+            android:layout_width="@dimen/_47sdp"
+            android:layout_height="@dimen/_47sdp"
+            app:cardBackgroundColor="@color/color_40434A"
+            app:cardCornerRadius="@dimen/_10sdp"
+            app:cardElevation="0dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:strokeWidth="0dp">
+
+            <ImageView
+                android:id="@+id/iv_thumbnail"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:src="@drawable/default_song_thumbnail"
+                android:scaleType="centerCrop" />
+
+        </com.google.android.material.card.MaterialCardView>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/_10sdp"
+            android:orientation="vertical"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toRightOf="@id/card_view"
+            app:layout_constraintRight_toLeftOf="@id/iv_queue"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <com.kma.musicplayer.ui.customview.MovableText
+                android:id="@+id/tv_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/nunito_semibold"
+                android:text="Hotling Bling"
+                android:textColor="@color/white"
+                android:textSize="@dimen/_12ssp" />
+
+            <com.kma.musicplayer.ui.customview.MovableText
+                android:id="@+id/tv_artist"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/nunito_medium"
+                android:layout_marginTop="@dimen/_5sdp"
+                android:text="Billie Eilish"
+                android:textColor="@color/color_787B82"
+                android:textSize="@dimen/_10ssp" />
+
+        </LinearLayout>
+
+        <ImageView
+            android:id="@+id/iv_queue"
+            android:layout_width="@dimen/_20sdp"
+            android:layout_height="@dimen/_20sdp"
+            android:src="@drawable/ic_queue"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

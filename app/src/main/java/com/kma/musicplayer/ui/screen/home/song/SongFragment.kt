@@ -12,6 +12,7 @@ import com.kma.musicplayer.network.common.ApiCallState
 import com.kma.musicplayer.ui.bottomsheet.add_to_playlist.AddToPlaylistBottomSheet
 import com.kma.musicplayer.ui.bottomsheet.song_option.SongOptionBottomSheet
 import com.kma.musicplayer.ui.screen.core.BaseFragment
+import com.kma.musicplayer.ui.screen.playsong.PlaySongActivity
 import com.kma.musicplayer.ui.screen.songselector.SongSelectorActivity
 import com.kma.musicplayer.utils.Constant
 import com.kma.musicplayer.utils.ShareUtils
@@ -103,7 +104,12 @@ class SongFragment : BaseFragment<FragmentSongBinding>() {
                 bottomSheet.show(requireActivity().supportFragmentManager, bottomSheet.tag)
             },
             onSongClick = { song ->
-
+                showActivity(
+                    PlaySongActivity::class.java,
+                    Bundle().apply {
+                        putSerializable(Constant.BUNDLE_SONGS, mutableListOf(song) as Serializable)
+                    },
+                )
             },
         )
         binding.rvSongs.adapter = songAdapter

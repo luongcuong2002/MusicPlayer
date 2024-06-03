@@ -34,4 +34,5 @@
     <string name="share">Share</string>
     <string name="no_app_found_to_handle_the_share_action">No app found to handle the share action</string>
     <string name="can_t_download_the_song_to_cache">Can\'t download the song to cache</string>
+    <string name="queue">Queue</string>
 </resources>
