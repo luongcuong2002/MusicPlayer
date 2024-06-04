@@ -30,10 +30,7 @@ class PlaySongService : Service() {
     var repeatMode = MutableLiveData<RepeatMode>().apply {
         value = RepeatMode.NONE
     }
-    var isAbleToNext = MutableLiveData<Boolean>().apply {
-        value = false
-    }
-    var isAbleToPrevious = MutableLiveData<Boolean>().apply {
+    var isPlaying = MutableLiveData<Boolean>().apply {
         value = false
     }
 
@@ -46,26 +43,41 @@ class PlaySongService : Service() {
         _audioPlayerManager = AudioPlayerManager(this, songs)
     }
 
+    fun pause() {
+        _audioPlayerManager?.simpleExoPlayer?.pause()
+        isPlaying.value = false
+    }
+
+    fun resume() {
+        _audioPlayerManager?.simpleExoPlayer?.play()
+        isPlaying.value = true
+    }
+
+    fun addMore(songs: List<Song>) {
+        this.songs.addAll(songs)
+    }
+
     fun playNext() {
         if (isPlayRandomlyEnabled.value == true) {
             val randomIndex = (0 until songs.size).random()
             updateCurrentIndexValue(randomIndex)
         } else {
-            updateCurrentIndexValue(currentIndex + 1)
+            val nextIndex = if (currentIndex == songs.size - 1) 0 else currentIndex + 1
+            updateCurrentIndexValue(nextIndex)
         }
         playAt(currentIndex)
     }
 
     fun playPrevious() {
-        updateCurrentIndexValue(currentIndex - 1)
+        val index = if (currentIndex == 0) songs.size - 1 else currentIndex - 1
+        updateCurrentIndexValue(index)
         playAt(currentIndex)
     }
 
     fun playAt(index: Int) {
         updateCurrentIndexValue(index)
-        checkAbleToNext()
-        checkAbleToPrevious()
         _audioPlayerManager?.play(currentIndex)
+        isPlaying.value = true
     }
 
     fun setPlayRandomlyEnabled(isEnabled: Boolean) {
@@ -76,17 +88,13 @@ class PlaySongService : Service() {
         repeatMode.value = mode
     }
 
+    fun changeCurrentIndex(index: Int) {
+        currentIndex = index
+    }
+
     private fun updateCurrentIndexValue(index: Int) {
         currentIndex = index
         playingSong.value = songs[currentIndex]
-    }
-
-    private fun checkAbleToNext() {
-        isAbleToNext.value = currentIndex < songs.size - 1
-    }
-
-    private fun checkAbleToPrevious() {
-        isAbleToPrevious.value = currentIndex > 0
     }
 
     override fun onDestroy() {

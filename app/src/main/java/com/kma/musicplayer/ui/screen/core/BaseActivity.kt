@@ -11,6 +11,7 @@ import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
+import androidx.lifecycle.MutableLiveData
 import com.kma.musicplayer.service.PlaySongService
 import com.kma.musicplayer.service.ServiceController
 import com.kma.musicplayer.utils.SystemUtil
@@ -24,19 +25,21 @@ abstract class BaseActivity<DB : ViewDataBinding> : AppCompatActivity(), Service
     val songService: PlaySongService?
         get() = _songService
 
-    private var mBound = false
+    val mBound = MutableLiveData<Boolean>().apply {
+        value = false
+    }
     override fun onServiceConnected(className: ComponentName, service: IBinder) {
         val binder = service as PlaySongService.LocalBinder
         _songService = binder.getService()
-        mBound = true
+        mBound.value = true
     }
 
     override fun onServiceDisconnected(className: ComponentName) {
-        mBound = false
+        mBound.value = false
     }
 
     fun isServiceBound(): Boolean {
-        return mBound
+        return mBound.value ?: false
     }
 
     abstract fun getContentView(): Int
@@ -79,9 +82,9 @@ abstract class BaseActivity<DB : ViewDataBinding> : AppCompatActivity(), Service
 
     override fun onStop() {
         super.onStop()
-        if (mBound) {
+        if (mBound.value == true) {
             unbindService(this)
-            mBound = false
+            mBound.value = false
         }
     }
 

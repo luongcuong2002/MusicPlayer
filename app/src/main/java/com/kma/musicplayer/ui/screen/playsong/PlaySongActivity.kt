@@ -3,6 +3,7 @@ package com.kma.musicplayer.ui.screen.playsong
 import android.content.ComponentName
 import android.os.Bundle
 import android.os.IBinder
+import android.view.View
 import android.view.animation.Animation
 import android.view.animation.AnimationUtils
 import android.widget.ImageView
@@ -21,10 +22,14 @@ import com.kma.musicplayer.utils.Constant
 import com.kma.musicplayer.utils.ShareUtils
 
 class PlaySongActivity : BaseActivity<ActivityPlaySongBinding>() {
+
+    private var isFromMiniPlayer = false
+
     override fun getContentView(): Int = R.layout.activity_play_song
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        isFromMiniPlayer = intent.getBooleanExtra(Constant.BUNDLE_IS_FROM_BOTTOM_MINI_PLAYER, false)
         val rotation: Animation = AnimationUtils.loadAnimation(this, R.anim.rotate)
         binding.ivThumbnail.startAnimation(rotation)
         ServiceController.shouldBindService = true
@@ -38,16 +43,20 @@ class PlaySongActivity : BaseActivity<ActivityPlaySongBinding>() {
     }
 
     private fun setupPlayers() {
-        val songs = intent.getSerializableExtra(Constant.BUNDLE_SONGS)
-        val currentIndex = intent.getIntExtra(Constant.BUNDLE_START_FROM_INDEX, 0)
+        if (!isFromMiniPlayer) {
+            val songs = intent.getSerializableExtra(Constant.BUNDLE_SONGS)
+            songService?.songs?.clear()
+            songService?.addMore(songs as MutableList<Song>)
+        }
         binding.playerView.player = songService?.audioPlayerManager?.simpleExoPlayer
-        songService?.songs?.clear()
-        songService?.songs?.addAll(songs as MutableList<Song>)
-
         setupObservers()
         setupListeners()
-
-        songService?.playAt(currentIndex)
+        if (!isFromMiniPlayer) {
+            val currentIndex = intent.getIntExtra(Constant.BUNDLE_START_FROM_INDEX, 0)
+            songService?.playAt(currentIndex)
+        } else {
+            binding.playerView.showController()
+        }
     }
 
     private fun setupListeners() {
@@ -82,10 +91,29 @@ class PlaySongActivity : BaseActivity<ActivityPlaySongBinding>() {
             songService?.let {
                 val bottomSheet = SongQueueBottomSheet(
                     songs = it.songs,
-                    playingSongIndex = it.currentIndex
+                    playingSongIndex = it.currentIndex,
+                    onPlayingSongIndexChanged = { newIndex ->
+                        it.changeCurrentIndex(newIndex)
+                    }
                 )
                 bottomSheet.show(supportFragmentManager, bottomSheet.tag)
             }
+        }
+        findViewById<ImageView>(R.id.exo_play).setOnClickListener {
+            songService?.resume()
+            findViewById<ImageView>(R.id.exo_play).visibility = View.GONE
+            findViewById<ImageView>(R.id.exo_pause).visibility = View.VISIBLE
+        }
+        findViewById<ImageView>(R.id.exo_pause).setOnClickListener {
+            songService?.pause()
+            findViewById<ImageView>(R.id.exo_play).visibility = View.VISIBLE
+            findViewById<ImageView>(R.id.exo_pause).visibility = View.GONE
+        }
+        findViewById<ImageView>(R.id.iv_previous).setOnClickListener {
+            songService?.playPrevious()
+        }
+        findViewById<ImageView>(R.id.iv_next).setOnClickListener {
+            songService?.playNext()
         }
     }
 
@@ -106,26 +134,6 @@ class PlaySongActivity : BaseActivity<ActivityPlaySongBinding>() {
                 RepeatMode.REPEAT_ONE -> {
                     binding.ivRepeat.setImageResource(R.drawable.ic_repeat_one)
                 }
-            }
-        }
-        songService?.isAbleToNext?.observe(this) {
-            val ivNext = findViewById<ImageView>(R.id.iv_next) ?: return@observe
-            if (it) {
-                ivNext.alpha = 1f
-                ivNext.isClickable = true
-            } else {
-                ivNext.alpha = 0.5f
-                ivNext.isClickable = false
-            }
-        }
-        songService?.isAbleToPrevious?.observe(this) {
-            val ivPrevious = findViewById<ImageView>(R.id.iv_previous) ?: return@observe
-            if (it) {
-                ivPrevious.alpha = 1f
-                ivPrevious.isClickable = true
-            } else {
-                ivPrevious.alpha = 0.5f
-                ivPrevious.isClickable = false
             }
         }
         songService?.playingSong?.observe(this) {

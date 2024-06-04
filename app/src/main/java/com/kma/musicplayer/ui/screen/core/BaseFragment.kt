@@ -5,9 +5,14 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.FrameLayout
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 import androidx.fragment.app.Fragment
+import com.kma.musicplayer.R
+import com.kma.musicplayer.service.PlaySongService
+import com.kma.musicplayer.service.ServiceController
+import com.kma.musicplayer.ui.customview.BottomMiniAudioPlayer
 import com.kma.musicplayer.utils.SystemUtil
 
 abstract class BaseFragment<DB : ViewDataBinding> : Fragment() {
@@ -58,5 +63,26 @@ abstract class BaseFragment<DB : ViewDataBinding> : Fragment() {
             intent.putExtras(bundle)
         }
         startActivityForResult(intent, requestCode)
+    }
+
+    override fun onResume() {
+        super.onResume()
+        val bottomMiniPlayer =
+            binding.root.findViewById<FrameLayout>(R.id.bottom_mini_player)
+
+        if (bottomMiniPlayer != null && ServiceController.isServiceRunning(requireContext(), PlaySongService::class.java)) {
+            bottomMiniPlayer.visibility = View.VISIBLE
+            val bottomMiniPlayerView = BottomMiniAudioPlayer(requireActivity())
+            bottomMiniPlayer.addView(bottomMiniPlayerView)
+            getBaseActivity().mBound.observe(this) {
+                if (it) {
+                    getBaseActivity().songService?.let {
+                        bottomMiniPlayerView.initView(getBaseActivity(), it)
+                    }
+                }
+            }
+        } else {
+            bottomMiniPlayer?.visibility = View.GONE
+        }
     }
 }

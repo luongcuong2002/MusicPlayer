@@ -107,7 +107,8 @@ class SongSelectorActivity : BaseActivity<ActivitySongSelectorBinding>() {
         }
         binding.llPlayNext.setOnClickListener {
             val selectedSongs = songSelectorViewModel.getSelectedSongs()
-            songService?.songs?.addAll(selectedSongs)
+            songService?.addMore(selectedSongs)
+            finish()
         }
     }
 

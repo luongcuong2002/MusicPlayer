@@ -98,7 +98,7 @@ class PlaylistFragment : BaseFragment<FragmentPlaylistBinding>() {
                             val songs = playlistModel.songIds.map {
                                 SongManager.getSongById(it)
                             }.filterNotNull()
-                            getBaseActivity().songService?.songs?.addAll(songs)
+                            getBaseActivity().songService?.addMore(songs)
                         },
                     )
                     bottomSheet.show(requireActivity().supportFragmentManager, bottomSheet.tag)

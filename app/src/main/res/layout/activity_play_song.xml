@@ -132,7 +132,7 @@
             app:hide_on_touch="false"
             app:player_layout_id="@layout/exo_player_view"
             app:resize_mode="fill"
-            app:show_timeout="5000"
+            app:show_timeout="0"
             app:use_artwork="false"
             app:use_controller="true" />
 

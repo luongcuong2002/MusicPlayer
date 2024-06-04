@@ -3,6 +3,7 @@ package com.kma.musicplayer.ui.bottomsheet.song_queue
 import android.annotation.SuppressLint
 import android.app.Dialog
 import android.text.TextWatcher
+import android.util.Log
 import android.view.ViewGroup
 import android.view.WindowManager
 import android.widget.Toast
@@ -26,7 +27,8 @@ import kotlinx.coroutines.withContext
 
 class SongQueueBottomSheet(
     private val songs: MutableList<Song>,
-    private val playingSongIndex: Int
+    private val playingSongIndex: Int,
+    private val onPlayingSongIndexChanged: (Int) -> Unit
 ) : BottomSheetDialogFragment() {
 
     private lateinit var binding: BottomSheetSongQueueBinding
@@ -97,6 +99,10 @@ class SongQueueBottomSheet(
         }
 
         binding.rlOk.setOnClickListener {
+            val newIndex = tempSongs.indexOfFirst { it.id == songs[playingSongIndex].id }
+            Log.d("SongQueueBottomSheet", "newIndex: $newIndex")
+            Log.d("SongQueueBottomSheet", "playingSongIndex: $playingSongIndex")
+            onPlayingSongIndexChanged.invoke(newIndex)
             songs.clear()
             songs.addAll(tempSongs)
             dismiss()
