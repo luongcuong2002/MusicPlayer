@@ -6,6 +6,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.kma.musicplayer.R
@@ -87,6 +88,14 @@ class PlaylistFragment : BaseFragment<FragmentPlaylistBinding>() {
                             val songs = playlistModel.songIds.map {
                                 SongManager.getSongById(it)
                             }.filterNotNull()
+                            if (songs.isEmpty()) {
+                                Toast.makeText(
+                                    requireContext(),
+                                    getString(R.string.no_song_in_playlist),
+                                    Toast.LENGTH_SHORT
+                                ).show()
+                                return@PlaylistOptionBottomSheet
+                            }
                             showActivity(
                                 PlaySongActivity::class.java,
                                 Bundle().apply {

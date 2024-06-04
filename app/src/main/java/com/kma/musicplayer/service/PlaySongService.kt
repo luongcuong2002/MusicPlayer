@@ -5,6 +5,7 @@ import android.content.Intent
 import android.os.Binder
 import android.os.IBinder
 import androidx.lifecycle.MutableLiveData
+import com.google.android.exoplayer2.Player
 import com.kma.musicplayer.model.RepeatMode
 import com.kma.musicplayer.model.Song
 import com.kma.musicplayer.utils.AudioPlayerManager
@@ -41,6 +42,25 @@ class PlaySongService : Service() {
     override fun onCreate() {
         super.onCreate()
         _audioPlayerManager = AudioPlayerManager(this, songs)
+        _audioPlayerManager?.simpleExoPlayer?.addListener(object : Player.EventListener {
+            override fun onPlaybackStateChanged(playbackState: Int) {
+                super.onPlaybackStateChanged(playbackState)
+                if (playbackState == Player.STATE_ENDED) {
+                    when (repeatMode.value) {
+                        RepeatMode.NONE -> {
+                            if (currentIndex == songs.size - 1) {
+                                isPlaying.value = false
+                            } else {
+                                playNext()
+                            }
+                        }
+                        RepeatMode.REPEAT_ONE -> playAt(currentIndex)
+                        RepeatMode.REPEAT_ALL -> playNext()
+                        null -> TODO()
+                    }
+                }
+            }
+        })
     }
 
     fun pause() {

@@ -2,6 +2,9 @@ package com.kma.musicplayer.database.dao
 
 import androidx.room.Dao
 import androidx.room.Query
+import com.kma.musicplayer.database.AppDatabase
+import com.kma.musicplayer.model.FavouriteSong
+import com.kma.musicplayer.model.PlaylistModel
 
 @Dao
 interface FavouriteSongDao {
@@ -13,4 +16,15 @@ interface FavouriteSongDao {
 
     @Query("DELETE FROM FavouriteSong WHERE song_id = :songId")
     fun delete(songId: String)
+
+    @Query("SELECT * FROM FavouriteSong")
+    fun getOriginalFavouriteSongs(): List<FavouriteSong>
+
+    fun getAllFavoriteSongs(): List<FavouriteSong> {
+        val songs = getOriginalFavouriteSongs().toMutableList()
+        songs.removeAll {
+            AppDatabase.INSTANCE.hiddenSongDao().isHidden(it.songId)
+        }
+        return songs
+    }
 }

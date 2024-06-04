@@ -3,6 +3,7 @@ package com.kma.musicplayer.ui.bottomsheet.song_option
 import android.annotation.SuppressLint
 import android.app.Dialog
 import android.view.View
+import com.bumptech.glide.Glide
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.kma.musicplayer.R
 import com.kma.musicplayer.database.AppDatabase
@@ -23,6 +24,7 @@ class SongOptionBottomSheet(
     private val onClickHide: (() -> Unit)? = null,
     private val onClickShare: (() -> Unit)? = null,
     private val onClickDelete: (() -> Unit)? = null,
+    private val onChangeFavorite: (() -> Unit)? = null
 ) : BottomSheetDialogFragment() {
 
     private lateinit var binding: BottomSheetSongOptionBinding
@@ -48,6 +50,9 @@ class SongOptionBottomSheet(
         when (song) {
             is OnlineSong -> {
                 binding.llDelete.visibility = View.GONE
+                Glide.with(requireContext())
+                    .load((song as OnlineSong).thumbnail)
+                    .into(binding.ivThumbnail)
             }
             else -> {
 
@@ -68,6 +73,7 @@ class SongOptionBottomSheet(
                 AppDatabase.INSTANCE.favouriteSongDao().insert(song.id)
                 binding.ivFavourite.setImageResource(R.drawable.ic_purple_heart)
             }
+            onChangeFavorite?.invoke()
         }
         binding.llPlayNext.setOnClickListener {
             onClickPlayNext?.invoke()

@@ -35,4 +35,10 @@
     <string name="no_app_found_to_handle_the_share_action">No app found to handle the share action</string>
     <string name="can_t_download_the_song_to_cache">Can\'t download the song to cache</string>
     <string name="queue">Queue</string>
+    <string name="no_song_in_playlist">No song in playlist</string>
+    <string name="my_favourite_songs">My favourite songs</string>
+    <string name="favourite_song">Favourite Song</string>
+    <string name="shuffle">Shuffle</string>
+    <string name="no_songs_added_to_favourite">No songs added to favourite</string>
+    <string name="no_song_to_play">No song to play</string>
 </resources>
