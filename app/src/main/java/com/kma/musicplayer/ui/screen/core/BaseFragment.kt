@@ -40,6 +40,10 @@ abstract class BaseFragment<DB : ViewDataBinding> : Fragment() {
         return rootView
     }
 
+    fun getBaseActivity(): BaseActivity<*> {
+        return requireActivity() as BaseActivity<*>
+    }
+
     fun showActivity(clazz: Class<*>, bundle: Bundle? = null) {
         val intent = Intent(requireContext(), clazz)
         if (bundle != null) {

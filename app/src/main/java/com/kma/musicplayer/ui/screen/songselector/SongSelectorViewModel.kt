@@ -49,6 +49,10 @@ class SongSelectorViewModel : ViewModel() {
         return songs.filter { it.isSelected }.map { it.song.id }
     }
 
+    fun getSelectedSongs(): List<OnlineSong> {
+        return songs.filter { it.isSelected }.map { it.song }
+    }
+
     fun hideSelectedSongs() {
         songs.removeAll { it.isSelected }
     }

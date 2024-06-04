@@ -46,28 +46,23 @@ class PlaySongService : Service() {
         _audioPlayerManager = AudioPlayerManager(this, songs)
     }
 
-    fun setSongs(songs: MutableList<Song>) {
-        this.songs.clear()
-        this.songs.addAll(songs)
-    }
-
     fun playNext() {
         if (isPlayRandomlyEnabled.value == true) {
             val randomIndex = (0 until songs.size).random()
-            setCurrentIndex(randomIndex)
+            updateCurrentIndexValue(randomIndex)
         } else {
-            setCurrentIndex(currentIndex + 1)
+            updateCurrentIndexValue(currentIndex + 1)
         }
         playAt(currentIndex)
     }
 
     fun playPrevious() {
-        setCurrentIndex(currentIndex - 1)
+        updateCurrentIndexValue(currentIndex - 1)
         playAt(currentIndex)
     }
 
     fun playAt(index: Int) {
-        setCurrentIndex(index)
+        updateCurrentIndexValue(index)
         checkAbleToNext()
         checkAbleToPrevious()
         _audioPlayerManager?.play(currentIndex)
@@ -81,7 +76,7 @@ class PlaySongService : Service() {
         repeatMode.value = mode
     }
 
-    private fun setCurrentIndex(index: Int) {
+    private fun updateCurrentIndexValue(index: Int) {
         currentIndex = index
         playingSong.value = songs[currentIndex]
     }

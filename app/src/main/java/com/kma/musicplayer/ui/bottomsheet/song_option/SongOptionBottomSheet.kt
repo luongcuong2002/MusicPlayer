@@ -11,6 +11,8 @@ import com.kma.musicplayer.extension.showDialog
 import com.kma.musicplayer.model.OnlineSong
 import com.kma.musicplayer.model.PlaylistModel
 import com.kma.musicplayer.model.Song
+import com.kma.musicplayer.service.PlaySongService
+import com.kma.musicplayer.service.ServiceController
 import com.kma.musicplayer.ui.bottomsheet.add_to_playlist.AddToPlaylistBottomSheet
 import com.kma.musicplayer.utils.Formatter
 
@@ -50,6 +52,10 @@ class SongOptionBottomSheet(
             else -> {
 
             }
+        }
+
+        if (!ServiceController.isServiceRunning(requireContext(), PlaySongService::class.java)) {
+            binding.llPlayNext.visibility = View.GONE
         }
     }
 

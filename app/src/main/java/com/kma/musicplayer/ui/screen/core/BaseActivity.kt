@@ -12,6 +12,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 import com.kma.musicplayer.service.PlaySongService
+import com.kma.musicplayer.service.ServiceController
 import com.kma.musicplayer.utils.SystemUtil
 
 abstract class BaseActivity<DB : ViewDataBinding> : AppCompatActivity(), ServiceConnection {
@@ -67,11 +68,13 @@ abstract class BaseActivity<DB : ViewDataBinding> : AppCompatActivity(), Service
 
     override fun onStart() {
         super.onStart()
-        bindService(
-            Intent(this, PlaySongService::class.java),
-            this,
-            BIND_AUTO_CREATE
-        )
+        if (ServiceController.shouldBindService) {
+            bindService(
+                Intent(this, PlaySongService::class.java),
+                this,
+                BIND_AUTO_CREATE
+            )
+        }
     }
 
     override fun onStop() {

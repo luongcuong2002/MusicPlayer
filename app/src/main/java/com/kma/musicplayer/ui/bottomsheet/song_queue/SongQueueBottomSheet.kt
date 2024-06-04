@@ -6,7 +6,9 @@ import android.text.TextWatcher
 import android.view.ViewGroup
 import android.view.WindowManager
 import android.widget.Toast
+import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.kma.musicplayer.R
 import com.kma.musicplayer.database.AppDatabase
@@ -15,6 +17,7 @@ import com.kma.musicplayer.databinding.BottomSheetSongQueueBinding
 import com.kma.musicplayer.model.PlaylistModel
 import com.kma.musicplayer.model.Song
 import com.kma.musicplayer.ui.bottomsheet.add_to_playlist.PlaylistAdapter
+import com.kma.musicplayer.ui.customview.CenterLayoutManager
 import com.kma.musicplayer.ui.customview.VerticalSpaceItemDecoration
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -22,9 +25,8 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
 class SongQueueBottomSheet(
-    private val songs: List<Song>,
-    private val playingSongIndex: Int,
-    private val onClickOk: () -> Unit
+    private val songs: MutableList<Song>,
+    private val playingSongIndex: Int
 ) : BottomSheetDialogFragment() {
 
     private lateinit var binding: BottomSheetSongQueueBinding
@@ -33,6 +35,10 @@ class SongQueueBottomSheet(
     private val maxVisibleItems = 4
     private var itemHeight: Int = 100
     private var spaceBetweenItems = 100
+
+    private val tempSongs = mutableListOf<Song>().apply {
+        addAll(songs)
+    }
 
     @SuppressLint("RestrictedApi")
     override fun setupDialog(dialog: Dialog, style: Int) {
@@ -45,19 +51,25 @@ class SongQueueBottomSheet(
         binding = BottomSheetSongQueueBinding.inflate(layoutInflater)
         dialog.setContentView(binding.root)
 
+        binding.tvQueue.text = getString(R.string.queue) + " (${songs.size})"
+
         setupRecycleView()
         setupListeners()
     }
 
     private fun setupRecycleView() {
         CoroutineScope(Dispatchers.Main).launch {
-            songQueueAdapter = SongQueueAdapter(songs)
+            songQueueAdapter = SongQueueAdapter(tempSongs, playingSongIndex)
 
             binding.rvSongQueue.addItemDecoration(VerticalSpaceItemDecoration(spaceBetweenItems))
-            binding.rvSongQueue.layoutManager = LinearLayoutManager(requireActivity())
+            binding.rvSongQueue.layoutManager = CenterLayoutManager(requireActivity(), RecyclerView.VERTICAL, false)
             binding.rvSongQueue.adapter = songQueueAdapter
 
             calculateRecyclerViewHeight()
+
+            // swap
+            val itemTouchHelper = ItemTouchHelper(MyItemTouchHelperCallback(songQueueAdapter))
+            itemTouchHelper.attachToRecyclerView(binding.rvSongQueue)
         }
     }
 
@@ -85,7 +97,9 @@ class SongQueueBottomSheet(
         }
 
         binding.rlOk.setOnClickListener {
-            onClickOk.invoke()
+            songs.clear()
+            songs.addAll(tempSongs)
+            dismiss()
         }
     }
 }

@@ -79,6 +79,7 @@ class SongFragment : BaseFragment<FragmentSongBinding>() {
                 bottomSheet = SongOptionBottomSheet(
                     song = song,
                     onClickPlayNext = {
+                        getBaseActivity().songService?.songs?.add(song)
                         bottomSheet?.dismiss()
                     },
                     onClickAddToPlaylist = {

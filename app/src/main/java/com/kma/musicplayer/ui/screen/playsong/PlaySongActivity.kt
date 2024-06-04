@@ -14,11 +14,11 @@ import com.kma.musicplayer.model.OnlineSong
 import com.kma.musicplayer.model.RepeatMode
 import com.kma.musicplayer.model.Song
 import com.kma.musicplayer.model.nextMode
+import com.kma.musicplayer.service.ServiceController
 import com.kma.musicplayer.ui.bottomsheet.song_queue.SongQueueBottomSheet
 import com.kma.musicplayer.ui.screen.core.BaseActivity
 import com.kma.musicplayer.utils.Constant
 import com.kma.musicplayer.utils.ShareUtils
-
 
 class PlaySongActivity : BaseActivity<ActivityPlaySongBinding>() {
     override fun getContentView(): Int = R.layout.activity_play_song
@@ -27,6 +27,7 @@ class PlaySongActivity : BaseActivity<ActivityPlaySongBinding>() {
         super.onCreate(savedInstanceState)
         val rotation: Animation = AnimationUtils.loadAnimation(this, R.anim.rotate)
         binding.ivThumbnail.startAnimation(rotation)
+        ServiceController.shouldBindService = true
     }
 
     override fun onServiceConnected(className: ComponentName, service: IBinder) {
@@ -40,7 +41,8 @@ class PlaySongActivity : BaseActivity<ActivityPlaySongBinding>() {
         val songs = intent.getSerializableExtra(Constant.BUNDLE_SONGS)
         val currentIndex = intent.getIntExtra(Constant.BUNDLE_START_FROM_INDEX, 0)
         binding.playerView.player = songService?.audioPlayerManager?.simpleExoPlayer
-        songService?.setSongs(songs as MutableList<Song>)
+        songService?.songs?.clear()
+        songService?.songs?.addAll(songs as MutableList<Song>)
 
         setupObservers()
         setupListeners()
@@ -81,8 +83,7 @@ class PlaySongActivity : BaseActivity<ActivityPlaySongBinding>() {
                 val bottomSheet = SongQueueBottomSheet(
                     songs = it.songs,
                     playingSongIndex = it.currentIndex
-                ) {
-                }
+                )
                 bottomSheet.show(supportFragmentManager, bottomSheet.tag)
             }
         }

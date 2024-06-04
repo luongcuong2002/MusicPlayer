@@ -8,10 +8,14 @@ import com.kma.musicplayer.database.AppDatabase
 import com.kma.musicplayer.databinding.BottomSheetPlaylistOptionBinding
 import com.kma.musicplayer.extension.showDialog
 import com.kma.musicplayer.model.PlaylistModel
+import com.kma.musicplayer.service.PlaySongService
+import com.kma.musicplayer.service.ServiceController
 
 class PlaylistOptionBottomSheet(
     private val playlistModel: PlaylistModel,
-    private val onPlaylistDeleted: () -> Unit
+    private val onPlaylistDeleted: () -> Unit,
+    private val onClickPlay: () -> Unit,
+    private val onClickAddToQueue: () -> Unit,
 ) : BottomSheetDialogFragment() {
 
     private lateinit var binding: BottomSheetPlaylistOptionBinding
@@ -33,6 +37,10 @@ class PlaylistOptionBottomSheet(
         } else {
             "$size ${binding.root.context.getString(R.string.song)}"
         }
+
+        if (!ServiceController.isServiceRunning(requireActivity(), PlaySongService::class.java)) {
+            binding.llAddToQueue.visibility = android.view.View.GONE
+        }
     }
 
     private fun setupListeners() {
@@ -48,6 +56,14 @@ class PlaylistOptionBottomSheet(
                     dismiss()
                 }
             )
+        }
+        binding.llPlayAll.setOnClickListener {
+            onClickPlay.invoke()
+            dismiss()
+        }
+        binding.llAddToQueue.setOnClickListener {
+            onClickAddToQueue.invoke()
+            dismiss()
         }
     }
 }

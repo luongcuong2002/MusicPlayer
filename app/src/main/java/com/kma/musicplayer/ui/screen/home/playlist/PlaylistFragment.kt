@@ -10,13 +10,19 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.kma.musicplayer.R
 import com.kma.musicplayer.databinding.FragmentPlaylistBinding
+import com.kma.musicplayer.service.PlaySongService
+import com.kma.musicplayer.service.ServiceController
 import com.kma.musicplayer.ui.bottomsheet.create_new_playlist.CreateNewPlaylistBottomSheet
 import com.kma.musicplayer.ui.bottomsheet.playlist_option.PlaylistOptionBottomSheet
 import com.kma.musicplayer.ui.customview.VerticalSpaceItemDecoration
 import com.kma.musicplayer.ui.screen.core.BaseFragment
+import com.kma.musicplayer.ui.screen.playsong.PlaySongActivity
+import com.kma.musicplayer.utils.Constant
+import com.kma.musicplayer.utils.SongManager
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import java.io.Serializable
 
 class PlaylistFragment : BaseFragment<FragmentPlaylistBinding>() {
 
@@ -28,7 +34,6 @@ class PlaylistFragment : BaseFragment<FragmentPlaylistBinding>() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         playlistViewModel = ViewModelProvider(this)[PlaylistViewModel::class.java]
-
         setupListeners()
         setupObserver()
         setupRecyclerView()
@@ -70,12 +75,32 @@ class PlaylistFragment : BaseFragment<FragmentPlaylistBinding>() {
             playlistAdapter = PlaylistAdapter(
                 playlistViewModel.playlists,
                 { playlistModel ->
-                    val bottomSheet = PlaylistOptionBottomSheet(playlistModel) {
-                        CoroutineScope(Dispatchers.Main).launch {
-                            playlistViewModel.getAllPlaylists()
-                            playlistAdapter.notifyDataSetChanged()
-                        }
-                    }
+                    val bottomSheet = PlaylistOptionBottomSheet(
+                        playlistModel = playlistModel,
+                        onPlaylistDeleted = {
+                            CoroutineScope(Dispatchers.Main).launch {
+                                playlistViewModel.getAllPlaylists()
+                                playlistAdapter.notifyDataSetChanged()
+                            }
+                        },
+                        onClickPlay = {
+                            val songs = playlistModel.songIds.map {
+                                SongManager.getSongById(it)
+                            }.filterNotNull()
+                            showActivity(
+                                PlaySongActivity::class.java,
+                                Bundle().apply {
+                                    putSerializable(Constant.BUNDLE_SONGS, songs as Serializable)
+                                },
+                            )
+                        },
+                        onClickAddToQueue = {
+                            val songs = playlistModel.songIds.map {
+                                SongManager.getSongById(it)
+                            }.filterNotNull()
+                            getBaseActivity().songService?.songs?.addAll(songs)
+                        },
+                    )
                     bottomSheet.show(requireActivity().supportFragmentManager, bottomSheet.tag)
                 },
                 { playlistModel ->
