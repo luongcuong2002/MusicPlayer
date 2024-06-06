@@ -1,7 +1,6 @@
-package com.casttv.screenmirror.castvideo.castweb.ui.screen.language_first_open;
+package com.kma.musicplayer.ui.screen.language;
 
-
-import com.casttv.screenmirror.castvideo.castweb.ui.model.LanguageModel;
+import com.kma.musicplayer.model.LanguageModel;
 
 public interface IClickLanguage {
     void onClick(LanguageModel data);

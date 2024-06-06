@@ -1,18 +1,12 @@
 package com.kma.musicplayer.ui.screen.songselector
 
-import android.graphics.drawable.Drawable
-import android.util.Log
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.bumptech.glide.load.DataSource
-import com.bumptech.glide.load.engine.GlideException
-import com.bumptech.glide.request.RequestListener
-import com.bumptech.glide.request.target.Target
 import com.kma.musicplayer.R
 import com.kma.musicplayer.databinding.LayoutItemSelectableSongBinding
+import com.kma.musicplayer.model.OnlineSong
 import com.kma.musicplayer.utils.Formatter
 
 class SelectableSongAdapter(
@@ -64,34 +58,16 @@ class SelectableSongAdapter(
         fun bind(position: Int) {
             val song = songs[position].song
             binding.tvTitle.text = song.title
-            binding.tvArtistAndDuration.text = "${song.artist} | ${Formatter.formatTime(song.duration.toLong())} mins"
+            binding.tvArtistAndDuration.text =
+                "${song.artist.name} | ${Formatter.formatTime(song.duration.toLong())} mins"
 
-            binding.progressBar.visibility = View.VISIBLE
-            Glide.with(binding.root)
-                .load(song.thumbnail)
-                .listener(object : RequestListener<Drawable> {
-                    override fun onResourceReady(
-                        resource: Drawable,
-                        model: Any,
-                        target: Target<Drawable>?,
-                        dataSource: DataSource,
-                        isFirstResource: Boolean
-                    ): Boolean {
-                        binding.progressBar.visibility = View.GONE
-                        return false
-                    }
-
-                    override fun onLoadFailed(
-                        e: GlideException?,
-                        model: Any?,
-                        target: Target<Drawable>,
-                        isFirstResource: Boolean
-                    ): Boolean {
-                        Log.d("CHECK_BUG", e.toString())
-                        return false
-                    }
-                })
-                .into(binding.ivThumbnail)
+            if (song is OnlineSong) {
+                Glide.with(binding.root)
+                    .load(song.thumbnail)
+                    .into(binding.ivThumbnail)
+            } else {
+                binding.ivThumbnail.setImageResource(R.drawable.default_song_thumbnail)
+            }
 
             binding.ivCheckbox.setImageResource(
                 if (songs[position].isSelected) {

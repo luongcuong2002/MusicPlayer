@@ -12,15 +12,28 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="@dimen/_13sdp">
+
             <com.kma.musicplayer.ui.customview.BackButton
                 android:layout_width="@dimen/_20sdp"
-                android:layout_height="@dimen/_20sdp" />
+                android:layout_height="@dimen/_20sdp"
+                android:layout_centerVertical="true" />
+
+            <com.kma.musicplayer.ui.customview.MovableText
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:layout_marginHorizontal="@dimen/_30sdp"
+                android:fontFamily="@font/nunito_bold"
+                android:text="@string/hidden_songs"
+                android:textColor="@color/white"
+                android:textSize="@dimen/_15ssp" />
 
             <ImageView
                 android:id="@+id/iv_select_all"
                 android:layout_width="@dimen/_17sdp"
                 android:layout_height="@dimen/_17sdp"
                 android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
                 android:src="@drawable/ic_select_all_disable" />
 
         </RelativeLayout>
@@ -75,87 +88,22 @@
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
 
         <LinearLayout
+            android:id="@+id/ll_unhide"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            android:layout_marginHorizontal="@dimen/_13sdp"
+            android:layout_marginBottom="@dimen/_20sdp"
+            android:background="@drawable/bg_purple_gradient"
+            android:gravity="center"
+            android:paddingVertical="@dimen/_10sdp">
 
-            <LinearLayout
-                android:id="@+id/ll_hide"
-                android:layout_width="0dp"
+            <com.kma.musicplayer.ui.customview.MovableText
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:alpha="0.5"
-                android:gravity="center"
-                android:orientation="vertical"
-                android:paddingVertical="@dimen/_13sdp">
-
-                <ImageView
-                    android:layout_width="@dimen/_20sdp"
-                    android:layout_height="@dimen/_20sdp"
-                    android:src="@drawable/ic_hide" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/_3sdp"
-                    android:fontFamily="@font/nunito_medium"
-                    android:text="@string/hide"
-                    android:textColor="@color/white"
-                    android:textSize="@dimen/_12ssp" />
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:id="@+id/ll_add_to"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:alpha="0.5"
-                android:gravity="center"
-                android:orientation="vertical"
-                android:paddingVertical="@dimen/_13sdp">
-
-                <ImageView
-                    android:layout_width="@dimen/_20sdp"
-                    android:layout_height="@dimen/_20sdp"
-                    android:src="@drawable/ic_add_to" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/_3sdp"
-                    android:fontFamily="@font/nunito_medium"
-                    android:text="@string/add_to"
-                    android:textColor="@color/white"
-                    android:textSize="@dimen/_12ssp" />
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:id="@+id/ll_play_next"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:alpha="0.5"
-                android:gravity="center"
-                android:orientation="vertical"
-                android:paddingVertical="@dimen/_13sdp">
-
-                <ImageView
-                    android:layout_width="@dimen/_20sdp"
-                    android:layout_height="@dimen/_20sdp"
-                    android:src="@drawable/ic_play_next" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/_3sdp"
-                    android:fontFamily="@font/nunito_medium"
-                    android:text="@string/play_next"
-                    android:textColor="@color/white"
-                    android:textSize="@dimen/_12ssp" />
-
-            </LinearLayout>
+                android:fontFamily="@font/nunito_bold"
+                android:text="@string/unhide"
+                android:textColor="@color/white"
+                android:textSize="@dimen/_13ssp" />
 
         </LinearLayout>
 

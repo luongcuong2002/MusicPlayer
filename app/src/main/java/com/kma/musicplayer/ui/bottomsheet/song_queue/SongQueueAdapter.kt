@@ -78,7 +78,7 @@ class SongQueueAdapter(
         RecyclerView.ViewHolder(binding.root) {
         fun bind(song: Song) {
             binding.tvName.text = song.title
-            binding.tvArtist.text = song.artist
+            binding.tvArtist.text = song.artist.name
 
             if (song is OnlineSong) {
                 Glide.with(binding.root)

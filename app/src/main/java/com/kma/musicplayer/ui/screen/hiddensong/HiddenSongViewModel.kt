@@ -1,12 +1,13 @@
-package com.kma.musicplayer.ui.screen.songselector
+package com.kma.musicplayer.ui.screen.hiddensong
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.kma.musicplayer.model.OnlineSong
 import com.kma.musicplayer.model.Song
+import com.kma.musicplayer.ui.screen.songselector.SelectableSong
 
-class SongSelectorViewModel : ViewModel() {
+class HiddenSongViewModel : ViewModel() {
     val songs = mutableListOf<SelectableSong>()
 
     private val _isSelectAll = MutableLiveData(false)
@@ -15,7 +16,7 @@ class SongSelectorViewModel : ViewModel() {
     private val _isAtLeastOneSelected = MutableLiveData(false)
     val isAtLeastOneSelected: LiveData<Boolean> = _isAtLeastOneSelected
 
-    fun setSongs(songs: List<OnlineSong>) {
+    fun setSongs(songs: List<Song>) {
         this.songs.clear()
         songs.forEach {
             this.songs.add(SelectableSong(it))

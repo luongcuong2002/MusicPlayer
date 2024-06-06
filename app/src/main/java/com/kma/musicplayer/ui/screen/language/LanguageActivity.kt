@@ -1,31 +1,33 @@
-package com.casttv.screenmirror.castvideo.castweb.ui.screen.language_setting
+package com.kma.musicplayer.ui.screen.language
 
 import android.content.SharedPreferences
 import android.content.res.Resources
 import android.os.Build
+import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
-import  com.casttv.screenmirror.castvideo.castweb.R
-import com.casttv.screenmirror.castvideo.castweb.databinding.ActivityLanguageSettingBinding
-import com.casttv.screenmirror.castvideo.castweb.ui.core.BaseActivity
-import com.casttv.screenmirror.castvideo.castweb.ui.model.LanguageModel
-import com.casttv.screenmirror.castvideo.castweb.ui.screen.language_first_open.IClickLanguage
-import com.casttv.screenmirror.castvideo.castweb.ui.screen.language_first_open.LanguageAdapter
-import com.casttv.screenmirror.castvideo.castweb.ui.screen.main.MainActivity
-import com.casttv.screenmirror.castvideo.castweb.utils.SystemUtil
+import androidx.lifecycle.ViewModelProvider
+import com.kma.musicplayer.R
+import com.kma.musicplayer.databinding.ActivityLanguageBinding
+import com.kma.musicplayer.model.LanguageModel
+import com.kma.musicplayer.ui.screen.core.BaseActivity
+import com.kma.musicplayer.ui.screen.main.MainActivity
+import com.kma.musicplayer.utils.SystemUtil
 
-class LanguageSettingActivity : BaseActivity<LanguageSettingViewModel, ActivityLanguageSettingBinding>(),
+class LanguageActivity : BaseActivity<ActivityLanguageBinding>(),
     IClickLanguage {
 
     private var adapter: LanguageAdapter? = null
     private var model: LanguageModel? = null
     private var sharedPreferences: SharedPreferences? = null
 
-    override fun createViewModel(): Class<LanguageSettingViewModel> = LanguageSettingViewModel::class.java
+    private lateinit var languageViewModel: LanguageViewModel
 
-    override fun getContentView(): Int = R.layout.activity_language_setting
+    override fun getContentView(): Int = R.layout.activity_language
 
-    override fun initView() {
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        languageViewModel = ViewModelProvider(this).get(LanguageViewModel::class.java)
         sharedPreferences = getSharedPreferences("MY_PRE", MODE_PRIVATE)
         adapter =
             LanguageAdapter(
@@ -33,19 +35,11 @@ class LanguageSettingActivity : BaseActivity<LanguageSettingViewModel, ActivityL
                 setLanguageDefault(),
                 this
             )
-        mDataBinding.rclLanguage.adapter = adapter
+        binding.rclLanguage.adapter = adapter
 
-        mDataBinding.ivDone.setOnClickListener {
+        binding.ivDone.setOnClickListener {
             ivDone()
         }
-    }
-
-    override fun bindViewModel() {
-
-    }
-
-    override fun onBackPressedCallback() {
-        finishAffinity()
     }
 
     override fun onClick(data: LanguageModel) {
@@ -107,7 +101,7 @@ class LanguageSettingActivity : BaseActivity<LanguageSettingViewModel, ActivityL
 
     fun ivDone() {
         if (model != null) {
-            SystemUtil.setPreLanguage(this@LanguageSettingActivity, model?.isoLanguage)
+            SystemUtil.setPreLanguage(this@LanguageActivity, model?.isoLanguage)
             SystemUtil.setLocale(this)
             startNextAct()
         }else{

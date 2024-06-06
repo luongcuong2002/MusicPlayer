@@ -2,78 +2,51 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <RelativeLayout
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/white">
+        android:background="@color/color_0F0817"
+        android:orientation="vertical"
+        android:paddingTop="@dimen/_20sdp">
 
-        <LinearLayout
-            android:id="@+id/linear_language"
+        <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical">
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/_13sdp"
+            android:layout_marginBottom="@dimen/_20sdp">
 
-            <LinearLayout
-                android:id="@+id/toolbar_language"
-                android:layout_width="match_parent"
-                android:layout_height="?actionBarSize"
-                android:gravity="center"
-                android:minHeight="?attr/actionBarSize"
-                android:orientation="horizontal"
-                android:paddingHorizontal="@dimen/_13sdp">
+            <com.kma.musicplayer.ui.customview.BackButton
+                android:layout_width="@dimen/_20sdp"
+                android:layout_height="@dimen/_20sdp"
+                android:layout_centerVertical="true" />
 
-                <com.casttv.screenmirror.castvideo.castweb.ui.custom_view.BackButton
-                    android:id="@+id/iv_back"
-                    android:layout_width="@dimen/_20sdp"
-                    android:layout_height="@dimen/_20sdp"
-                    android:src="@drawable/ic_back" />
+            <com.kma.musicplayer.ui.customview.MovableText
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:layout_marginHorizontal="@dimen/_30sdp"
+                android:fontFamily="@font/nunito_bold"
+                android:text="@string/language"
+                android:textColor="@color/white"
+                android:textSize="@dimen/_15ssp" />
 
-                <com.casttv.screenmirror.castvideo.castweb.ui.custom_view.MovableText
-                    android:id="@+id/tv_title"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:fontFamily="@font/gilroy_bold"
-                    android:text="@string/language"
-                    android:textAlignment="center"
-                    android:textColor="@color/color_1E232E"
-                    android:textSize="@dimen/_16ssp" />
+            <ImageView
+                android:id="@+id/iv_done"
+                android:layout_width="@dimen/_20sdp"
+                android:layout_height="@dimen/_20sdp"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
+                android:src="@drawable/ic_done_language" />
 
-                <ImageView
-                    android:id="@+id/iv_done"
-                    android:layout_width="@dimen/_20sdp"
-                    android:layout_height="@dimen/_20sdp"
-                    android:layout_alignParentEnd="true"
-                    android:layout_centerVertical="true"
-                    android:src="@drawable/ic_done_language" />
-            </LinearLayout>
+        </RelativeLayout>
 
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="1"
-                android:orientation="vertical">
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rcl_language"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:orientation="vertical"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
 
-                <RelativeLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_marginVertical="@dimen/_13sdp">
-
-                    <androidx.recyclerview.widget.RecyclerView
-                        android:id="@+id/rcl_language"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_centerInParent="true"
-                        android:orientation="vertical"
-                        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
-                </RelativeLayout>
-
-            </RelativeLayout>
-
-            <include
-                layout="@layout/layout_bottom_banner"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
-        </LinearLayout>
-    </RelativeLayout>
+    </LinearLayout>
 </layout>

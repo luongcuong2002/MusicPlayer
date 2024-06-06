@@ -1,6 +1,6 @@
-package com.casttv.screenmirror.castvideo.castweb.ui.screen.language_setting
+package com.kma.musicplayer.ui.screen.language
 
 import androidx.lifecycle.ViewModel
 
-class LanguageSettingViewModel : ViewModel() {
+class LanguageViewModel : ViewModel() {
 }

@@ -5,6 +5,6 @@ import retrofit2.Call
 import retrofit2.http.GET
 
 interface SongApi {
-    @GET("get-all-songs")
+    @GET("app/get-all-songs")
     fun getAllSongs(): Call<List<SongDto>>
 }

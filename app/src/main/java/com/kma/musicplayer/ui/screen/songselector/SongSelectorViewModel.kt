@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.kma.musicplayer.model.OnlineSong
+import com.kma.musicplayer.model.Song
 
 class SongSelectorViewModel : ViewModel() {
     val songs = mutableListOf<SelectableSong>()
@@ -49,7 +50,7 @@ class SongSelectorViewModel : ViewModel() {
         return songs.filter { it.isSelected }.map { it.song.id }
     }
 
-    fun getSelectedSongs(): List<OnlineSong> {
+    fun getSelectedSongs(): List<Song> {
         return songs.filter { it.isSelected }.map { it.song }
     }
 

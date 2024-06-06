@@ -2,6 +2,8 @@ package com.kma.musicplayer.database.dao
 
 import androidx.room.Dao
 import androidx.room.Query
+import com.kma.musicplayer.model.FavouriteSong
+import com.kma.musicplayer.model.HiddenSong
 
 @Dao
 interface HiddenSongDao {
@@ -13,5 +15,15 @@ interface HiddenSongDao {
 
     suspend fun insertAll(songIds: List<String>) {
         songIds.forEach { insert(it) }
+    }
+
+    @Query("SELECT * FROM HiddenSong")
+    fun getHiddenSongs(): List<HiddenSong>
+
+    @Query("DELETE FROM HiddenSong WHERE song_id = :songId")
+    suspend fun delete(songId: String)
+
+    suspend fun deleteAll(songIds: List<String>) {
+        songIds.forEach { delete(it) }
     }
 }

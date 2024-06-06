@@ -30,20 +30,12 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
-            android:layout_marginStart="@dimen/_15sdp"
+            android:layout_marginStart="@dimen/_10sdp"
             android:layout_toEndOf="@id/img_avatar"
-            android:fontFamily="@font/gilroy_medium"
+            android:fontFamily="@font/nunito_medium"
             android:text="abc"
-            android:textColor="@color/color_CC000000"
+            android:textColor="@color/white"
             android:textSize="@dimen/_12ssp" />
 
-        <RadioButton
-            android:id="@+id/rb_language"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentEnd="true"
-            android:layout_centerVertical="true"
-            android:layout_marginEnd="@dimen/_9sdp"
-            android:theme="@style/RadioButtonMain" />
     </RelativeLayout>
 </androidx.cardview.widget.CardView>

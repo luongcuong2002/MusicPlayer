@@ -5,6 +5,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.kma.musicplayer.R
+import com.kma.musicplayer.database.AppDatabase
 import com.kma.musicplayer.databinding.LayoutItemPlaylistInfoBinding
 import com.kma.musicplayer.model.OnlineSong
 import com.kma.musicplayer.utils.SongManager
@@ -55,12 +56,16 @@ class PlaylistAdapter(
                 }
             )
 
-            (playlistModel.songIds.first {
-                SongManager.getSongById(it) is OnlineSong
-            } as OnlineSong).let {
-                Glide.with(binding.root.context)
-                    .load(it.thumbnail)
-                    .into(binding.ivThumbnail)
+            val firstSongId = playlistModel.songIds.firstOrNull { !AppDatabase.INSTANCE.hiddenSongDao().isHidden(it) }
+            firstSongId?.let {
+                val firstSong = SongManager.getSongById(it)
+                if (firstSong is OnlineSong) {
+                    Glide.with(binding.root.context)
+                        .load(firstSong.thumbnail)
+                        .into(binding.ivThumbnail)
+                } else {
+                    binding.ivThumbnail.setImageResource(R.drawable.default_song_thumbnail)
+                }
             }
 
             binding.root.setOnClickListener {

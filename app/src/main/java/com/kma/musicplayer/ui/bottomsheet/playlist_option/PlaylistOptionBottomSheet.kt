@@ -2,14 +2,17 @@ package com.kma.musicplayer.ui.bottomsheet.playlist_option
 
 import android.annotation.SuppressLint
 import android.app.Dialog
+import com.bumptech.glide.Glide
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.kma.musicplayer.R
 import com.kma.musicplayer.database.AppDatabase
 import com.kma.musicplayer.databinding.BottomSheetPlaylistOptionBinding
 import com.kma.musicplayer.extension.showDialog
+import com.kma.musicplayer.model.OnlineSong
 import com.kma.musicplayer.model.PlaylistModel
 import com.kma.musicplayer.service.PlaySongService
 import com.kma.musicplayer.service.ServiceController
+import com.kma.musicplayer.utils.SongManager
 
 class PlaylistOptionBottomSheet(
     private val playlistModel: PlaylistModel,
@@ -36,6 +39,18 @@ class PlaylistOptionBottomSheet(
             "$size ${binding.root.context.getString(R.string.songs_2)}"
         } else {
             "$size ${binding.root.context.getString(R.string.song)}"
+        }
+
+        val firstSongId = playlistModel.songIds.firstOrNull { !AppDatabase.INSTANCE.hiddenSongDao().isHidden(it) }
+        firstSongId?.let {
+            val firstSong = SongManager.getSongById(it)
+            if (firstSong is OnlineSong) {
+                Glide.with(binding.root.context)
+                    .load(firstSong.thumbnail)
+                    .into(binding.ivThumbnail)
+            } else {
+                binding.ivThumbnail.setImageResource(R.drawable.default_song_thumbnail)
+            }
         }
 
         if (!ServiceController.isServiceRunning(requireActivity(), PlaySongService::class.java)) {

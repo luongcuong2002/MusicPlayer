@@ -108,6 +108,7 @@ class FavouriteFragment : BaseFragment<FragmentFavouriteBinding>() {
                                 requireActivity().supportFragmentManager,
                                 addToPlaylistBottomSheet.tag
                             )
+                            bottomSheet?.dismiss()
                         },
                         onClickHide = {
                             CoroutineScope(Dispatchers.Main).launch {

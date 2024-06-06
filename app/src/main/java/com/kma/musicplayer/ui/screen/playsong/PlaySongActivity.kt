@@ -144,7 +144,7 @@ class PlaySongActivity : BaseActivity<ActivityPlaySongBinding>() {
     private fun updateUIBasedOnCurrentSong() {
         songService?.playingSong?.value?.let {
             binding.tvSongName.text = it.title
-            binding.tvArtist.text = it.artist
+            binding.tvArtist.text = it.artist.name
             if (AppDatabase.INSTANCE.favouriteSongDao().isFavourite(it.id)) {
                 binding.ivFavourite.setImageResource(R.drawable.ic_purple_heart)
             } else {

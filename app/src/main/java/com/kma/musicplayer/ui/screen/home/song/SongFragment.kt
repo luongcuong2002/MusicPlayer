@@ -31,6 +31,7 @@ class SongFragment : BaseFragment<FragmentSongBinding>() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         songViewModel = ViewModelProvider(requireActivity()).get(SongViewModel::class.java)
+        songViewModel.fetAllSongs()
         setupListeners()
         setupObserver()
     }
@@ -88,6 +89,7 @@ class SongFragment : BaseFragment<FragmentSongBinding>() {
                             requireActivity().supportFragmentManager,
                             addToPlaylistBottomSheet.tag
                         )
+                        bottomSheet?.dismiss()
                     },
                     onClickHide = {
                         CoroutineScope(Dispatchers.Main).launch {

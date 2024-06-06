@@ -37,7 +37,7 @@ class BottomMiniAudioPlayer : FrameLayout {
         binding.ivThumbnail.startAnimation(rotation)
         songService.playingSong.observe(activity) {
             binding.tvName.text = songService.playingSong.value?.title
-            binding.tvArtist.text = songService.playingSong.value?.artist
+            binding.tvArtist.text = songService.playingSong.value?.artist?.name
             if (songService.playingSong.value is OnlineSong) {
                 Glide.with(context)
                     .load((songService.playingSong.value as OnlineSong).thumbnail)

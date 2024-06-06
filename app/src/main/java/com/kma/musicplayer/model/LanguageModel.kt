@@ -1,4 +1,4 @@
-package com.casttv.screenmirror.castvideo.castweb.ui.model
+package com.kma.musicplayer.model
 
 data class LanguageModel(
     var languageName: String,

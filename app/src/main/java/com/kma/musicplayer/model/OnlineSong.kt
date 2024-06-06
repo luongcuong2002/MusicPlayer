@@ -3,7 +3,7 @@ package com.kma.musicplayer.model
 class OnlineSong(
     id: String,
     title: String,
-    artist: String,
+    artist: Artist,
     duration: Int,
     val thumbnail: String,
     path: String
