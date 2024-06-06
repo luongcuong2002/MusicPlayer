@@ -1,6 +1,7 @@
 package com.kma.musicplayer.utils
 
 import android.util.Log
+import com.kma.musicplayer.model.Artist
 import com.kma.musicplayer.model.OnlineSong
 import com.kma.musicplayer.model.Song
 import com.kma.musicplayer.network.retrofit.model.SongDto
@@ -35,5 +36,13 @@ object SongManager {
     fun getSongById(id: String): Song? {
         return allSongs.find { it.id == id }
         // must add get local song by id
+    }
+
+    fun getAllArtist(): List<Artist> {
+        return allSongs.map { it.artist }.distinct()
+    }
+
+    fun getSongByArtist(artist: Artist): List<Song> {
+        return allSongs.filter { it.artist == artist }
     }
 }

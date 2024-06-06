@@ -67,4 +67,5 @@
     <string name="add_widget_guide_description_2">Select widgets</string>
     <string name="add_widget_guide_description_3">Find Music Player</string>
     <string name="add_widget_guide_description_4">Move to the home screen</string>
+    <string name="no_artist_found">No artist found</string>
 </resources>
