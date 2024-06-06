@@ -11,6 +11,7 @@ import com.kma.musicplayer.ui.bottomsheet.artist_option.ArtistOptionBottomSheet
 import com.kma.musicplayer.ui.bottomsheet.create_new_playlist.CreateNewPlaylistBottomSheet
 import com.kma.musicplayer.ui.bottomsheet.playlist_option.PlaylistOptionBottomSheet
 import com.kma.musicplayer.ui.customview.VerticalSpaceItemDecoration
+import com.kma.musicplayer.ui.screen.artistviewer.ArtistViewerActivity
 import com.kma.musicplayer.ui.screen.core.BaseFragment
 import com.kma.musicplayer.ui.screen.home.playlist.PlaylistAdapter
 import com.kma.musicplayer.ui.screen.home.playlist.PlaylistViewModel
@@ -84,8 +85,13 @@ class ArtistFragment : BaseFragment<FragmentArtistBinding>() {
                     )
                     bottomSheet.show(requireActivity().supportFragmentManager, bottomSheet.tag)
                 },
-                { playlistModel ->
-                    // onClickItem
+                { artist ->
+                    showActivity(
+                        ArtistViewerActivity::class.java,
+                        Bundle().apply {
+                            putSerializable(Constant.BUNDLE_ARTIST, artist)
+                        },
+                    )
                 },
             )
             binding.rvArtist.addItemDecoration(

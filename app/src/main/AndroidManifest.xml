@@ -54,6 +54,10 @@
             android:name=".ui.screen.addwidget.AddWidgetActivity"
             android:exported="true"
             android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.screen.artistviewer.ArtistViewerActivity"
+            android:exported="true"
+            android:screenOrientation="portrait" />
 
         <service
             android:name=".service.PlaySongService"
