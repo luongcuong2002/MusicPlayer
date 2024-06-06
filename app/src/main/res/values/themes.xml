@@ -24,4 +24,8 @@
         <item name="cornerSizeBottomRight">0dp</item>
         <item name="cornerSizeBottomLeft">0dp</item>
     </style>
+
+    <style name="CustomAlertDialog" parent="Theme.AppCompat.Light.Dialog.Alert">
+        <item name="android:windowBackground">@android:color/transparent</item>
+    </style>
 </resources>

@@ -7,4 +7,13 @@
             <enum name="height" value="1"/>
         </attr>
     </declare-styleable>
+
+    <declare-styleable name="CustomSwitch">
+        <attr name="checked" format="boolean" />
+        <attr name="trackActive" format="reference" />
+        <attr name="trackInactive" format="reference" />
+        <attr name="thumbActive" format="reference" />
+        <attr name="thumbInactive" format="reference" />
+        <attr name="invokeDefaultOnClick" format="boolean" />
+    </declare-styleable>
 </resources>

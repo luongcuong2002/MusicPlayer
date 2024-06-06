@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:clipChildren="false"
+    android:clipToPadding="false">
+
+    <RelativeLayout
+        android:id="@+id/trackContainer"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <View
+            android:id="@+id/track"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginVertical="3dp"
+            android:layout_marginHorizontal="@dimen/_3sdp"
+            android:background="@drawable/track_selector" />
+
+    </RelativeLayout>
+    <com.kma.musicplayer.ui.customview.RectangleRelativeLayout
+        android:id="@+id/thumbContainer"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_alignParentEnd="true"
+        android:layout_centerVertical="true"
+        android:clipChildren="false"
+        android:clipToPadding="false"
+        app:dependOnDimension="height"
+        app:rectAspectRatio="1">
+
+        <com.google.android.material.card.MaterialCardView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:cardCornerRadius="@dimen/_100sdp"
+            app:strokeWidth="0dp"
+            app:cardElevation="3dp">
+
+            <View
+                android:id="@+id/thumb"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@drawable/thumb_selector" />
+
+        </com.google.android.material.card.MaterialCardView>
+
+    </com.kma.musicplayer.ui.customview.RectangleRelativeLayout>
+
+</RelativeLayout>

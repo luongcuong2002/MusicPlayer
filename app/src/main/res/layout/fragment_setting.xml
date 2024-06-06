@@ -1,8 +1,299 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout>
-    <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
+<layout xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/color_0F0817"
+        android:gravity="center_horizontal"
+        android:orientation="vertical"
+        android:paddingHorizontal="@dimen/_13sdp"
+        android:paddingTop="@dimen/_20sdp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/nunito_bold"
+            android:text="@string/setting"
+            android:textColor="@color/white"
+            android:textSize="@dimen/_18ssp" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_20sdp"
+            android:fontFamily="@font/nunito_semibold"
+            android:text="@string/general"
+            android:textColor="@color/color_D2D3D5"
+            android:textSize="@dimen/_13ssp" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_10sdp"
+            android:background="@drawable/bg_setting_tab"
+            android:orientation="vertical"
+            android:padding="@dimen/_13sdp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/_20sdp"
+                android:gravity="center"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:layout_width="@dimen/_20sdp"
+                    android:layout_height="@dimen/_20sdp"
+                    android:src="@drawable/ic_setting_change_theme" />
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="@dimen/_10sdp"
+                    android:layout_weight="1"
+                    android:fontFamily="@font/nunito_semibold"
+                    android:text="@string/light_mode"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/_12ssp" />
+
+                <com.kma.musicplayer.ui.customview.CustomSwitch
+                    android:id="@+id/switch_light_mode"
+                    android:layout_width="@dimen/_31sdp"
+                    android:layout_height="@dimen/_16sdp"
+                    android:clipChildren="false"
+                    android:clipToPadding="false" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/ll_hidden_songs"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/_20sdp"
+                android:gravity="center"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:layout_width="@dimen/_20sdp"
+                    android:layout_height="@dimen/_20sdp"
+                    android:src="@drawable/ic_setting_hidden_song" />
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="@dimen/_10sdp"
+                    android:layout_weight="1"
+                    android:fontFamily="@font/nunito_semibold"
+                    android:text="@string/hidden_songs"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/_12ssp" />
+
+                <ImageView
+                    android:layout_width="@dimen/_20sdp"
+                    android:layout_height="@dimen/_20sdp"
+                    android:src="@drawable/ic_setting_arrow_right" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/ll_add_widget"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/_20sdp"
+                android:gravity="center"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:layout_width="@dimen/_20sdp"
+                    android:layout_height="@dimen/_20sdp"
+                    android:src="@drawable/ic_setting_add_widget" />
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="@dimen/_10sdp"
+                    android:layout_weight="1"
+                    android:fontFamily="@font/nunito_semibold"
+                    android:text="@string/add_widget"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/_12ssp" />
+
+                <ImageView
+                    android:layout_width="@dimen/_20sdp"
+                    android:layout_height="@dimen/_20sdp"
+                    android:src="@drawable/ic_setting_arrow_right" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/ll_ringtone"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/_20sdp"
+                android:gravity="center"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:layout_width="@dimen/_20sdp"
+                    android:layout_height="@dimen/_20sdp"
+                    android:src="@drawable/ic_setting_ringtone" />
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="@dimen/_10sdp"
+                    android:layout_weight="1"
+                    android:fontFamily="@font/nunito_semibold"
+                    android:text="@string/ringtone"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/_12ssp" />
+
+                <ImageView
+                    android:layout_width="@dimen/_20sdp"
+                    android:layout_height="@dimen/_20sdp"
+                    android:src="@drawable/ic_setting_arrow_right" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/ll_language"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:layout_width="@dimen/_20sdp"
+                    android:layout_height="@dimen/_20sdp"
+                    android:src="@drawable/ic_setting_language" />
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="@dimen/_10sdp"
+                    android:layout_weight="1"
+                    android:fontFamily="@font/nunito_semibold"
+                    android:text="@string/language"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/_12ssp" />
+
+                <ImageView
+                    android:layout_width="@dimen/_20sdp"
+                    android:layout_height="@dimen/_20sdp"
+                    android:src="@drawable/ic_setting_arrow_right" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_13sdp"
+            android:fontFamily="@font/nunito_semibold"
+            android:text="@string/help"
+            android:textColor="@color/color_D2D3D5"
+            android:textSize="@dimen/_13ssp" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_10sdp"
+            android:background="@drawable/bg_setting_tab"
+            android:orientation="vertical"
+            android:padding="@dimen/_13sdp">
+
+            <LinearLayout
+                android:id="@+id/ll_share"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/_20sdp"
+                android:gravity="center"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:layout_width="@dimen/_20sdp"
+                    android:layout_height="@dimen/_20sdp"
+                    android:src="@drawable/ic_setting_share" />
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="@dimen/_10sdp"
+                    android:layout_weight="1"
+                    android:fontFamily="@font/nunito_semibold"
+                    android:text="@string/share"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/_12ssp" />
+
+                <ImageView
+                    android:layout_width="@dimen/_20sdp"
+                    android:layout_height="@dimen/_20sdp"
+                    android:src="@drawable/ic_setting_arrow_right" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/ll_rate"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/_20sdp"
+                android:gravity="center"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:layout_width="@dimen/_20sdp"
+                    android:layout_height="@dimen/_20sdp"
+                    android:src="@drawable/ic_setting_rate" />
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="@dimen/_10sdp"
+                    android:layout_weight="1"
+                    android:fontFamily="@font/nunito_semibold"
+                    android:text="@string/rate"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/_12ssp" />
+
+                <ImageView
+                    android:layout_width="@dimen/_20sdp"
+                    android:layout_height="@dimen/_20sdp"
+                    android:src="@drawable/ic_setting_arrow_right" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/ll_privacy_policy"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:layout_width="@dimen/_20sdp"
+                    android:layout_height="@dimen/_20sdp"
+                    android:src="@drawable/ic_setting_policy" />
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="@dimen/_10sdp"
+                    android:layout_weight="1"
+                    android:fontFamily="@font/nunito_semibold"
+                    android:text="@string/privacy_policy"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/_12ssp" />
+
+                <ImageView
+                    android:layout_width="@dimen/_20sdp"
+                    android:layout_height="@dimen/_20sdp"
+                    android:src="@drawable/ic_setting_arrow_right" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </LinearLayout>
 </layout>

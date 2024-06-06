@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/color_0F0817"
+        android:orientation="vertical"
+        android:paddingTop="@dimen/_20sdp">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/_13sdp"
+            android:layout_marginBottom="@dimen/_20sdp">
+
+            <com.kma.musicplayer.ui.customview.BackButton
+                android:layout_width="@dimen/_20sdp"
+                android:layout_height="@dimen/_20sdp"
+                android:layout_centerVertical="true" />
+
+            <com.kma.musicplayer.ui.customview.MovableText
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:layout_marginHorizontal="@dimen/_30sdp"
+                android:fontFamily="@font/nunito_bold"
+                android:text="@string/privacy_policy"
+                android:textColor="@color/white"
+                android:textSize="@dimen/_15ssp" />
+
+        </RelativeLayout>
+
+        <WebView
+            android:id="@+id/webview"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1" />
+
+    </LinearLayout>
+</layout>

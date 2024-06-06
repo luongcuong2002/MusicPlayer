@@ -38,6 +38,22 @@
             android:name=".ui.screen.playsong.PlaySongActivity"
             android:exported="true"
             android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.screen.policy.PolicyActivity"
+            android:exported="true"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.screen.hiddensong.HiddenSongActivity"
+            android:exported="true"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.screen.language.LanguageActivity"
+            android:exported="true"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.screen.addwidget.AddWidgetActivity"
+            android:exported="true"
+            android:screenOrientation="portrait" />
 
         <service
             android:name=".service.PlaySongService"
