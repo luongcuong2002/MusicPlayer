@@ -22,6 +22,8 @@ class BottomMiniAudioPlayer : FrameLayout {
     private var binding: BottomMiniAudioPlayerBinding =
         BottomMiniAudioPlayerBinding.inflate(LayoutInflater.from(context), this, true)
 
+    lateinit var activity: BaseActivity<*>
+
     constructor(context: Context) : super(context)
 
     constructor(context: Context, attrs: AttributeSet?) : super(context, attrs)
@@ -32,10 +34,11 @@ class BottomMiniAudioPlayer : FrameLayout {
         defStyleAttr
     )
 
-    fun initView(activity: BaseActivity<*>, songService: PlaySongService) {
-        val rotation: Animation = AnimationUtils.loadAnimation(activity, R.anim.rotate)
-        binding.ivThumbnail.startAnimation(rotation)
-        songService.playingSong.observe(activity) {
+    fun initView(songService: PlaySongService) {
+        songService.thumbnailRotation.observeForever {
+            binding.ivThumbnail.rotation = it
+        }
+        songService.playingSong.observeForever {
             binding.tvName.text = songService.playingSong.value?.title
             binding.tvArtist.text = songService.playingSong.value?.artist?.name
             if (songService.playingSong.value is OnlineSong) {
@@ -47,7 +50,7 @@ class BottomMiniAudioPlayer : FrameLayout {
                 binding.ivThumbnail.setImageResource(R.drawable.default_song_thumbnail)
             }
         }
-        songService.isPlaying.observe(activity) {
+        songService.isPlaying.observeForever {
             if (it) {
                 binding.ivPlayPause.setImageResource(R.drawable.ic_mini_pause)
             } else {

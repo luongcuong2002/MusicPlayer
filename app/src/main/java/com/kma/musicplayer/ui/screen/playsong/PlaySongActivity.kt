@@ -1,6 +1,7 @@
 package com.kma.musicplayer.ui.screen.playsong
 
 import android.content.ComponentName
+import android.content.Intent
 import android.os.Bundle
 import android.os.IBinder
 import android.view.View
@@ -15,6 +16,7 @@ import com.kma.musicplayer.model.OnlineSong
 import com.kma.musicplayer.model.RepeatMode
 import com.kma.musicplayer.model.Song
 import com.kma.musicplayer.model.nextMode
+import com.kma.musicplayer.service.PlaySongService
 import com.kma.musicplayer.service.ServiceController
 import com.kma.musicplayer.ui.bottomsheet.song_queue.SongQueueBottomSheet
 import com.kma.musicplayer.ui.screen.core.BaseActivity
@@ -32,7 +34,10 @@ class PlaySongActivity : BaseActivity<ActivityPlaySongBinding>() {
         isFromMiniPlayer = intent.getBooleanExtra(Constant.BUNDLE_IS_FROM_BOTTOM_MINI_PLAYER, false)
         val rotation: Animation = AnimationUtils.loadAnimation(this, R.anim.rotate)
         binding.ivThumbnail.startAnimation(rotation)
+
+        // start service
         ServiceController.shouldBindService = true
+        startService(Intent(this, PlaySongService::class.java))
     }
 
     override fun onServiceConnected(className: ComponentName, service: IBinder) {

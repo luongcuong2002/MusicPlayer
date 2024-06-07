@@ -8,12 +8,16 @@ import android.os.Bundle
 import android.os.IBinder
 import android.util.Log
 import android.view.View
+import android.view.ViewGroup
+import android.widget.FrameLayout
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 import androidx.lifecycle.MutableLiveData
+import com.kma.musicplayer.R
 import com.kma.musicplayer.service.PlaySongService
 import com.kma.musicplayer.service.ServiceController
+import com.kma.musicplayer.ui.customview.BottomMiniAudioPlayer
 import com.kma.musicplayer.utils.SystemUtil
 
 abstract class BaseActivity<DB : ViewDataBinding> : AppCompatActivity(), ServiceConnection {
@@ -106,5 +110,35 @@ abstract class BaseActivity<DB : ViewDataBinding> : AppCompatActivity(), Service
             intent.putExtras(bundle)
         }
         startActivity(intent)
+    }
+
+    override fun onResume() {
+        super.onResume()
+        val bottomMiniPlayer =
+            binding.root.findViewById<FrameLayout>(R.id.bottom_mini_player)
+
+        if (bottomMiniPlayer != null && ServiceController.isServiceRunning(this, PlaySongService::class.java)) {
+            bottomMiniPlayer.visibility = View.VISIBLE
+//            val bottomMiniPlayerView = BottomMiniAudioPlayer(this)
+//            bottomMiniPlayer.addView(bottomMiniPlayerView)
+            mBound.observe(this) {
+                if (it) {
+                    songService?.let {
+                        if (it.bottomMiniAudioPlayer == null) {
+                            it.bottomMiniAudioPlayer = BottomMiniAudioPlayer(this)
+                            it.bottomMiniAudioPlayer!!.activity = this
+                            it.bottomMiniAudioPlayer!!.initView(it)
+                        }
+                        it.bottomMiniAudioPlayer!!.activity = this
+                        it.bottomMiniAudioPlayer!!.parent?.let { parent ->
+                            (parent as ViewGroup).removeView(it.bottomMiniAudioPlayer!!)
+                        }
+                        bottomMiniPlayer.addView(it.bottomMiniAudioPlayer)
+                    }
+                }
+            }
+        } else {
+            bottomMiniPlayer?.visibility = View.GONE
+        }
     }
 }

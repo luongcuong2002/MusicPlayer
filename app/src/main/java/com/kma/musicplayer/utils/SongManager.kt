@@ -1,6 +1,7 @@
 package com.kma.musicplayer.utils
 
 import android.util.Log
+import com.kma.musicplayer.database.AppDatabase
 import com.kma.musicplayer.model.Artist
 import com.kma.musicplayer.model.OnlineSong
 import com.kma.musicplayer.model.Song
@@ -23,7 +24,7 @@ object SongManager {
             override fun onResponse(call: Call<List<SongDto>>, response: Response<List<SongDto>>) {
                 val songs = response.body()?.map { it.toOnlineSong() } ?: emptyList()
                 allSongs.addAll(songs)
-                onSuccess(songs)
+                onSuccess(songs.filter { !AppDatabase.INSTANCE.hiddenSongDao().isHidden(it.id) })
             }
 
             override fun onFailure(call: Call<List<SongDto>>, t: Throwable) {
@@ -39,10 +40,10 @@ object SongManager {
     }
 
     fun getAllArtist(): List<Artist> {
-        return allSongs.map { it.artist }.distinct()
+        return allSongs.map { it.artist }.distinct().filter { getSongByArtist(it).isNotEmpty() }
     }
 
     fun getSongByArtist(artist: Artist): List<Song> {
-        return allSongs.filter { it.artist == artist }
+        return allSongs.filter { it.artist == artist }.filter { !AppDatabase.INSTANCE.hiddenSongDao().isHidden(it.id) }
     }
 }

@@ -71,13 +71,29 @@ abstract class BaseFragment<DB : ViewDataBinding> : Fragment() {
             binding.root.findViewById<FrameLayout>(R.id.bottom_mini_player)
 
         if (bottomMiniPlayer != null && ServiceController.isServiceRunning(requireContext(), PlaySongService::class.java)) {
-            bottomMiniPlayer.visibility = View.VISIBLE
-            val bottomMiniPlayerView = BottomMiniAudioPlayer(requireActivity())
-            bottomMiniPlayer.addView(bottomMiniPlayerView)
+//            bottomMiniPlayer.visibility = View.VISIBLE
+//            val bottomMiniPlayerView = BottomMiniAudioPlayer(requireActivity())
+//            bottomMiniPlayer.addView(bottomMiniPlayerView)
+//            getBaseActivity().mBound.observe(this) {
+//                if (it) {
+//                    getBaseActivity().songService?.let {
+//                        bottomMiniPlayerView.initView(getBaseActivity(), it)
+//                    }
+//                }
+//            }
             getBaseActivity().mBound.observe(this) {
                 if (it) {
                     getBaseActivity().songService?.let {
-                        bottomMiniPlayerView.initView(getBaseActivity(), it)
+                        if (it.bottomMiniAudioPlayer == null) {
+                            it.bottomMiniAudioPlayer = BottomMiniAudioPlayer(requireActivity())
+                            it.bottomMiniAudioPlayer!!.activity = getBaseActivity()
+                            it.bottomMiniAudioPlayer!!.initView(it)
+                        }
+                        it.bottomMiniAudioPlayer!!.activity = getBaseActivity()
+                        it.bottomMiniAudioPlayer!!.parent?.let { parent ->
+                            (parent as ViewGroup).removeView(it.bottomMiniAudioPlayer!!)
+                        }
+                        bottomMiniPlayer.addView(it.bottomMiniAudioPlayer)
                     }
                 }
             }

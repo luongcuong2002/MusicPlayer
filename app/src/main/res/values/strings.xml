@@ -40,6 +40,7 @@
     <string name="favourite_song">Favourite Song</string>
     <string name="shuffle">Shuffle</string>
     <string name="no_songs_added_to_favourite">No songs added to favourite</string>
+    <string name="no_songs_found">No songs found</string>
     <string name="no_song_to_play">No song to play</string>
     <string name="general">General</string>
     <string name="light_mode">Light mode</string>

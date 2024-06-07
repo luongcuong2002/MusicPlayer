@@ -7,12 +7,12 @@
         android:background="@color/color_0F0817"
         android:gravity="center_horizontal"
         android:orientation="vertical"
-        android:paddingHorizontal="@dimen/_13sdp"
         android:paddingTop="@dimen/_20sdp">
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/_13sdp">
 
             <com.kma.musicplayer.ui.customview.BackButton
                 android:layout_width="@dimen/_20sdp"
@@ -35,8 +35,8 @@
                 android:id="@+id/iv_thumbnail"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:src="@drawable/default_song_thumbnail"
-                android:scaleType="centerCrop" />
+                android:scaleType="centerCrop"
+                android:src="@drawable/default_song_thumbnail" />
 
         </com.google.android.material.card.MaterialCardView>
 
@@ -62,7 +62,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="@dimen/_37sdp"
-            android:layout_marginHorizontal="@dimen/_7sdp"
+            android:layout_marginHorizontal="@dimen/_20sdp"
             android:layout_marginTop="@dimen/_13sdp"
             android:orientation="horizontal">
 
@@ -120,12 +120,14 @@
         <View
             android:layout_width="match_parent"
             android:layout_height="1dp"
+            android:layout_marginHorizontal="@dimen/_13sdp"
             android:layout_marginVertical="@dimen/_20sdp"
             android:background="@color/color_4B4F58_50" />
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/_13sdp"
             android:layout_marginBottom="@dimen/_13sdp"
             android:fontFamily="@font/nunito_semibold"
             android:text="@string/songs"
@@ -135,6 +137,7 @@
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
+            android:layout_marginHorizontal="@dimen/_13sdp"
             android:layout_weight="1">
 
             <androidx.recyclerview.widget.RecyclerView
@@ -148,13 +151,18 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerInParent="true"
-                android:visibility="gone"
                 android:fontFamily="@font/nunito_medium"
-                android:text="@string/no_songs_added_to_favourite"
+                android:text="@string/no_songs_found"
                 android:textColor="@color/color_D2D3D5"
-                android:textSize="@dimen/_12ssp" />
+                android:textSize="@dimen/_12ssp"
+                android:visibility="gone" />
 
         </RelativeLayout>
+
+        <FrameLayout
+            android:id="@+id/bottom_mini_player"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
 
     </LinearLayout>
 </layout>
