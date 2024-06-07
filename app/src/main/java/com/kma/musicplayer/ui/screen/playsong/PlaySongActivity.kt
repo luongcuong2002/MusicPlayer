@@ -18,6 +18,7 @@ import com.kma.musicplayer.model.Song
 import com.kma.musicplayer.model.nextMode
 import com.kma.musicplayer.service.PlaySongService
 import com.kma.musicplayer.service.ServiceController
+import com.kma.musicplayer.ui.bottomsheet.sleeptimer.SleepTimerBottomSheet
 import com.kma.musicplayer.ui.bottomsheet.song_queue.SongQueueBottomSheet
 import com.kma.musicplayer.ui.screen.core.BaseActivity
 import com.kma.musicplayer.utils.Constant
@@ -80,7 +81,10 @@ class PlaySongActivity : BaseActivity<ActivityPlaySongBinding>() {
             ShareUtils.shareSong(this, song)
         }
         binding.llTimer.setOnClickListener {
-
+            songService?.let {
+                val bottomSheet = SleepTimerBottomSheet(supportFragmentManager, it)
+                bottomSheet.show(supportFragmentManager, bottomSheet.tag)
+            }
         }
         binding.llRandom.setOnClickListener {
             songService?.setPlayRandomlyEnabled(
@@ -123,6 +127,13 @@ class PlaySongActivity : BaseActivity<ActivityPlaySongBinding>() {
     }
 
     private fun setupObservers() {
+        songService?.sleepTimerModel?.observe(this) {
+            if (it != null) {
+                binding.ivTimer.setImageResource(R.drawable.ic_timer_on)
+            } else {
+                binding.ivTimer.setImageResource(R.drawable.ic_timer_off)
+            }
+        }
         songService?.isPlayRandomlyEnabled?.observe(this) {
             binding.ivRandom.setImageResource(if (it) R.drawable.ic_random_on else R.drawable.ic_random_off)
         }

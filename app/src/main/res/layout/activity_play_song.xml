@@ -154,7 +154,7 @@
                     android:id="@+id/iv_timer"
                     android:layout_width="@dimen/_20sdp"
                     android:layout_height="@dimen/_20sdp"
-                    android:src="@drawable/ic_time_off" />
+                    android:src="@drawable/ic_timer_off" />
 
             </LinearLayout>
 

@@ -11,9 +11,16 @@ import androidx.lifecycle.MutableLiveData
 import com.google.android.exoplayer2.Player
 import com.kma.musicplayer.R
 import com.kma.musicplayer.model.RepeatMode
+import com.kma.musicplayer.model.SleepTimerModel
 import com.kma.musicplayer.model.Song
 import com.kma.musicplayer.ui.customview.BottomMiniAudioPlayer
 import com.kma.musicplayer.utils.AudioPlayerManager
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 class PlaySongService : Service() {
 
@@ -48,6 +55,13 @@ class PlaySongService : Service() {
     val audioPlayerManager: AudioPlayerManager?
         get() = _audioPlayerManager
 
+    val sleepTimerModel = MutableLiveData<SleepTimerModel?>(null)
+    val isSleepTimerEnabled: Boolean
+        get() = sleepTimerModel.value != null
+
+    private var _job: Job? = null
+    var sleepTimerRemainingTime = MutableLiveData<Long>(0)
+
     override fun onCreate() {
         super.onCreate()
         setupThumbnailAnimation()
@@ -56,6 +70,13 @@ class PlaySongService : Service() {
             override fun onPlaybackStateChanged(playbackState: Int) {
                 super.onPlaybackStateChanged(playbackState)
                 if (playbackState == Player.STATE_ENDED) {
+
+                    if (isSleepTimerEnabled && sleepTimerModel.value == SleepTimerModel.END_OF_TRACK) {
+                        isPlaying.value = false
+                        stopSleepTimer()
+                        return
+                    }
+
                     when (repeatMode.value) {
                         RepeatMode.NONE -> {
                             if (currentIndex == songs.size - 1) {
@@ -93,8 +114,14 @@ class PlaySongService : Service() {
     }
 
     fun resume() {
-        _audioPlayerManager?.simpleExoPlayer?.play()
         isPlaying.value = true
+        // check if the end of the track is reached
+        if (Math.abs((_audioPlayerManager?.simpleExoPlayer?.currentPosition ?: 0) - (_audioPlayerManager?.simpleExoPlayer?.duration ?: 0)) < 1000) {
+            // replay the song
+            playAt(currentIndex)
+        } else {
+            _audioPlayerManager?.simpleExoPlayer?.play()
+        }
     }
 
     fun addMore(songs: List<Song>) {
@@ -134,6 +161,40 @@ class PlaySongService : Service() {
 
     fun changeCurrentIndex(index: Int) {
         currentIndex = index
+    }
+
+    fun setSleepTimerModel(model: SleepTimerModel?, timeInMillis: Long) {
+        sleepTimerModel.value = model
+        // if model is null, cancel the sleep timer
+        if (model == null) {
+            stopSleepTimer()
+        } else {
+            if (model == SleepTimerModel.END_OF_TRACK) {
+                _job?.cancel()
+                sleepTimerRemainingTime.value = 0
+            } else {
+                startSleepTimer(timeInMillis)
+            }
+        }
+    }
+
+    private fun startSleepTimer(timeInMillis: Long) {
+        _job?.cancel()
+        _job = CoroutineScope(Dispatchers.Main).launch {
+            sleepTimerRemainingTime.value = timeInMillis
+            while (sleepTimerRemainingTime.value!! > 0) {
+                delay(1000)
+                sleepTimerRemainingTime.value = sleepTimerRemainingTime.value!! - 1
+            }
+            stopSleepTimer()
+            pause()
+        }
+    }
+
+    private fun stopSleepTimer() {
+        _job?.cancel()
+        sleepTimerModel.value = null
+        sleepTimerRemainingTime.value = 0
     }
 
     private fun updateCurrentIndexValue(index: Int) {
