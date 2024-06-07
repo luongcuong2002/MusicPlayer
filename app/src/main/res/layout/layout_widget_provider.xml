@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/ll_widget"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/bg_widget_provider_4_1"
+    android:clipChildren="false"
+    android:clipToPadding="false"
+    android:elevation="3dp"
+    android:gravity="center"
+    android:orientation="horizontal"
+    android:paddingHorizontal="@dimen/_13sdp"
+    android:paddingVertical="@dimen/_7sdp"
+    android:theme="@style/WidgetTheme">
+
+    <ImageView
+        android:id="@+id/iv_thumbnail"
+        android:layout_width="@dimen/_47sdp"
+        android:layout_height="@dimen/_47sdp"
+        android:src="@drawable/default_song_thumbnail" />
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="@dimen/_12sdp"
+        android:layout_weight="1"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/tv_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:ellipsize="end"
+            android:fontFamily="@font/nunito_semibold"
+            android:text="The Weeknd"
+            android:textColor="@color/white"
+            android:textSize="@dimen/_13ssp" />
+
+        <TextView
+            android:id="@+id/tv_artist"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_3sdp"
+            android:ellipsize="end"
+            android:fontFamily="@font/nunito_medium"
+            android:text="Yann tiarsen"
+            android:textColor="@color/color_787B82"
+            android:textSize="@dimen/_11ssp" />
+
+    </LinearLayout>
+
+    <ImageView
+        android:id="@+id/iv_previous"
+        android:layout_width="@dimen/_20sdp"
+        android:layout_height="@dimen/_20sdp"
+        android:src="@drawable/ic_previous" />
+
+    <ImageView
+        android:id="@+id/iv_play_pause"
+        android:layout_width="@dimen/_20sdp"
+        android:layout_height="@dimen/_20sdp"
+        android:layout_marginHorizontal="@dimen/_13sdp"
+        android:src="@drawable/ic_mini_play" />
+
+    <ImageView
+        android:id="@+id/iv_next"
+        android:layout_width="@dimen/_20sdp"
+        android:layout_height="@dimen/_20sdp"
+        android:src="@drawable/ic_next" />
+
+</LinearLayout>

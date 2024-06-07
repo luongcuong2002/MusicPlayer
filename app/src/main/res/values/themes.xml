@@ -28,4 +28,11 @@
     <style name="CustomAlertDialog" parent="Theme.AppCompat.Light.Dialog.Alert">
         <item name="android:windowBackground">@android:color/transparent</item>
     </style>
+
+    <!-- Widget theme -->
+    <style name="WidgetTheme" parent="Theme.Material3.DayNight">
+        <item name="appWidgetRadius">8dp</item>
+        <item name="appWidgetInnerRadius">16dp</item>
+        <item name="appWidgetPadding">0dp</item>
+    </style>
 </resources>
