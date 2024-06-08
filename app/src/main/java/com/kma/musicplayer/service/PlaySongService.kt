@@ -5,11 +5,8 @@ import android.app.Service
 import android.content.Intent
 import android.os.Binder
 import android.os.IBinder
-import android.view.animation.Animation
-import android.view.animation.AnimationUtils
 import androidx.lifecycle.MutableLiveData
 import com.google.android.exoplayer2.Player
-import com.kma.musicplayer.R
 import com.kma.musicplayer.model.RepeatMode
 import com.kma.musicplayer.model.SleepTimerModel
 import com.kma.musicplayer.model.Song
@@ -20,7 +17,6 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 
 class PlaySongService : Service() {
 

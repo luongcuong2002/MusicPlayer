@@ -18,6 +18,8 @@
         android:id="@+id/iv_thumbnail"
         android:layout_width="@dimen/_47sdp"
         android:layout_height="@dimen/_47sdp"
+        android:background="@drawable/rounded_corner"
+        android:clipToOutline="true"
         android:src="@drawable/default_song_thumbnail" />
 
     <LinearLayout
