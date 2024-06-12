@@ -15,21 +15,21 @@ object SongManager {
 
     val allSongs = mutableListOf<Song>()
 
-    fun fetchAllOnlineSong(onSuccess: (List<OnlineSong>) -> Unit, onError: () -> Unit) {
+    fun fetchAllOnlineSong(onSuccess: ((List<OnlineSong>) -> Unit)? = null, onError: (() -> Unit)? = null) {
         if (allSongs.isNotEmpty()) {
-            onSuccess(allSongs.filterIsInstance<OnlineSong>())
+            onSuccess?.invoke(allSongs.filterIsInstance<OnlineSong>())
             return
         }
         SongRepository.getAllSongs(object : Callback<List<SongDto>> {
             override fun onResponse(call: Call<List<SongDto>>, response: Response<List<SongDto>>) {
                 val songs = response.body()?.map { it.toOnlineSong() } ?: emptyList()
                 allSongs.addAll(songs)
-                onSuccess(songs.filter { !AppDatabase.INSTANCE.hiddenSongDao().isHidden(it.id) })
+                onSuccess?.invoke(songs.filter { !AppDatabase.INSTANCE.hiddenSongDao().isHidden(it.id) })
             }
 
             override fun onFailure(call: Call<List<SongDto>>, t: Throwable) {
                 Log.d("SongManager", "onFailure: ${t.message}")
-                onError()
+                onError?.invoke()
             }
         })
     }

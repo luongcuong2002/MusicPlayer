@@ -35,10 +35,6 @@ class PlaySongActivity : BaseActivity<ActivityPlaySongBinding>() {
         isFromMiniPlayer = intent.getBooleanExtra(Constant.BUNDLE_IS_FROM_BOTTOM_MINI_PLAYER, false)
         val rotation: Animation = AnimationUtils.loadAnimation(this, R.anim.rotate)
         binding.ivThumbnail.startAnimation(rotation)
-
-        // start service
-        ServiceController.shouldBindService = true
-        startService(Intent(this, PlaySongService::class.java))
     }
 
     override fun onServiceConnected(className: ComponentName, service: IBinder) {

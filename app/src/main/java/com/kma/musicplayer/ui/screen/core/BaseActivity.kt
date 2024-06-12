@@ -75,13 +75,14 @@ abstract class BaseActivity<DB : ViewDataBinding> : AppCompatActivity(), Service
 
     override fun onStart() {
         super.onStart()
-        if (ServiceController.shouldBindService) {
-            bindService(
-                Intent(this, PlaySongService::class.java),
-                this,
-                BIND_AUTO_CREATE
-            )
+        if (!ServiceController.isServiceRunning(this, PlaySongService::class.java)) {
+            startService(Intent(this, PlaySongService::class.java))
         }
+        bindService(
+            Intent(this, PlaySongService::class.java),
+            this,
+            BIND_AUTO_CREATE
+        )
     }
 
     override fun onStop() {

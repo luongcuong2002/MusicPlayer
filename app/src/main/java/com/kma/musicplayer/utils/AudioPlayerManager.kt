@@ -24,12 +24,17 @@ class AudioPlayerManager(
         setPlayVideo(currentVideo)
     }
 
-    private fun setPlayVideo(song: Song) {
+    fun setPlayerAt(posSelect: Int) {
+        val currentVideo = songs[posSelect]
+        setPlayVideo(currentVideo, false)
+    }
+
+    private fun setPlayVideo(song: Song, isPlay: Boolean = true) {
         simpleExoPlayer?.stop()
         val mediaItem = MediaItem.fromUri(song.path)
         simpleExoPlayer?.setMediaItem(mediaItem)
         simpleExoPlayer?.prepare()
-        simpleExoPlayer?.playWhenReady = true
+        simpleExoPlayer?.playWhenReady = isPlay
     }
 
     fun releasePlayer() {

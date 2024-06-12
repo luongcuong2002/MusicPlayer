@@ -16,6 +16,6 @@ class SplashActivity : BaseActivity<ActivitySplashBinding>() {
         Handler().postDelayed({
             // Start your app main activity
             showActivity(MainActivity::class.java)
-        }, 2000)
+        }, 3000)
     }
 }
