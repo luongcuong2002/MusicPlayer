@@ -66,7 +66,7 @@ class SelectableSongAdapter(
             val song = songs[position].song
             binding.tvTitle.text = song.title
             binding.tvArtistAndDuration.text =
-                "${song.artist.name} | ${Formatter.formatTime(song.duration.toLong())} mins"
+                "${song.artist?.name ?: binding.root.context.getString(R.string.unknown)} | ${Formatter.formatTime(song.duration.toLong())} mins"
 
             if (song is OnlineSong) {
                 Glide.with(binding.root)

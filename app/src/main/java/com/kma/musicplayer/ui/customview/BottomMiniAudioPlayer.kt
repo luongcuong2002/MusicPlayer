@@ -46,7 +46,7 @@ class BottomMiniAudioPlayer : FrameLayout {
         }
         songService.playingSong.observeForever {
             binding.tvName.text = songService.playingSong.value?.title
-            binding.tvArtist.text = songService.playingSong.value?.artist?.name
+            binding.tvArtist.text = songService.playingSong.value?.artist?.name ?: binding.root.context.getString(R.string.unknown)
             if (songService.playingSong.value is OnlineSong) {
                 Glide.with(context.applicationContext)
                     .load((songService.playingSong.value as OnlineSong).thumbnail)

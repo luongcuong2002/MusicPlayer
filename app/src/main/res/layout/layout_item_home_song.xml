@@ -53,6 +53,8 @@
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/nunito_semibold"
                 android:text="Back To Her Men"
+                android:maxLines="1"
+                android:ellipsize="end"
                 android:textColor="@color/black"
                 android:textSize="@dimen/_12ssp" />
 

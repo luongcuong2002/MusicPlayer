@@ -111,7 +111,7 @@ class MusicPlayerAppWidgetProvider : AppWidgetProvider() {
                         getPendingSelfIntent(context, BUTTON_PREVIOUS)
                     )
                     setTextViewText(R.id.tv_song_name, it.song.title)
-                    setTextViewText(R.id.tv_artist_name, it.song.artist.name)
+                    setTextViewText(R.id.tv_artist_name, it.song.artist?.name ?: context.getString(R.string.unknown))
                     setImageViewResource(
                         R.id.iv_play_pause,
                         if (it.isPlaying) R.drawable.ic_mini_pause else R.drawable.ic_mini_play)

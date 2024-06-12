@@ -40,7 +40,7 @@ object SongManager {
     }
 
     fun getAllArtist(): List<Artist> {
-        return allSongs.map { it.artist }.distinct().filter { getSongByArtist(it).isNotEmpty() }
+        return allSongs.mapNotNull { it.artist }.distinct().filter { getSongByArtist(it).isNotEmpty() }
     }
 
     fun getSongByArtist(artist: Artist): List<Song> {

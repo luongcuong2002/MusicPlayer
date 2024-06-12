@@ -1,11 +1,15 @@
 package com.kma.musicplayer.utils
 
 import android.content.Context
+import android.media.MediaMetadataRetriever
 import android.net.Uri
 import android.os.Handler
+import android.provider.MediaStore
 import android.util.Log
 import androidx.core.content.FileProvider
+import com.kma.musicplayer.model.Artist
 import com.kma.musicplayer.model.OnlineSong
+import com.kma.musicplayer.model.Song
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -19,6 +23,66 @@ import java.io.FileOutputStream
 import java.io.IOException
 
 object FileUtils {
+
+    private val songs = mutableListOf<Song>()
+
+    fun getAllAudios(context: Context): MutableList<Song> {
+        if (songs.isNotEmpty()) {
+            return songs
+        }
+
+        val audios = mutableListOf<Song>()
+
+        val projection = arrayOf(
+            MediaStore.Audio.Media.DATA,
+            MediaStore.Audio.Media._ID,
+        )
+
+        val cursor = context.contentResolver.query(
+            MediaStore.Audio.Media.EXTERNAL_CONTENT_URI,
+            projection,
+            null,
+            null,
+            null
+        )
+
+        cursor?.use { cursor ->
+            val pathColumnIndex = cursor.getColumnIndexOrThrow(MediaStore.Audio.Media.DATA)
+            val idColumnIndex = cursor.getColumnIndexOrThrow(MediaStore.Audio.Media._ID)
+
+            while (cursor.moveToNext()) {
+                val path = cursor.getString(pathColumnIndex)
+                if (File(path).exists()) {
+                    audios.add(
+                        Song(
+                            id = "local-${idColumnIndex}",
+                            title = File(path).nameWithoutExtension,
+                            artist = null,
+                            duration = getMediaDurationInSeconds(context, path).toInt(),
+                            path = path
+                        )
+                    )
+                }
+            }
+        }
+        songs.addAll(audios)
+        return audios
+    }
+
+    private fun getMediaDurationInSeconds(context: Context, path: String): Long {
+        try {
+            val file = File(path)
+            val retriever = MediaMetadataRetriever()
+            retriever.setDataSource(context, Uri.fromFile(file))
+            val time = retriever.extractMetadata(MediaMetadataRetriever.METADATA_KEY_DURATION)
+            val timeInMillisec = time?.toLong() ?: 0
+            retriever.release()
+            return timeInMillisec / 1000
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+        return 0
+    }
 
     fun saveOnlineSongToCacheDir(
         context: Context,

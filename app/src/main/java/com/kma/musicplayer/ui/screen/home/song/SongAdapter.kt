@@ -50,7 +50,7 @@ class SongAdapter(
         RecyclerView.ViewHolder(binding.root) {
         fun bind(song: Song) {
             binding.tvTitle.text = song.title
-            binding.tvArtistAndDuration.text = "${song.artist.name} | ${Formatter.formatTime(song.duration.toLong())} mins"
+            binding.tvArtistAndDuration.text = "${song.artist?.name  ?: binding.root.context.getString(R.string.unknown)} | ${Formatter.formatTime(song.duration.toLong())} mins"
 
             binding.progressBar.visibility = View.VISIBLE
 
