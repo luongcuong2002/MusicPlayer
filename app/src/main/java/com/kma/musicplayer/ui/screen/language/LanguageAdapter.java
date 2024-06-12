@@ -12,6 +12,8 @@ import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 import com.kma.musicplayer.R;
 import com.kma.musicplayer.model.LanguageModel;
+import com.kma.musicplayer.model.Theme;
+
 import org.jetbrains.annotations.NotNull;
 import java.util.List;
 
@@ -19,6 +21,13 @@ public class LanguageAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
     private Context context;
     private List<LanguageModel> lists;
     private IClickLanguage iClickLanguage;
+
+    private Theme theme = Theme.DARK;
+
+    public void setTheme(Theme theme) {
+        this.theme = theme;
+        notifyDataSetChanged();
+    }
 
     public LanguageAdapter(Context context, List<LanguageModel> lists, IClickLanguage iClickLanguage) {
         this.context = context;
@@ -41,8 +50,10 @@ public class LanguageAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
 
             if (data.isCheck()) {
                 ((LanguageViewHolder) holder).relayEnglish.setBackgroundResource(R.drawable.border_item_language_select);
+                ((LanguageViewHolder) holder).tvTitle.setTextColor(context.getResources().getColor(R.color.white));
             } else {
-                ((LanguageViewHolder) holder).relayEnglish.setBackgroundResource(R.drawable.border_item_language);
+                ((LanguageViewHolder) holder).relayEnglish.setBackgroundResource(theme.getImageLanguageItemBackgroundRes());
+                ((LanguageViewHolder) holder).tvTitle.setTextColor(context.getResources().getColor(theme.getLanguageItemTextColorRes()));
             }
         }
     }

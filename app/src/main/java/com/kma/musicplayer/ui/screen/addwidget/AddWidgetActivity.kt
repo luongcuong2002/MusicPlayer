@@ -7,12 +7,20 @@ import androidx.viewpager2.widget.ViewPager2
 import com.kma.musicplayer.databinding.ActivityAddWidgetBinding
 import com.kma.musicplayer.ui.screen.core.BaseActivity
 import com.kma.musicplayer.R
+import com.kma.musicplayer.model.Theme
 
 class AddWidgetActivity : BaseActivity<ActivityAddWidgetBinding>() {
 
-    private lateinit var addWidgetAdapter: AddWidgetGuideAdapter
+    private var addWidgetAdapter: AddWidgetGuideAdapter? = null
 
     override fun getContentView(): Int = R.layout.activity_add_widget
+
+    override fun onThemeChanged(theme: Theme) {
+        binding.root.setBackgroundColor(getColor(theme.backgroundColorRes))
+        binding.tvTitle.setTextColor(getColor(theme.titleTextColorRes))
+        binding.backButton.setImageResource(theme.imageBackButtonRes)
+        addWidgetAdapter?.setTheme(theme)
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -27,7 +35,7 @@ class AddWidgetActivity : BaseActivity<ActivityAddWidgetBinding>() {
             override fun onPageSelected(position: Int) {
                 super.onPageSelected(position)
                 updateIndicator(position)
-                if (position == addWidgetAdapter.itemCount - 1) {
+                if (position == addWidgetAdapter!!.itemCount - 1) {
                     binding.tvNext.text = getString(R.string.got_it)
                 } else {
                     binding.tvNext.text = getString(R.string.next)
@@ -38,7 +46,7 @@ class AddWidgetActivity : BaseActivity<ActivityAddWidgetBinding>() {
 
     private fun setupListeners() {
         binding.llNext.setOnClickListener {
-            if (binding.viewPager.currentItem < addWidgetAdapter.itemCount - 1) {
+            if (binding.viewPager.currentItem < addWidgetAdapter!!.itemCount - 1) {
                 binding.viewPager.currentItem += 1
             } else {
                 finish()

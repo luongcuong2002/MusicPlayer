@@ -15,6 +15,7 @@ import com.kma.musicplayer.R
 import com.kma.musicplayer.databinding.LayoutItemHomeSongBinding
 import com.kma.musicplayer.model.OnlineSong
 import com.kma.musicplayer.model.Song
+import com.kma.musicplayer.model.Theme
 import com.kma.musicplayer.utils.Formatter
 
 class SongAdapter(
@@ -22,6 +23,13 @@ class SongAdapter(
     private val onMoreClick: (Song) -> Unit,
     private val onSongClick: (Song) -> Unit
 ) : RecyclerView.Adapter<SongAdapter.SongViewHolder>() {
+
+    private var theme: Theme = Theme.DARK
+
+    fun setTheme(theme: Theme) {
+        this.theme = theme
+        notifyDataSetChanged()
+    }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SongViewHolder {
         val binding = LayoutItemHomeSongBinding.inflate(
@@ -84,6 +92,12 @@ class SongAdapter(
             binding.root.setOnClickListener {
                 onSongClick(song)
             }
+
+            Log.d("CHECK_BUG", "bind: ${theme.titleTextColorRes} - theme: $theme")
+
+            binding.tvTitle.setTextColor(binding.root.resources.getColor(theme.titleTextColorRes))
+            binding.cardView.setCardBackgroundColor(binding.root.resources.getColor(theme.cardBackgroundColorRes))
+            binding.ivMore.setImageResource(theme.imageMenuRes)
         }
     }
 }

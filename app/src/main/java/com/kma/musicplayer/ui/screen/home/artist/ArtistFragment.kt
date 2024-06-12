@@ -6,6 +6,7 @@ import android.widget.Toast
 import androidx.lifecycle.ViewModelProvider
 import com.kma.musicplayer.R
 import com.kma.musicplayer.databinding.FragmentArtistBinding
+import com.kma.musicplayer.model.Theme
 import com.kma.musicplayer.ui.bottomsheet.add_to_playlist.AddToPlaylistBottomSheet
 import com.kma.musicplayer.ui.bottomsheet.artist_option.ArtistOptionBottomSheet
 import com.kma.musicplayer.ui.bottomsheet.create_new_playlist.CreateNewPlaylistBottomSheet
@@ -26,9 +27,14 @@ import java.io.Serializable
 class ArtistFragment : BaseFragment<FragmentArtistBinding>() {
 
     private lateinit var artistViewModel: ArtistViewModel
-    private lateinit var artistAdapter: ArtistAdapter
+    private var artistAdapter: ArtistAdapter? = null
 
     override fun getContentView(): Int = R.layout.fragment_artist
+
+    override fun onThemeChanged(theme: Theme) {
+        binding.tvNoArtistFound.setTextColor(requireActivity().getColor(theme.titleTextColorRes))
+        artistAdapter?.setTheme(theme)
+    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -41,7 +47,7 @@ class ArtistFragment : BaseFragment<FragmentArtistBinding>() {
         super.onResume()
         CoroutineScope(Dispatchers.Main).launch {
             artistViewModel.getAllArtist()
-            artistAdapter.notifyDataSetChanged()
+            artistAdapter?.notifyDataSetChanged()
         }
     }
 
@@ -102,6 +108,10 @@ class ArtistFragment : BaseFragment<FragmentArtistBinding>() {
                 )
             )
             binding.rvArtist.adapter = artistAdapter
+
+            getThemeViewModel().theme.observe(viewLifecycleOwner) {
+                onThemeChanged(it)
+            }
         }
     }
 }

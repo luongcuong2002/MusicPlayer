@@ -35,6 +35,12 @@ class BottomMiniAudioPlayer : FrameLayout {
     )
 
     fun initView(songService: PlaySongService) {
+
+        activity.getThemeViewModel().theme.observeForever {
+            binding.root.setBackgroundResource(it.bottomMiniPlayerBackgroundRes)
+            binding.ivSongQueue.setColorFilter(context.resources.getColor(it.songQueueIconColorRes))
+        }
+
         songService.thumbnailRotation.observeForever {
             binding.ivThumbnail.rotation = it
         }

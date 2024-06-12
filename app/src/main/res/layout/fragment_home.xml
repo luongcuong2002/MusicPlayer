@@ -4,7 +4,6 @@
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/color_0F0817"
         android:orientation="vertical"
         android:paddingTop="@dimen/_20sdp">
 
@@ -21,6 +20,7 @@
                 android:src="@drawable/app_logo" />
 
             <TextView
+                android:id="@+id/tv_title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/_7sdp"
@@ -37,11 +37,12 @@
             android:layout_marginHorizontal="@dimen/_13sdp">
 
             <com.google.android.material.card.MaterialCardView
+                android:id="@+id/divider"
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
                 android:layout_alignParentBottom="true"
                 android:layout_marginTop="@dimen/_10sdp"
-                app:cardBackgroundColor="@color/color_1E232E"
+                app:cardBackgroundColor="@color/color_F1F1F1"
                 app:cardCornerRadius="4dp"
                 app:cardElevation="0dp"
                 android:layout_marginBottom="1dp"

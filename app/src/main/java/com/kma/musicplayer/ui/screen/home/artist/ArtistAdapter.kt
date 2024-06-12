@@ -7,6 +7,7 @@ import com.bumptech.glide.Glide
 import com.kma.musicplayer.R
 import com.kma.musicplayer.databinding.LayoutItemPlaylistInfoWithMoreButtonBinding
 import com.kma.musicplayer.model.Artist
+import com.kma.musicplayer.model.Theme
 import com.kma.musicplayer.utils.SongManager
 
 class ArtistAdapter(
@@ -14,6 +15,13 @@ class ArtistAdapter(
     private val onClickMore: (Artist) -> Unit,
     private val onClickItem: (Artist) -> Unit,
 ) : RecyclerView.Adapter<ArtistAdapter.ViewHolder>() {
+
+    private var theme = Theme.DARK
+
+    fun setTheme(theme: Theme) {
+        this.theme = theme
+        notifyDataSetChanged()
+    }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val binding = LayoutItemPlaylistInfoWithMoreButtonBinding.inflate(
@@ -53,6 +61,10 @@ class ArtistAdapter(
             binding.root.setOnClickListener {
                 onClickItem(artists[adapterPosition])
             }
+
+            binding.tvName.setTextColor(binding.root.resources.getColor(theme.titleTextColorRes))
+            binding.cardView.setCardBackgroundColor(binding.root.resources.getColor(theme.cardBackgroundColorRes))
+            binding.ivMore.setImageResource(theme.imageMenuRes)
         }
     }
 }

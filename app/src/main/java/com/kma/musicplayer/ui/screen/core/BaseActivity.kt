@@ -16,6 +16,7 @@ import androidx.databinding.ViewDataBinding
 import androidx.lifecycle.MutableLiveData
 import com.kma.musicplayer.Application
 import com.kma.musicplayer.R
+import com.kma.musicplayer.model.Theme
 import com.kma.musicplayer.service.PlaySongService
 import com.kma.musicplayer.service.ServiceController
 import com.kma.musicplayer.ui.customview.BottomMiniAudioPlayer
@@ -38,6 +39,10 @@ abstract class BaseActivity<DB : ViewDataBinding> : AppCompatActivity(), Service
         val binder = service as PlaySongService.LocalBinder
         _songService = binder.getService()
         mBound.value = true
+
+        getThemeViewModel().theme.observe(this) {
+            onThemeChanged(it)
+        }
     }
 
     override fun onServiceDisconnected(className: ComponentName) {
@@ -49,6 +54,7 @@ abstract class BaseActivity<DB : ViewDataBinding> : AppCompatActivity(), Service
     }
 
     abstract fun getContentView(): Int
+    abstract fun onThemeChanged(theme: Theme)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

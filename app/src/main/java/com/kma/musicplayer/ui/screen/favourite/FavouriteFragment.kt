@@ -9,6 +9,7 @@ import com.kma.musicplayer.databinding.FragmentFavouriteBinding
 import com.kma.musicplayer.ui.screen.core.BaseFragment
 import com.kma.musicplayer.R
 import com.kma.musicplayer.database.AppDatabase
+import com.kma.musicplayer.model.Theme
 import com.kma.musicplayer.ui.bottomsheet.add_to_playlist.AddToPlaylistBottomSheet
 import com.kma.musicplayer.ui.bottomsheet.song_option.SongOptionBottomSheet
 import com.kma.musicplayer.ui.screen.home.song.SongAdapter
@@ -26,6 +27,16 @@ class FavouriteFragment : BaseFragment<FragmentFavouriteBinding>() {
     private var songAdapter: SongAdapter? = null
 
     override fun getContentView(): Int = R.layout.fragment_favourite
+
+    override fun onThemeChanged(theme: Theme) {
+        binding.tvTitle.setTextColor(requireActivity().getColor(theme.titleTextColorRes))
+        binding.tvMyFavouriteSongs.setTextColor(requireActivity().getColor(theme.titleTextColorRes))
+        binding.tvSongs.setTextColor(requireActivity().getColor(theme.titleTextColorRes))
+        binding.tvPlay.setTextColor(requireActivity().getColor(theme.titleTextColorRes))
+        binding.llPlay.setBackgroundResource(theme.backgroundPlayButtonRes)
+        binding.tvNoSongs.setTextColor(requireActivity().getColor(theme.titleTextColorRes))
+        songAdapter?.setTheme(theme)
+    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -145,6 +156,10 @@ class FavouriteFragment : BaseFragment<FragmentFavouriteBinding>() {
                 },
             )
             binding.rvFavourite.adapter = songAdapter
+
+            getThemeViewModel().theme.observe(viewLifecycleOwner) {
+                onThemeChanged(it)
+            }
         }
     }
 

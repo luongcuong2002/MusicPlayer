@@ -4,8 +4,16 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.kma.musicplayer.databinding.LayoutItemAddWidgetGuideBinding
+import com.kma.musicplayer.model.Theme
 
 class AddWidgetGuideAdapter : RecyclerView.Adapter<AddWidgetGuideAdapter.ViewHolder>() {
+
+    private var theme = Theme.DARK
+
+    fun setTheme(theme: Theme) {
+        this.theme = theme
+        notifyDataSetChanged()
+    }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val binding = LayoutItemAddWidgetGuideBinding.inflate(
@@ -27,6 +35,10 @@ class AddWidgetGuideAdapter : RecyclerView.Adapter<AddWidgetGuideAdapter.ViewHol
             binding.imgGuide.setImageResource(model.img)
             binding.tvTitle.setText(binding.root.context.getString(model.title))
             binding.tvDescription.setText(binding.root.context.getString(model.content))
+
+            binding.tvTitle.setTextColor(binding.root.context.resources.getColor(theme.titleTextColorRes))
+            binding.tvDescription.setTextColor(binding.root.context.resources.getColor(theme.descriptionTextColorRes))
+            binding.root.setBackgroundColor(binding.root.context.resources.getColor(theme.backgroundColorRes))
         }
     }
 }

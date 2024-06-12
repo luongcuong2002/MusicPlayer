@@ -3,11 +3,13 @@ package com.kma.musicplayer.ui.screen.home.song
 import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
+import android.os.Handler
 import android.view.View
 import androidx.lifecycle.ViewModelProvider
 import com.kma.musicplayer.R
 import com.kma.musicplayer.database.AppDatabase
 import com.kma.musicplayer.databinding.FragmentSongBinding
+import com.kma.musicplayer.model.Theme
 import com.kma.musicplayer.network.common.ApiCallState
 import com.kma.musicplayer.ui.bottomsheet.add_to_playlist.AddToPlaylistBottomSheet
 import com.kma.musicplayer.ui.bottomsheet.song_option.SongOptionBottomSheet
@@ -24,9 +26,17 @@ import java.io.Serializable
 class SongFragment : BaseFragment<FragmentSongBinding>() {
 
     private lateinit var songViewModel: SongViewModel
-    private lateinit var songAdapter: SongAdapter
+    private var songAdapter: SongAdapter? = null
 
     override fun getContentView(): Int = R.layout.fragment_song
+
+    override fun onThemeChanged(theme: Theme) {
+        binding.tvAllSongs.setTextColor(resources.getColor(theme.adapterTitleTextColorRes))
+        binding.ivCheckbox.setImageResource(theme.imageCheckBoxRes)
+        binding.ivSort.setImageResource(theme.imageSortRes)
+        binding.tvError.setTextColor(resources.getColor(theme.titleTextColorRes))
+        songAdapter?.setTheme(theme)
+    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -61,6 +71,10 @@ class SongFragment : BaseFragment<FragmentSongBinding>() {
                     binding.pbLoading.visibility = View.GONE
                     binding.tvError.visibility = View.GONE
                     setupRecyclerView()
+
+                    getThemeViewModel().theme.observe(viewLifecycleOwner) {
+                        onThemeChanged(it)
+                    }
                 }
 
                 ApiCallState.ERROR -> {
@@ -95,7 +109,7 @@ class SongFragment : BaseFragment<FragmentSongBinding>() {
                         CoroutineScope(Dispatchers.Main).launch {
                             AppDatabase.INSTANCE.hiddenSongDao().insert(song.id)
                             songViewModel.filterHiddenSongs()
-                            songAdapter.notifyDataSetChanged()
+                            songAdapter?.notifyDataSetChanged()
                             bottomSheet?.dismiss()
                         }
                     },
@@ -123,7 +137,7 @@ class SongFragment : BaseFragment<FragmentSongBinding>() {
         if (requestCode == Constant.REQUEST_CODE_DATA_CHANGED && resultCode == Activity.RESULT_OK) {
             CoroutineScope(Dispatchers.Main).launch {
                 songViewModel.filterHiddenSongs()
-                songAdapter.notifyDataSetChanged()
+                songAdapter?.notifyDataSetChanged()
             }
         }
     }

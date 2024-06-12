@@ -4,7 +4,6 @@
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/color_0F0817"
         android:orientation="vertical"
         android:paddingHorizontal="@dimen/_13sdp"
         android:paddingTop="@dimen/_25sdp">
@@ -14,6 +13,7 @@
             android:layout_height="wrap_content">
 
             <TextView
+                android:id="@+id/tv_playlists"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -31,11 +31,13 @@
                 app:layout_constraintRight_toRightOf="parent">
 
                 <ImageView
+                    android:id="@+id/iv_new_playlist"
                     android:layout_width="@dimen/_17sdp"
                     android:layout_height="@dimen/_17sdp"
                     android:src="@drawable/ic_plus_circle" />
 
                 <com.kma.musicplayer.ui.customview.MovableText
+                    android:id="@+id/tv_new_playlist"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/_7sdp"

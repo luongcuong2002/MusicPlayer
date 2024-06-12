@@ -7,6 +7,7 @@ import com.bumptech.glide.Glide
 import com.kma.musicplayer.R
 import com.kma.musicplayer.databinding.LayoutItemSelectableSongBinding
 import com.kma.musicplayer.model.OnlineSong
+import com.kma.musicplayer.model.Theme
 import com.kma.musicplayer.utils.Formatter
 
 class SelectableSongAdapter(
@@ -14,7 +15,13 @@ class SelectableSongAdapter(
     private val onSongClick: (Int) -> Unit
 ) : RecyclerView.Adapter<SelectableSongAdapter.SongViewHolder>() {
 
+    private var theme = Theme.DARK
     private val tempSongs = mutableListOf<SelectableSong>()
+
+    fun setTheme(theme: Theme) {
+        this.theme = theme
+        notifyDataSetChanged()
+    }
 
     fun doFilter(text: String) {
         // If tempVideoPaths is empty, it means that the adapter has not been filtered yet
@@ -71,15 +78,17 @@ class SelectableSongAdapter(
 
             binding.ivCheckbox.setImageResource(
                 if (songs[position].isSelected) {
-                    R.drawable.ic_select_all_enable
+                    theme.imageCheckBoxSelectedRes
                 } else {
-                    R.drawable.ic_checkbox_unselected
+                    theme.imageCheckBoxUnSelectedRes
                 }
             )
 
             binding.root.setOnClickListener {
                 onSongClick(position)
             }
+
+            binding.tvTitle.setTextColor(binding.root.resources.getColor(theme.titleTextColorRes))
         }
     }
 }

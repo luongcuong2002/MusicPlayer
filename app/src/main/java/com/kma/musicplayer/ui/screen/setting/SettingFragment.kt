@@ -2,6 +2,8 @@ package com.kma.musicplayer.ui.screen.setting
 
 import android.content.Intent
 import android.os.Bundle
+import android.os.Handler
+import android.util.Log
 import android.view.View
 import com.kma.musicplayer.ui.screen.language.LanguageActivity
 import com.kma.musicplayer.BuildConfig
@@ -17,9 +19,44 @@ import com.kma.musicplayer.ui.screen.policy.PolicyActivity
 class SettingFragment : BaseFragment<FragmentSettingBinding>() {
     override fun getContentView(): Int = R.layout.fragment_setting
 
+    override fun onThemeChanged(theme: Theme) {
+        binding.tvTitle.setTextColor(requireActivity().getColor(theme.titleTextColorRes))
+        binding.tvGeneral.setTextColor(requireActivity().getColor(theme.adapterTitleTextColorRes))
+        binding.tvHelp.setTextColor(requireActivity().getColor(theme.adapterTitleTextColorRes))
+        binding.ivLightMode.setColorFilter(requireActivity().getColor(theme.settingIconColorRes))
+        binding.tvLightMode.setTextColor(requireActivity().getColor(theme.titleTextColorRes))
+        binding.ivHiddenSongs.setColorFilter(requireActivity().getColor(theme.settingIconColorRes))
+        binding.tvHiddenSongs.setTextColor(requireActivity().getColor(theme.titleTextColorRes))
+        binding.ivAddWidget.setColorFilter(requireActivity().getColor(theme.settingIconColorRes))
+        binding.tvAddWidget.setTextColor(requireActivity().getColor(theme.titleTextColorRes))
+        binding.ivRingtone.setColorFilter(requireActivity().getColor(theme.settingIconColorRes))
+        binding.tvRingtone.setTextColor(requireActivity().getColor(theme.titleTextColorRes))
+        binding.ivLanguage.setColorFilter(requireActivity().getColor(theme.settingIconColorRes))
+        binding.tvLanguage.setTextColor(requireActivity().getColor(theme.titleTextColorRes))
+        binding.ivShare.setColorFilter(requireActivity().getColor(theme.settingIconColorRes))
+        binding.tvShare.setTextColor(requireActivity().getColor(theme.titleTextColorRes))
+        binding.ivRate.setColorFilter(requireActivity().getColor(theme.settingIconColorRes))
+        binding.tvRate.setTextColor(requireActivity().getColor(theme.titleTextColorRes))
+        binding.ivPrivacyPolicy.setColorFilter(requireActivity().getColor(theme.settingIconColorRes))
+        binding.tvPrivacyPolicy.setTextColor(requireActivity().getColor(theme.titleTextColorRes))
+        binding.llGeneral.setBackgroundResource(theme.backgroundSettingTabRes)
+        binding.llHelp.setBackgroundResource(theme.backgroundSettingTabRes)
+    }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        initView()
         setupListener()
+
+        getThemeViewModel().theme.observe(viewLifecycleOwner) {
+            onThemeChanged(it)
+        }
+    }
+
+    private fun initView() {
+        binding.switchLightMode.post {
+            binding.switchLightMode.setChecked(getThemeViewModel().theme.value == Theme.LIGHT)
+        }
     }
 
     private fun setupListener() {

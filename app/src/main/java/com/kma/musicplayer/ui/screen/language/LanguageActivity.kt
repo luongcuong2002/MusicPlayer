@@ -10,6 +10,7 @@ import androidx.lifecycle.ViewModelProvider
 import com.kma.musicplayer.R
 import com.kma.musicplayer.databinding.ActivityLanguageBinding
 import com.kma.musicplayer.model.LanguageModel
+import com.kma.musicplayer.model.Theme
 import com.kma.musicplayer.ui.screen.core.BaseActivity
 import com.kma.musicplayer.ui.screen.main.MainActivity
 import com.kma.musicplayer.utils.SystemUtil
@@ -24,6 +25,13 @@ class LanguageActivity : BaseActivity<ActivityLanguageBinding>(),
     private lateinit var languageViewModel: LanguageViewModel
 
     override fun getContentView(): Int = R.layout.activity_language
+
+    override fun onThemeChanged(theme: Theme) {
+        binding.root.setBackgroundColor(resources.getColor(theme.backgroundColorRes))
+        binding.backButton.setImageResource(theme.imageBackButtonRes)
+        binding.tvTitle.setTextColor(resources.getColor(theme.titleTextColorRes))
+        adapter?.setTheme(theme)
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

@@ -20,4 +20,10 @@
     <color name="color_AE92FF">#AE92FF</color>
     <color name="color_AE92FF_50">#80AE92FF</color>
     <color name="color_7150D0_50">#807150D0</color>
+    <color name="color_F3F4F6">#F3F4F6</color>
+    <color name="white_20">#33FFFFFF</color>
+    <color name="black_20">#33000000</color>
+    <color name="color_F3F4F6_50">#80F3F4F6</color>
+    <color name="color_4B4F58_5">#0D4B4F58</color>
+    <color name="color_F1F1F1">#F1F1F1</color>
 </resources>

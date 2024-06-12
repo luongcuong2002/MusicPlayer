@@ -8,6 +8,7 @@ import com.kma.musicplayer.databinding.ActivityHiddenSongBinding
 import com.kma.musicplayer.ui.screen.core.BaseActivity
 import com.kma.musicplayer.R
 import com.kma.musicplayer.database.AppDatabase
+import com.kma.musicplayer.model.Theme
 import com.kma.musicplayer.ui.screen.songselector.SelectableSongAdapter
 import com.kma.musicplayer.utils.SongManager
 import kotlinx.coroutines.CoroutineScope
@@ -17,9 +18,20 @@ import kotlinx.coroutines.launch
 class HiddenSongActivity : BaseActivity<ActivityHiddenSongBinding>() {
 
     private lateinit var hiddenSongViewModel: HiddenSongViewModel
-    private lateinit var selectableSongAdapter: SelectableSongAdapter
+    private var selectableSongAdapter: SelectableSongAdapter? = null
 
     override fun getContentView(): Int = R.layout.activity_hidden_song
+
+    override fun onThemeChanged(theme: Theme) {
+        binding.root.setBackgroundColor(resources.getColor(theme.backgroundColorRes))
+        binding.backButton.setImageResource(theme.imageBackButtonRes)
+        binding.tvTitle.setTextColor(resources.getColor(theme.titleTextColorRes))
+        binding.cvSearch.setCardBackgroundColor(resources.getColor(theme.editTextBackgroundColorRes))
+        binding.ivSearch.setImageResource(theme.imageSearchRes)
+        binding.etSearch.setTextColor(resources.getColor(theme.titleTextColorRes))
+        binding.ivSelectAll.setImageResource(if (hiddenSongViewModel.isSelectAll.value == true) theme.imageCheckBoxSelectedRes else theme.imageCheckBoxUnSelectedRes)
+        selectableSongAdapter?.setTheme(theme)
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -43,7 +55,7 @@ class HiddenSongActivity : BaseActivity<ActivityHiddenSongBinding>() {
     private fun setupRecyclerView() {
         selectableSongAdapter = SelectableSongAdapter(hiddenSongViewModel.songs) {
             hiddenSongViewModel.songs[it].isSelected = !hiddenSongViewModel.songs[it].isSelected
-            selectableSongAdapter.notifyItemChanged(it)
+            selectableSongAdapter?.notifyItemChanged(it)
             hiddenSongViewModel.checkSelectAll()
             hiddenSongViewModel.checkAtLeastOneSelected()
         }
@@ -57,14 +69,14 @@ class HiddenSongActivity : BaseActivity<ActivityHiddenSongBinding>() {
             } else {
                 hiddenSongViewModel.selectAll()
             }
-            selectableSongAdapter.notifyDataSetChanged()
+            selectableSongAdapter?.notifyDataSetChanged()
         }
         binding.etSearch.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
             }
 
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                selectableSongAdapter.doFilter(s.toString())
+                selectableSongAdapter?.doFilter(s.toString())
             }
 
             override fun afterTextChanged(s: Editable?) {
@@ -82,7 +94,7 @@ class HiddenSongActivity : BaseActivity<ActivityHiddenSongBinding>() {
 
     private fun setupObserver() {
         hiddenSongViewModel.isSelectAll.observe(this) {
-            binding.ivSelectAll.setImageResource(if (it) R.drawable.ic_select_all_enable else R.drawable.ic_select_all_disable)
+            binding.ivSelectAll.setImageResource(if (it) getThemeViewModel().theme.value!!.imageCheckBoxSelectedRes else getThemeViewModel().theme.value!!.imageCheckBoxUnSelectedRes)
         }
         hiddenSongViewModel.isAtLeastOneSelected.observe(this) {
             val opacity = if (it) 1.0f else 0.5f

@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/audio_controller_root"
     android:layout_width="match_parent"
-    android:layout_height="@dimen/_115sdp"
+    android:layout_height="@dimen/_118sdp"
     android:orientation="vertical">
 
     <com.google.android.exoplayer2.ui.DefaultTimeBar
@@ -10,7 +11,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:buffered_color="#33FFFFFF"
-        app:played_color="@color/white"
+        app:played_color="#C1C1C1"
         app:scrubber_drawable="@drawable/custom_seekbar_thumb"
         app:unplayed_color="#33FFFFFF" />
 

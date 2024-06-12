@@ -4,7 +4,6 @@
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/color_0F0817"
         android:orientation="vertical"
         android:paddingTop="@dimen/_20sdp">
 
@@ -12,7 +11,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="@dimen/_13sdp">
+
             <com.kma.musicplayer.ui.customview.BackButton
+                android:id="@+id/back_button"
                 android:layout_width="@dimen/_20sdp"
                 android:layout_height="@dimen/_20sdp" />
 
@@ -20,17 +21,16 @@
                 android:id="@+id/iv_select_all"
                 android:layout_width="@dimen/_17sdp"
                 android:layout_height="@dimen/_17sdp"
-                android:layout_alignParentEnd="true"
-                android:src="@drawable/ic_select_all_disable" />
+                android:layout_alignParentEnd="true" />
 
         </RelativeLayout>
 
         <com.google.android.material.card.MaterialCardView
+            android:id="@+id/cvSearch"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="@dimen/_13sdp"
             android:layout_marginTop="@dimen/_13sdp"
-            app:cardBackgroundColor="@color/color_242635"
             app:cardCornerRadius="@dimen/_100sdp"
             app:cardElevation="0dp"
             app:strokeWidth="0dp">
@@ -44,6 +44,7 @@
                 android:paddingVertical="@dimen/_10sdp">
 
                 <ImageView
+                    android:id="@+id/ivSearch"
                     android:layout_width="@dimen/_20sdp"
                     android:layout_height="@dimen/_20sdp"
                     android:src="@drawable/ic_search" />
@@ -90,11 +91,13 @@
                 android:paddingVertical="@dimen/_13sdp">
 
                 <ImageView
+                    android:id="@+id/iv_hide"
                     android:layout_width="@dimen/_20sdp"
                     android:layout_height="@dimen/_20sdp"
                     android:src="@drawable/ic_hide" />
 
                 <TextView
+                    android:id="@+id/tv_hide"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/_3sdp"
@@ -116,11 +119,13 @@
                 android:paddingVertical="@dimen/_13sdp">
 
                 <ImageView
+                    android:id="@+id/iv_add_to"
                     android:layout_width="@dimen/_20sdp"
                     android:layout_height="@dimen/_20sdp"
                     android:src="@drawable/ic_add_to" />
 
                 <TextView
+                    android:id="@+id/tv_add_to"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/_3sdp"
@@ -142,11 +147,13 @@
                 android:paddingVertical="@dimen/_13sdp">
 
                 <ImageView
+                    android:id="@+id/iv_play_next"
                     android:layout_width="@dimen/_20sdp"
                     android:layout_height="@dimen/_20sdp"
                     android:src="@drawable/ic_play_next" />
 
                 <TextView
+                    android:id="@+id/tv_play_next"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/_3sdp"

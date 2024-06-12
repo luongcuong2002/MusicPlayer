@@ -5,7 +5,6 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/color_0F0817"
         android:orientation="vertical"
         android:paddingTop="@dimen/_20sdp">
 
@@ -16,11 +15,13 @@
             android:layout_marginBottom="@dimen/_20sdp">
 
             <com.kma.musicplayer.ui.customview.BackButton
+                android:id="@+id/back_button"
                 android:layout_width="@dimen/_20sdp"
                 android:layout_height="@dimen/_20sdp"
                 android:layout_centerVertical="true" />
 
             <com.kma.musicplayer.ui.customview.MovableText
+                android:id="@+id/tv_title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerInParent="true"

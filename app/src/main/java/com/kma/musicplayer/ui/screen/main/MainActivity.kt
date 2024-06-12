@@ -6,12 +6,17 @@ import androidx.navigation.findNavController
 import com.kma.musicplayer.databinding.ActivityMainBinding
 import com.kma.musicplayer.ui.screen.core.BaseActivity
 import com.kma.musicplayer.R
+import com.kma.musicplayer.model.Theme
 
 class MainActivity : BaseActivity<ActivityMainBinding>() {
 
     private lateinit var navController: NavController
 
     override fun getContentView(): Int = R.layout.activity_main
+
+    override fun onThemeChanged(theme: Theme) {
+        binding.root.setBackgroundResource(theme.backgroundColorRes)
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

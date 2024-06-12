@@ -10,6 +10,7 @@ import com.kma.musicplayer.ui.screen.core.BaseActivity
 import com.kma.musicplayer.R
 import com.kma.musicplayer.database.AppDatabase
 import com.kma.musicplayer.model.Artist
+import com.kma.musicplayer.model.Theme
 import com.kma.musicplayer.ui.bottomsheet.add_to_playlist.AddToPlaylistBottomSheet
 import com.kma.musicplayer.ui.bottomsheet.song_option.SongOptionBottomSheet
 import com.kma.musicplayer.ui.screen.home.song.SongAdapter
@@ -26,6 +27,17 @@ class ArtistViewerActivity : BaseActivity<ActivityArtistViewerBinding>() {
     private var songAdapter: SongAdapter? = null
 
     override fun getContentView(): Int = R.layout.activity_artist_viewer
+
+    override fun onThemeChanged(theme: Theme) {
+        binding.root.setBackgroundColor(getColor(theme.backgroundColorRes))
+        binding.tvArtistName.setTextColor(getColor(theme.titleTextColorRes))
+        binding.backButton.setImageResource(theme.imageBackButtonRes)
+        binding.tvSongs.setTextColor(getColor(theme.titleTextColorRes))
+        binding.tvPlay.setTextColor(getColor(theme.titleTextColorRes))
+        binding.llPlay.setBackgroundResource(theme.backgroundPlayButtonRes)
+        binding.tvNoSongs.setTextColor(getColor(theme.titleTextColorRes))
+        songAdapter?.setTheme(theme)
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

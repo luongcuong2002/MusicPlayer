@@ -1,18 +1,12 @@
 package com.kma.musicplayer.ui.screen.home.playlist
 
-import android.content.Context
 import android.os.Bundle
-import android.util.Log
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import android.widget.Toast
 import androidx.lifecycle.ViewModelProvider
-import androidx.recyclerview.widget.LinearLayoutManager
 import com.kma.musicplayer.R
 import com.kma.musicplayer.databinding.FragmentPlaylistBinding
-import com.kma.musicplayer.service.PlaySongService
-import com.kma.musicplayer.service.ServiceController
+import com.kma.musicplayer.model.Theme
 import com.kma.musicplayer.ui.bottomsheet.create_new_playlist.CreateNewPlaylistBottomSheet
 import com.kma.musicplayer.ui.bottomsheet.playlist_option.PlaylistOptionBottomSheet
 import com.kma.musicplayer.ui.customview.VerticalSpaceItemDecoration
@@ -28,9 +22,17 @@ import java.io.Serializable
 class PlaylistFragment : BaseFragment<FragmentPlaylistBinding>() {
 
     private lateinit var playlistViewModel: PlaylistViewModel
-    private lateinit var playlistAdapter: PlaylistAdapter
+    private var playlistAdapter: PlaylistAdapter? = null
 
     override fun getContentView(): Int = R.layout.fragment_playlist
+
+    override fun onThemeChanged(theme: Theme) {
+        binding.tvPlaylists.setTextColor(requireContext().getColor(theme.adapterTitleTextColorRes))
+        binding.ivNewPlaylist.setImageResource(theme.imagePlusCircle)
+        binding.tvNewPlaylist.setTextColor(requireContext().getColor(theme.adapterSubTitleTextColorRes))
+        binding.tvNoPlaylistFound.setTextColor(requireContext().getColor(theme.titleTextColorRes))
+        playlistAdapter?.setTheme(theme)
+    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -44,7 +46,7 @@ class PlaylistFragment : BaseFragment<FragmentPlaylistBinding>() {
         super.onResume()
         CoroutineScope(Dispatchers.Main).launch {
             playlistViewModel.getAllPlaylists()
-            playlistAdapter.notifyDataSetChanged()
+            playlistAdapter?.notifyDataSetChanged()
         }
     }
 
@@ -53,7 +55,7 @@ class PlaylistFragment : BaseFragment<FragmentPlaylistBinding>() {
             val createNewPlaylistBottomSheet = CreateNewPlaylistBottomSheet {
                 CoroutineScope(Dispatchers.Main).launch {
                     playlistViewModel.getAllPlaylists()
-                    playlistAdapter.notifyDataSetChanged()
+                    playlistAdapter?.notifyDataSetChanged()
                 }
             }
             createNewPlaylistBottomSheet.show(
@@ -81,7 +83,7 @@ class PlaylistFragment : BaseFragment<FragmentPlaylistBinding>() {
                         onPlaylistDeleted = {
                             CoroutineScope(Dispatchers.Main).launch {
                                 playlistViewModel.getAllPlaylists()
-                                playlistAdapter.notifyDataSetChanged()
+                                playlistAdapter?.notifyDataSetChanged()
                             }
                         },
                         onClickPlay = {
@@ -124,6 +126,10 @@ class PlaylistFragment : BaseFragment<FragmentPlaylistBinding>() {
                 )
             )
             binding.rvPlaylist.adapter = playlistAdapter
+
+            getThemeViewModel().theme.observe(viewLifecycleOwner) {
+                onThemeChanged(it)
+            }
         }
     }
 }

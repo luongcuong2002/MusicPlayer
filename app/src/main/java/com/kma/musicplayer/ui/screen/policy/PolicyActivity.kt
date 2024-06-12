@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.webkit.WebSettings
 import com.kma.musicplayer.R
 import com.kma.musicplayer.databinding.ActivityPolicyBinding
+import com.kma.musicplayer.model.Theme
 import com.kma.musicplayer.ui.screen.core.BaseActivity
 
 class PolicyActivity : BaseActivity<ActivityPolicyBinding>() {
@@ -13,6 +14,12 @@ class PolicyActivity : BaseActivity<ActivityPolicyBinding>() {
     }
 
     override fun getContentView(): Int = R.layout.activity_policy
+
+    override fun onThemeChanged(theme: Theme) {
+        binding.root.setBackgroundColor(getColor(theme.backgroundColorRes))
+        binding.backButton.setImageResource(theme.imageBackButtonRes)
+        binding.tvTitle.setTextColor(getColor(theme.titleTextColorRes))
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
