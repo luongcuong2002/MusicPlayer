@@ -26,9 +26,11 @@ import com.kma.musicplayer.utils.Constant
 
 class MusicPlayerAppWidgetProvider : AppWidgetProvider() {
 
-    private val BUTTON_PLAY_PAUSE = "BUTTON_PLAY_PAUSE"
-    private val BUTTON_NEXT = "BUTTON_NEXT"
-    private val BUTTON_PREVIOUS = "BUTTON_PREVIOUS"
+    companion object {
+        private const val BUTTON_PLAY_PAUSE = "BUTTON_PLAY_PAUSE"
+        private const val BUTTON_NEXT = "BUTTON_NEXT"
+        private const val BUTTON_PREVIOUS = "BUTTON_PREVIOUS"
+    }
 
     override fun onReceive(context: Context, intent: Intent) {
         super.onReceive(context, intent)
