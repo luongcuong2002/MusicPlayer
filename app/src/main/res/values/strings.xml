@@ -81,4 +81,6 @@
     <string name="custom_hh_mm">Custom ( hh:mm )</string>
     <string name="please_select_a_time">Please select a time</string>
     <string name="left">Left</string>
+    <string name="widget_description">Quick access to your media controls.</string>
+    <string name="now_playing">Now Playing</string>
 </resources>

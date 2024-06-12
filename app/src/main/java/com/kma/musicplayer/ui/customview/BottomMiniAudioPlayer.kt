@@ -42,7 +42,7 @@ class BottomMiniAudioPlayer : FrameLayout {
             binding.tvName.text = songService.playingSong.value?.title
             binding.tvArtist.text = songService.playingSong.value?.artist?.name
             if (songService.playingSong.value is OnlineSong) {
-                Glide.with(context)
+                Glide.with(context.applicationContext)
                     .load((songService.playingSong.value as OnlineSong).thumbnail)
                     .placeholder(R.drawable.default_song_thumbnail)
                     .into(binding.ivThumbnail)

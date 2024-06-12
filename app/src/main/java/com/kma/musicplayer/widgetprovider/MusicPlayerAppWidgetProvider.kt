@@ -69,6 +69,10 @@ class MusicPlayerAppWidgetProvider : AppWidgetProvider() {
             } else {
                 context.startService(Intent(context, PlaySongService::class.java))
             }
+        } else {
+            LocalBroadcastManager.getInstance(context).sendBroadcast(
+                Intent(PlaySongService.ACTION_REQUEST_UPDATE_WIDGET_UI)
+            )
         }
     }
 
@@ -80,6 +84,7 @@ class MusicPlayerAppWidgetProvider : AppWidgetProvider() {
     ) {
         val songStatus = intent.getSerializableExtra(Constant.BUNDLE_SONG_STATUS) as PlaySongService.SongStatus?
         songStatus?.let {
+            Log.d("PlaySongService", "updateWidget: ${it.song.title} - ${it.isPlaying}")
             appWidgetIds.forEach { appWidgetId ->
                 val pendingIntent: PendingIntent = PendingIntent.getActivity(
                     /* context = */ context,
@@ -133,7 +138,6 @@ class MusicPlayerAppWidgetProvider : AppWidgetProvider() {
                 } else {
                     views.setImageViewResource(R.id.iv_thumbnail, R.drawable.default_song_thumbnail)
                 }
-
                 appWidgetManager.updateAppWidget(appWidgetId, views)
             }
         }

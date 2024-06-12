@@ -79,7 +79,7 @@
 
         <receiver android:name=".widgetprovider.MusicPlayerAppWidgetProvider"
             android:exported="false"
-            android:label="Classic">
+            android:label="@string/now_playing">
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
             </intent-filter>

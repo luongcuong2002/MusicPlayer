@@ -57,6 +57,7 @@ class PlaySongService : Service() {
         const val ACTION_TOGGLE_PLAY_PAUSE = "ACTION_TOGGLE_PLAY_PAUSE"
         const val ACTION_PLAY_NEXT = "ACTION_PLAY_NEXT"
         const val ACTION_PLAY_PREVIOUS = "ACTION_PLAY_PREVIOUS"
+        const val ACTION_REQUEST_UPDATE_WIDGET_UI = "ACTION_REQUEST_UPDATE_WIDGET_UI"
     }
 
     private val mReceiver: BroadcastReceiver = object : BroadcastReceiver() {
@@ -65,6 +66,7 @@ class PlaySongService : Service() {
                 ACTION_TOGGLE_PLAY_PAUSE -> togglePlayPause()
                 ACTION_PLAY_NEXT -> playNext()
                 ACTION_PLAY_PREVIOUS -> playPrevious()
+                ACTION_REQUEST_UPDATE_WIDGET_UI -> updateWidgetUI()
             }
         }
     }
@@ -73,6 +75,7 @@ class PlaySongService : Service() {
         addAction(ACTION_TOGGLE_PLAY_PAUSE)
         addAction(ACTION_PLAY_NEXT)
         addAction(ACTION_PLAY_PREVIOUS)
+        addAction(ACTION_REQUEST_UPDATE_WIDGET_UI)
     }
 
     var songs: MutableList<Song> = mutableListOf()
@@ -197,16 +200,13 @@ class PlaySongService : Service() {
         isPlaying.observeForever {
             updateWidgetUI()
         }
-        playingSong.observeForever {
-            updateWidgetUI()
-        }
     }
 
     private fun updateWidgetUI() {
         val intent = Intent(this, MusicPlayerAppWidgetProvider::class.java)
         intent.setAction(AppWidgetManager.ACTION_APPWIDGET_UPDATE)
         val ids: IntArray = AppWidgetManager.getInstance(application)
-            .getAppWidgetIds(ComponentName(getApplication(), MusicPlayerAppWidgetProvider::class.java))
+            .getAppWidgetIds(ComponentName(application, MusicPlayerAppWidgetProvider::class.java))
         intent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_IDS, ids)
         intent.putExtra(Constant.BUNDLE_SONG_STATUS, SongStatus(playingSong.value!!, isPlaying.value!!))
         sendBroadcast(intent)
@@ -270,13 +270,13 @@ class PlaySongService : Service() {
     fun playAt(index: Int) {
         updateCurrentIndexValue(index)
         _audioPlayerManager?.play(currentIndex)
-        isPlaying.value = true
+        isPlaying.postValue(true)
     }
 
     fun setPlayerAt(index: Int) {
         updateCurrentIndexValue(index)
         _audioPlayerManager?.setPlayerAt(index)
-        isPlaying.value = false
+        isPlaying.postValue(false)
     }
 
     fun setPlayRandomlyEnabled(isEnabled: Boolean) {
