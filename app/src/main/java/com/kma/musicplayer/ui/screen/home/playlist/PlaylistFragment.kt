@@ -11,6 +11,7 @@ import com.kma.musicplayer.ui.bottomsheet.create_new_playlist.CreateNewPlaylistB
 import com.kma.musicplayer.ui.bottomsheet.playlist_option.PlaylistOptionBottomSheet
 import com.kma.musicplayer.ui.customview.VerticalSpaceItemDecoration
 import com.kma.musicplayer.ui.screen.core.BaseFragment
+import com.kma.musicplayer.ui.screen.playlistviewer.PlaylistViewerActivity
 import com.kma.musicplayer.ui.screen.playsong.PlaySongActivity
 import com.kma.musicplayer.utils.Constant
 import com.kma.musicplayer.utils.SongManager
@@ -115,7 +116,17 @@ class PlaylistFragment : BaseFragment<FragmentPlaylistBinding>() {
                     bottomSheet.show(requireActivity().supportFragmentManager, bottomSheet.tag)
                 },
                 { playlistModel ->
-                    // onClickItem
+                    if (playlistModel.songIds.isEmpty()) {
+                        Toast.makeText(
+                            requireContext(),
+                            getString(R.string.no_song_in_playlist),
+                            Toast.LENGTH_SHORT
+                        ).show()
+                        return@PlaylistAdapter
+                    }
+                    showActivity(PlaylistViewerActivity::class.java, Bundle().apply {
+                        putSerializable(Constant.BUNDLE_PLAYLIST, playlistModel)
+                    })
                 },
             )
             binding.rvPlaylist.addItemDecoration(

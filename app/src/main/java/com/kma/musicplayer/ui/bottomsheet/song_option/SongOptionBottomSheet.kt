@@ -24,7 +24,9 @@ class SongOptionBottomSheet(
     private val onClickHide: (() -> Unit)? = null,
     private val onClickShare: (() -> Unit)? = null,
     private val onClickDelete: (() -> Unit)? = null,
-    private val onChangeFavorite: (() -> Unit)? = null
+    private val onChangeFavorite: (() -> Unit)? = null,
+    private val onDeleteFromPlaylist: (() -> Unit)? = null,
+    private val showDeleteFromPlaylist: Boolean = false,
 ) : BottomSheetDialogFragment() {
 
     private lateinit var binding: BottomSheetSongOptionBinding
@@ -46,6 +48,12 @@ class SongOptionBottomSheet(
                     .isFavourite(song.id)
             ) R.drawable.ic_purple_heart else R.drawable.ic_white_heart
         )
+
+        if (showDeleteFromPlaylist) {
+            binding.llDeleteFromPlaylist.visibility = View.VISIBLE
+        } else {
+            binding.llDeleteFromPlaylist.visibility = View.GONE
+        }
 
         when (song) {
             is OnlineSong -> {
@@ -86,6 +94,9 @@ class SongOptionBottomSheet(
         }
         binding.llShare.setOnClickListener {
             onClickShare?.invoke()
+        }
+        binding.llDeleteFromPlaylist.setOnClickListener {
+            onDeleteFromPlaylist?.invoke()
         }
         binding.llDelete.setOnClickListener {
             onClickDelete?.invoke()

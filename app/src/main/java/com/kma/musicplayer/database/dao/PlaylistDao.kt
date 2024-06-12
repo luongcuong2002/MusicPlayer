@@ -59,4 +59,10 @@ interface PlaylistDao {
         }
         return playlists
     }
+
+    suspend fun deleteSongFromPlaylist(playlistId: Int, songId: String) {
+        val playlist = getOriginalPlaylistById(playlistId)
+        playlist.songIds.remove(songId)
+        updateOriginalPlaylist(playlist)
+    }
 }

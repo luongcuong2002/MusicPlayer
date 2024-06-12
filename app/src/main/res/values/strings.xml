@@ -83,4 +83,5 @@
     <string name="left">Left</string>
     <string name="widget_description">Quick access to your media controls.</string>
     <string name="now_playing">Now Playing</string>
+    <string name="delete_from_playlist">Delete from playlist</string>
 </resources>
