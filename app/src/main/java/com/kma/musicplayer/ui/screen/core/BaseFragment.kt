@@ -9,11 +9,13 @@ import android.widget.FrameLayout
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 import androidx.fragment.app.Fragment
+import com.kma.musicplayer.Application
 import com.kma.musicplayer.R
 import com.kma.musicplayer.service.PlaySongService
 import com.kma.musicplayer.service.ServiceController
 import com.kma.musicplayer.ui.customview.BottomMiniAudioPlayer
 import com.kma.musicplayer.utils.SystemUtil
+import com.kma.musicplayer.viewmodel.ThemeViewModel
 
 abstract class BaseFragment<DB : ViewDataBinding> : Fragment() {
     lateinit var binding: DB
@@ -100,5 +102,9 @@ abstract class BaseFragment<DB : ViewDataBinding> : Fragment() {
         } else {
             bottomMiniPlayer?.visibility = View.GONE
         }
+    }
+
+    fun getThemeViewModel(): ThemeViewModel {
+        return (requireContext().applicationContext as Application).getThemeViewModel()
     }
 }

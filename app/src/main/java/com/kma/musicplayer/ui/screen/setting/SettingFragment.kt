@@ -8,6 +8,7 @@ import com.kma.musicplayer.BuildConfig
 import com.kma.musicplayer.databinding.FragmentSettingBinding
 import com.kma.musicplayer.ui.screen.core.BaseFragment
 import com.kma.musicplayer.R
+import com.kma.musicplayer.model.Theme
 import com.kma.musicplayer.ui.dialog.RatingDialog
 import com.kma.musicplayer.ui.screen.addwidget.AddWidgetActivity
 import com.kma.musicplayer.ui.screen.hiddensong.HiddenSongActivity
@@ -22,6 +23,13 @@ class SettingFragment : BaseFragment<FragmentSettingBinding>() {
     }
 
     private fun setupListener() {
+        binding.switchLightMode.setOnCheckedChangeListener { _, isChecked ->
+            if (isChecked) {
+                getThemeViewModel().setCurrentTheme(Theme.LIGHT)
+            } else {
+                getThemeViewModel().setCurrentTheme(Theme.DARK)
+            }
+        }
         binding.llHiddenSongs.setOnClickListener {
             showActivity(HiddenSongActivity::class.java)
         }

@@ -14,11 +14,13 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 import androidx.lifecycle.MutableLiveData
+import com.kma.musicplayer.Application
 import com.kma.musicplayer.R
 import com.kma.musicplayer.service.PlaySongService
 import com.kma.musicplayer.service.ServiceController
 import com.kma.musicplayer.ui.customview.BottomMiniAudioPlayer
 import com.kma.musicplayer.utils.SystemUtil
+import com.kma.musicplayer.viewmodel.ThemeViewModel
 
 abstract class BaseActivity<DB : ViewDataBinding> : AppCompatActivity(), ServiceConnection {
 
@@ -141,5 +143,9 @@ abstract class BaseActivity<DB : ViewDataBinding> : AppCompatActivity(), Service
         } else {
             bottomMiniPlayer?.visibility = View.GONE
         }
+    }
+
+    fun getThemeViewModel(): ThemeViewModel {
+        return (applicationContext as Application).getThemeViewModel()
     }
 }
