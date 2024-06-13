@@ -46,6 +46,9 @@ abstract class BaseFragment<DB : ViewDataBinding> : Fragment() {
             )
             rootView = binding.root
         }
+        getThemeViewModel().theme.observe(viewLifecycleOwner) {
+            onThemeChanged(it)
+        }
         return rootView
     }
 
@@ -108,5 +111,9 @@ abstract class BaseFragment<DB : ViewDataBinding> : Fragment() {
 
     fun getThemeViewModel(): ThemeViewModel {
         return (requireContext().applicationContext as Application).getThemeViewModel()
+    }
+
+    fun requestUpdateTheme() {
+        onThemeChanged(getThemeViewModel().theme.value!!)
     }
 }

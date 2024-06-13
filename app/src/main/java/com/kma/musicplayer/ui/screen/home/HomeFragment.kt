@@ -31,10 +31,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
             }
         })
         setupListeners()
-
-        getThemeViewModel().theme.observe(viewLifecycleOwner) {
-            onThemeChanged(it)
-        }
+        requestUpdateTheme()
     }
 
     private fun setupListeners() {

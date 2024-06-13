@@ -157,9 +157,7 @@ class FavouriteFragment : BaseFragment<FragmentFavouriteBinding>() {
             )
             binding.rvFavourite.adapter = songAdapter
 
-            getThemeViewModel().theme.observe(viewLifecycleOwner) {
-                onThemeChanged(it)
-            }
+            requestUpdateTheme()
         }
     }
 

@@ -21,16 +21,8 @@
                 android:id="@+id/iv_share"
                 android:layout_width="@dimen/_20sdp"
                 android:layout_height="@dimen/_20sdp"
-                android:layout_marginEnd="@dimen/_10sdp"
-                android:layout_toLeftOf="@id/iv_more"
-                android:src="@drawable/ic_share" />
-
-            <ImageView
-                android:id="@+id/iv_more"
-                android:layout_width="@dimen/_20sdp"
-                android:layout_height="@dimen/_20sdp"
                 android:layout_alignParentEnd="true"
-                android:src="@drawable/ic_menu" />
+                android:src="@drawable/ic_share" />
 
         </RelativeLayout>
 

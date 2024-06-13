@@ -33,6 +33,64 @@
             android:textColor="@color/color_A5A7AB"
             android:textSize="@dimen/_12ssp" />
 
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_37sdp"
+            android:layout_marginHorizontal="@dimen/_20sdp"
+            android:layout_marginBottom="@dimen/_13sdp"
+            android:orientation="horizontal">
+
+            <LinearLayout
+                android:id="@+id/ll_shuffle"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_marginEnd="@dimen/_10sdp"
+                android:layout_weight="1"
+                android:background="@drawable/bg_bottom_sheet_ok_button"
+                android:gravity="center">
+
+                <ImageView
+                    android:layout_width="@dimen/_20sdp"
+                    android:layout_height="@dimen/_20sdp"
+                    android:src="@drawable/ic_shuffle" />
+
+                <com.kma.musicplayer.ui.customview.MovableText
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/_7sdp"
+                    android:fontFamily="@font/nunito_bold"
+                    android:text="@string/shuffle"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/_13ssp" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/ll_play"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center">
+
+                <ImageView
+                    android:layout_width="@dimen/_20sdp"
+                    android:layout_height="@dimen/_20sdp"
+                    android:src="@drawable/ic_play_without_circle" />
+
+                <com.kma.musicplayer.ui.customview.MovableText
+                    android:id="@+id/tv_play"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/_7sdp"
+                    android:fontFamily="@font/nunito_bold"
+                    android:text="@string/play"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/_13ssp" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+
         <View
             android:layout_width="match_parent"
             android:layout_height="1dp"

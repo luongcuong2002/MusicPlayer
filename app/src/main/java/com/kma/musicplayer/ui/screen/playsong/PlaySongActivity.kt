@@ -43,7 +43,6 @@ class PlaySongActivity : BaseActivity<ActivityPlaySongBinding>() {
     override fun onThemeChanged(theme: Theme) {
         binding.root.setBackgroundColor(resources.getColor(theme.backgroundColorRes))
         binding.backButton.setImageResource(theme.imageBackButtonRes)
-        binding.ivMore.setImageResource(theme.imageMenuRes)
         binding.ivShare.setImageResource(theme.imageShareRes)
         binding.tvSongName.setTextColor(resources.getColor(theme.titleTextColorRes))
 
@@ -203,6 +202,10 @@ class PlaySongActivity : BaseActivity<ActivityPlaySongBinding>() {
                 Glide.with(this)
                     .load(it.thumbnail)
                     .placeholder(R.drawable.default_song_thumbnail)
+                    .into(binding.ivThumbnail)
+            } else {
+                Glide.with(this)
+                    .load(R.drawable.default_song_thumbnail)
                     .into(binding.ivThumbnail)
             }
         }

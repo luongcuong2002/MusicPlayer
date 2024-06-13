@@ -47,10 +47,7 @@ class SettingFragment : BaseFragment<FragmentSettingBinding>() {
         super.onViewCreated(view, savedInstanceState)
         initView()
         setupListener()
-
-        getThemeViewModel().theme.observe(viewLifecycleOwner) {
-            onThemeChanged(it)
-        }
+        requestUpdateTheme()
     }
 
     private fun initView() {

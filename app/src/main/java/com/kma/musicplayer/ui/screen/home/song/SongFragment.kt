@@ -71,10 +71,7 @@ class SongFragment : BaseFragment<FragmentSongBinding>() {
                     binding.pbLoading.visibility = View.GONE
                     binding.tvError.visibility = View.GONE
                     setupRecyclerView()
-
-                    getThemeViewModel().theme.observe(viewLifecycleOwner) {
-                        onThemeChanged(it)
-                    }
+                    requestUpdateTheme()
                 }
 
                 ApiCallState.ERROR -> {

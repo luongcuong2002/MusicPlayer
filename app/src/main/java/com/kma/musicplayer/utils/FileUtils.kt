@@ -57,12 +57,16 @@ object FileUtils {
             while (cursor.moveToNext()) {
                 val path = cursor.getString(pathColumnIndex)
                 if (File(path).exists()) {
+                    val duration = getMediaDurationInSeconds(context, path).toInt()
+                    if (duration == 0) {
+                        continue
+                    }
                     audios.add(
                         Song(
                             id = "${Constant.LOCAL_AUDIO_PREFIX_ID}-${cursor.getLong(idColumnIndex)}",
                             title = File(path).nameWithoutExtension,
                             artist = null,
-                            duration = getMediaDurationInSeconds(context, path).toInt(),
+                            duration = duration,
                             path = path
                         )
                     )

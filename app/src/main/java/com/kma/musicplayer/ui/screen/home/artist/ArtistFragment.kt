@@ -109,9 +109,7 @@ class ArtistFragment : BaseFragment<FragmentArtistBinding>() {
             )
             binding.rvArtist.adapter = artistAdapter
 
-            getThemeViewModel().theme.observe(viewLifecycleOwner) {
-                onThemeChanged(it)
-            }
+            requestUpdateTheme()
         }
     }
 }

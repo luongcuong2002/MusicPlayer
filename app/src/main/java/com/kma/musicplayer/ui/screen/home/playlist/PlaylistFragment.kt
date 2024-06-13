@@ -138,9 +138,7 @@ class PlaylistFragment : BaseFragment<FragmentPlaylistBinding>() {
             )
             binding.rvPlaylist.adapter = playlistAdapter
 
-            getThemeViewModel().theme.observe(viewLifecycleOwner) {
-                onThemeChanged(it)
-            }
+            requestUpdateTheme()
         }
     }
 }

@@ -2,6 +2,7 @@ package com.kma.musicplayer.ui.screen.musiclocal
 
 import android.os.Bundle
 import android.view.View
+import android.widget.Toast
 import com.kma.musicplayer.databinding.FragmentMusicLocalBinding
 import com.kma.musicplayer.ui.screen.core.BaseFragment
 import com.kma.musicplayer.R
@@ -35,21 +36,55 @@ class MusicLocalFragment : BaseFragment<FragmentMusicLocalBinding>() {
     override fun getContentView(): Int = R.layout.fragment_music_local
 
     override fun onThemeChanged(theme: Theme) {
-
+        binding.tvTitle.setTextColor(requireActivity().getColor(theme.titleTextColorRes))
+        binding.tvSongs.setTextColor(requireActivity().getColor(theme.titleTextColorRes))
+        binding.tvPlay.setTextColor(requireActivity().getColor(theme.titleTextColorRes))
+        binding.llPlay.setBackgroundResource(theme.backgroundPlayButtonRes)
+        songAdapter?.setTheme(theme)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setupListeners()
         checkPermissionAndSetupRecycleView()
-        getThemeViewModel().theme.observe(viewLifecycleOwner) {
-            onThemeChanged(it)
-        }
     }
 
     private fun setupListeners() {
         binding.btnGrantPermission.setOnClickListener {
             PermissionUtils.requestReadAudioPermission(requireActivity(), REQUEST_CODE_PERMISSION)
+        }
+        binding.llShuffle.setOnClickListener {
+            if (songs.isEmpty()) {
+                Toast.makeText(
+                    requireContext(),
+                    getString(R.string.no_song_to_play),
+                    Toast.LENGTH_SHORT
+                ).show()
+                return@setOnClickListener
+            }
+            val cloneSong = songs.map { it }.shuffled()
+            showActivity(
+                PlaySongActivity::class.java,
+                Bundle().apply {
+                    putSerializable(Constant.BUNDLE_SONGS, cloneSong as Serializable)
+                },
+            )
+        }
+        binding.llPlay.setOnClickListener {
+            if (songs.isEmpty()) {
+                Toast.makeText(
+                    requireContext(),
+                    getString(R.string.no_song_to_play),
+                    Toast.LENGTH_SHORT
+                ).show()
+                return@setOnClickListener
+            }
+            showActivity(
+                PlaySongActivity::class.java,
+                Bundle().apply {
+                    putSerializable(Constant.BUNDLE_SONGS, songs as Serializable)
+                },
+            )
         }
     }
 
@@ -140,6 +175,7 @@ class MusicLocalFragment : BaseFragment<FragmentMusicLocalBinding>() {
                 } else {
                     "${songs.size} ${getString(R.string.audio)}"
                 }
+                requestUpdateTheme()
             }
         }
     }
