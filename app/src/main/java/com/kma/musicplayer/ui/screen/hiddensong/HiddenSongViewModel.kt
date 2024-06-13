@@ -16,11 +16,15 @@ class HiddenSongViewModel : ViewModel() {
     private val _isAtLeastOneSelected = MutableLiveData(false)
     val isAtLeastOneSelected: LiveData<Boolean> = _isAtLeastOneSelected
 
+    private val _isListEmpty = MutableLiveData(false)
+    val isListEmpty: LiveData<Boolean> = _isListEmpty
+
     fun setSongs(songs: List<Song>) {
         this.songs.clear()
         songs.forEach {
             this.songs.add(SelectableSong(it))
         }
+        checkListEmpty()
     }
 
     fun selectAll() {
@@ -47,15 +51,11 @@ class HiddenSongViewModel : ViewModel() {
         _isAtLeastOneSelected.value = songs.any { it.isSelected }
     }
 
-    fun getSelectedSongIds(): List<String> {
-        return songs.filter { it.isSelected }.map { it.song.id }
-    }
-
     fun getSelectedSongs(): List<Song> {
         return songs.filter { it.isSelected }.map { it.song }
     }
 
-    fun hideSelectedSongs() {
-        songs.removeAll { it.isSelected }
+    fun checkListEmpty() {
+        _isListEmpty.value = songs.isEmpty()
     }
 }

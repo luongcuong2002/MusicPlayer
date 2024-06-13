@@ -30,6 +30,7 @@ class HiddenSongActivity : BaseActivity<ActivityHiddenSongBinding>() {
         binding.ivSearch.setImageResource(theme.imageSearchRes)
         binding.etSearch.setTextColor(resources.getColor(theme.titleTextColorRes))
         binding.ivSelectAll.setImageResource(if (hiddenSongViewModel.isSelectAll.value == true) theme.imageCheckBoxSelectedRes else theme.imageCheckBoxUnSelectedRes)
+        binding.tvNoSongs.setTextColor(getColor(theme.titleTextColorRes))
         selectableSongAdapter?.setTheme(theme)
     }
 
@@ -77,6 +78,7 @@ class HiddenSongActivity : BaseActivity<ActivityHiddenSongBinding>() {
 
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
                 selectableSongAdapter?.doFilter(s.toString())
+                hiddenSongViewModel.checkListEmpty()
             }
 
             override fun afterTextChanged(s: Editable?) {
@@ -100,6 +102,10 @@ class HiddenSongActivity : BaseActivity<ActivityHiddenSongBinding>() {
             val opacity = if (it) 1.0f else 0.5f
             binding.llUnhide.alpha = opacity
             binding.llUnhide.isClickable = it
+        }
+        hiddenSongViewModel.isListEmpty.observe(this) {
+            binding.tvNoSongs.visibility = if (it) android.view.View.VISIBLE else android.view.View.GONE
+            binding.rvSongs.visibility = if (it) android.view.View.GONE else android.view.View.VISIBLE
         }
     }
 }
