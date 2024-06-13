@@ -1,18 +1,22 @@
 package com.kma.musicplayer.utils
 
+import android.Manifest
+import android.app.RecoverableSecurityException
+import android.content.ContentResolver
 import android.content.Context
 import android.media.MediaMetadataRetriever
 import android.net.Uri
-import android.os.Handler
+import android.os.Build
 import android.provider.MediaStore
 import android.util.Log
+import androidx.activity.result.IntentSenderRequest
 import androidx.core.content.FileProvider
-import com.kma.musicplayer.model.Artist
 import com.kma.musicplayer.model.OnlineSong
 import com.kma.musicplayer.model.Song
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import okhttp3.Call
 import okhttp3.Callback
 import okhttp3.OkHttpClient
@@ -24,11 +28,11 @@ import java.io.IOException
 
 object FileUtils {
 
-    private val songs = mutableListOf<Song>()
+    private val localSongs = mutableListOf<Song>()
 
     fun getAllAudios(context: Context): MutableList<Song> {
-        if (songs.isNotEmpty()) {
-            return songs
+        if (localSongs.isNotEmpty()) {
+            return localSongs
         }
 
         val audios = mutableListOf<Song>()
@@ -55,7 +59,7 @@ object FileUtils {
                 if (File(path).exists()) {
                     audios.add(
                         Song(
-                            id = "local-${idColumnIndex}",
+                            id = "${Constant.LOCAL_AUDIO_PREFIX_ID}-${cursor.getLong(idColumnIndex)}",
                             title = File(path).nameWithoutExtension,
                             artist = null,
                             duration = getMediaDurationInSeconds(context, path).toInt(),
@@ -65,7 +69,8 @@ object FileUtils {
                 }
             }
         }
-        songs.addAll(audios)
+        localSongs.addAll(audios)
+        SongManager.allSongs.addAll(audios)
         return audios
     }
 
@@ -159,5 +164,25 @@ object FileUtils {
 
     fun getUriFromFile(context: Context, file: File): Uri {
         return FileProvider.getUriForFile(context, context.packageName + ".provider", file)
+    }
+
+    fun getAudioMediaContentUri(context: Context, filePath: String): Uri? {
+        val contentResolver: ContentResolver = context.contentResolver
+        val uri: Uri = MediaStore.Files.getContentUri("external")
+
+        val projection = arrayOf(MediaStore.Files.FileColumns._ID)
+        val selection = "${MediaStore.Files.FileColumns.DATA} = ?"
+        val selectionArgs = arrayOf(filePath)
+        val sortOrder = null // You can specify sorting order if needed
+
+        contentResolver.query(uri, projection, selection, selectionArgs, sortOrder)?.use { cursor ->
+            if (cursor.moveToFirst()) {
+                val columnIndex = cursor.getColumnIndex(MediaStore.Files.FileColumns._ID)
+                val id = cursor.getLong(columnIndex)
+                val contentUri = MediaStore.Audio.Media.EXTERNAL_CONTENT_URI
+                return Uri.withAppendedPath(contentUri, id.toString())
+            }
+        }
+        return null
     }
 }

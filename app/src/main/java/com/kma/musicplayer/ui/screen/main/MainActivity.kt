@@ -4,11 +4,11 @@ import android.os.Bundle
 import androidx.navigation.NavController
 import androidx.navigation.findNavController
 import com.kma.musicplayer.databinding.ActivityMainBinding
-import com.kma.musicplayer.ui.screen.core.BaseActivity
 import com.kma.musicplayer.R
 import com.kma.musicplayer.model.Theme
+import com.kma.musicplayer.ui.screen.core.ActivityHavingDeleteMediaFeature
 
-class MainActivity : BaseActivity<ActivityMainBinding>() {
+class MainActivity : ActivityHavingDeleteMediaFeature<ActivityMainBinding>() {
 
     private lateinit var navController: NavController
 
@@ -82,5 +82,16 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
         binding.tvLocal.setTextColor(resources.getColor(R.color.color_787B82))
         binding.ivSetting.setImageResource(R.drawable.ic_tab_setting_inactive)
         binding.tvSetting.setTextColor(resources.getColor(R.color.color_787B82))
+    }
+
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<out String>,
+        grantResults: IntArray
+    ) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+        val navHostFragment = supportFragmentManager.findFragmentById(R.id.nav_host_fragment)
+        val currentFragment = navHostFragment?.childFragmentManager?.fragments?.get(0)
+        currentFragment?.onRequestPermissionsResult(requestCode, permissions, grantResults)
     }
 }

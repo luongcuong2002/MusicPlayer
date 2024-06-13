@@ -9,4 +9,6 @@ object Constant {
     const val BUNDLE_PLAYLIST = "BUNDLE_PLAYLIST"
 
     const val REQUEST_CODE_DATA_CHANGED = 100
+
+    const val LOCAL_AUDIO_PREFIX_ID = "local"
 }

@@ -8,13 +8,10 @@ import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.kma.musicplayer.R
 import com.kma.musicplayer.database.AppDatabase
 import com.kma.musicplayer.databinding.BottomSheetSongOptionBinding
-import com.kma.musicplayer.extension.showDialog
 import com.kma.musicplayer.model.OnlineSong
-import com.kma.musicplayer.model.PlaylistModel
 import com.kma.musicplayer.model.Song
 import com.kma.musicplayer.service.PlaySongService
 import com.kma.musicplayer.service.ServiceController
-import com.kma.musicplayer.ui.bottomsheet.add_to_playlist.AddToPlaylistBottomSheet
 import com.kma.musicplayer.utils.Formatter
 
 class SongOptionBottomSheet(
@@ -23,7 +20,7 @@ class SongOptionBottomSheet(
     private val onClickAddToPlaylist: (() -> Unit)? = null,
     private val onClickHide: (() -> Unit)? = null,
     private val onClickShare: (() -> Unit)? = null,
-    private val onClickDelete: (() -> Unit)? = null,
+    private val onClickDeleteFromDevice: (() -> Unit)? = null,
     private val onChangeFavorite: (() -> Unit)? = null,
     private val onDeleteFromPlaylist: (() -> Unit)? = null,
     private val showDeleteFromPlaylist: Boolean = false,
@@ -57,7 +54,7 @@ class SongOptionBottomSheet(
 
         when (song) {
             is OnlineSong -> {
-                binding.llDelete.visibility = View.GONE
+                binding.llDeleteFromDevice.visibility = View.GONE
                 Glide.with(requireContext())
                     .load((song as OnlineSong).thumbnail)
                     .into(binding.ivThumbnail)
@@ -98,8 +95,8 @@ class SongOptionBottomSheet(
         binding.llDeleteFromPlaylist.setOnClickListener {
             onDeleteFromPlaylist?.invoke()
         }
-        binding.llDelete.setOnClickListener {
-            onClickDelete?.invoke()
+        binding.llDeleteFromDevice.setOnClickListener {
+            onClickDeleteFromDevice?.invoke()
         }
     }
 }

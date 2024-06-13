@@ -28,6 +28,13 @@ object PermissionUtils {
         }
     }
 
+    fun isWriteExternalStoragePermissionGranted(context: Context): Boolean {
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.Q) {
+            return context.checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED
+        }
+        return true
+    }
+
     fun requestReadAudioPermission(activity: Activity, requestCode: Int = 1000) {
         requestPermissions(activity, readAudioPermissionsToRequest.toTypedArray(), requestCode)
     }

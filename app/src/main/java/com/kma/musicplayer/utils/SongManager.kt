@@ -10,6 +10,7 @@ import com.kma.musicplayer.network.retrofit.repository.SongRepository
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import java.io.File
 
 object SongManager {
 
@@ -35,8 +36,14 @@ object SongManager {
     }
 
     fun getSongById(id: String): Song? {
-        return allSongs.find { it.id == id }
-        // must add get local song by id
+        val song = allSongs.find { it.id == id }
+        song?.let {
+            if (song.id.startsWith(Constant.LOCAL_AUDIO_PREFIX_ID) && File(song.path).exists().not()) {
+                allSongs.remove(song)
+                return null
+            }
+        }
+        return song
     }
 
     fun getAllArtist(): List<Artist> {

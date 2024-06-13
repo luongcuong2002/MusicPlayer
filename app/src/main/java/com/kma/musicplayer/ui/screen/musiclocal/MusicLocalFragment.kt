@@ -5,13 +5,18 @@ import android.view.View
 import com.kma.musicplayer.databinding.FragmentMusicLocalBinding
 import com.kma.musicplayer.ui.screen.core.BaseFragment
 import com.kma.musicplayer.R
+import com.kma.musicplayer.database.AppDatabase
 import com.kma.musicplayer.model.Song
 import com.kma.musicplayer.model.Theme
+import com.kma.musicplayer.ui.bottomsheet.add_to_playlist.AddToPlaylistBottomSheet
+import com.kma.musicplayer.ui.bottomsheet.song_option.SongOptionBottomSheet
+import com.kma.musicplayer.ui.screen.core.ActivityHavingDeleteMediaFeature
 import com.kma.musicplayer.ui.screen.home.song.SongAdapter
 import com.kma.musicplayer.ui.screen.playsong.PlaySongActivity
 import com.kma.musicplayer.utils.Constant
 import com.kma.musicplayer.utils.FileUtils
 import com.kma.musicplayer.utils.PermissionUtils
+import com.kma.musicplayer.utils.ShareUtils
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -54,6 +59,7 @@ class MusicLocalFragment : BaseFragment<FragmentMusicLocalBinding>() {
                 binding.rvSongs.visibility = View.GONE
                 binding.pbLoading.visibility = View.VISIBLE
             }
+            songs.clear()
             songs.addAll(
                 FileUtils.getAllAudios(requireContext())
             )
@@ -63,14 +69,67 @@ class MusicLocalFragment : BaseFragment<FragmentMusicLocalBinding>() {
 
                 songAdapter = SongAdapter(
                     songs,
-                    onMoreClick = {
-
+                    onMoreClick = { song ->
+                        var bottomSheet: SongOptionBottomSheet? = null
+                        bottomSheet = SongOptionBottomSheet(
+                            song = song,
+                            onClickPlayNext = {
+                                getBaseActivity().songService?.songs?.add(song)
+                                bottomSheet?.dismiss()
+                            },
+                            onClickAddToPlaylist = {
+                                val addToPlaylistBottomSheet =
+                                    AddToPlaylistBottomSheet(listOf(song.id))
+                                addToPlaylistBottomSheet.show(
+                                    getBaseActivity().supportFragmentManager,
+                                    addToPlaylistBottomSheet.tag
+                                )
+                                bottomSheet?.dismiss()
+                            },
+                            onClickHide = {
+                                CoroutineScope(Dispatchers.Main).launch {
+                                    AppDatabase.INSTANCE.hiddenSongDao().insert(song.id)
+                                    songs.removeAll {
+                                        AppDatabase.INSTANCE.hiddenSongDao().isHidden(it.id)
+                                    }
+                                    binding.tvTotalSongs.text = if (songs.size > 1) {
+                                        "${songs.size} ${getString(R.string.audios)}"
+                                    } else {
+                                        "${songs.size} ${getString(R.string.audio)}"
+                                    }
+                                    songAdapter?.notifyDataSetChanged()
+                                    bottomSheet?.dismiss()
+                                }
+                            },
+                            onClickShare = {
+                                ShareUtils.shareSong(requireActivity(), song)
+                                bottomSheet?.dismiss()
+                            },
+                            onClickDeleteFromDevice = {
+                                (getBaseActivity() as ActivityHavingDeleteMediaFeature).deleteAudioMedia(
+                                    song.path
+                                ) {
+                                    songs.remove(song)
+                                    songAdapter?.notifyDataSetChanged()
+                                    binding.tvTotalSongs.text = if (songs.size > 1) {
+                                        "${songs.size} ${getString(R.string.audios)}"
+                                    } else {
+                                        "${songs.size} ${getString(R.string.audio)}"
+                                    }
+                                    bottomSheet?.dismiss()
+                                }
+                            }
+                        )
+                        bottomSheet.show(getBaseActivity().supportFragmentManager, bottomSheet.tag)
                     },
                     onSongClick = {
                         showActivity(
                             PlaySongActivity::class.java,
                             Bundle().apply {
-                                putSerializable(Constant.BUNDLE_SONGS, mutableListOf(it) as Serializable)
+                                putSerializable(
+                                    Constant.BUNDLE_SONGS,
+                                    mutableListOf(it) as Serializable
+                                )
                             },
                         )
                     }
