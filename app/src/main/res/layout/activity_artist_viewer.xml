@@ -73,7 +73,8 @@
                 android:layout_marginEnd="@dimen/_10sdp"
                 android:layout_weight="1"
                 android:background="@drawable/bg_bottom_sheet_ok_button"
-                android:gravity="center">
+                android:gravity="center"
+                android:paddingHorizontal="@dimen/_13sdp">
 
                 <ImageView
                     android:layout_width="@dimen/_20sdp"
@@ -97,7 +98,8 @@
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:background="@drawable/bg_favourite_play_button"
-                android:gravity="center">
+                android:gravity="center"
+                android:paddingHorizontal="@dimen/_13sdp">
 
                 <ImageView
                     android:layout_width="@dimen/_20sdp"
